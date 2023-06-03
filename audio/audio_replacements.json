@@ -1,0 +1,126 @@
+{
+
+	// ----------------------------------------
+	// SOUNDS SECTION
+	// ----------------------------------------
+
+	// Accurate Drop Dash sound effect.
+	// The one in 3 A.I.R is different.
+	// This works like it does in Origins.
+	"dropdash_charge": { "File": "dropdash_charge.ogg", "Type": "Sound", "Channel": "AB" },
+	"dropdash_release": { "File": "dropdash_release.ogg", "Type": "Sound", "Channel": "AB" },
+
+	// Different quality Peel-Out sounds.
+	"peelout_charge":  { "File": "peelout_charge.ogg", "Type": "Sound", "Channel": "AB" },
+	"peelout_release": { "File": "peelout_release.ogg", "Type": "Sound", "Channel": "AB" },
+
+	// ----------------------------------------
+
+	// AIZ2's door button.
+	// Sound taken from Sonic 1.
+	"door_reveal":	   { "File": "door_reveal.ogg", "Type": "Sound" },
+
+	// AIZ2's bridge opens.
+	// Sound taken from Sonic 2 and cut to
+	// fit in-game better.
+	"bridge":	   { "File": "aiz2bridge.ogg", "Type": "Sound" },
+
+	// AIZ2's bridge closes.
+	// Sound taken from Sonic 2.
+	"bridge_end":	   { "File": "aiz2bridgelands.ogg", "Type": "Sound" },
+
+	// HCZ's water pipe, now with a stronger sound.
+	// Taken from Mania's sound effects.
+	"waterpipe":	   { "File": "hczwaterpipe.ogg", "Type": "Sound" },
+
+	// HCZ's Whirlpool. Heard at start of Act 2.
+	// Taken from Mania's sound effects.
+	"whirlpool":	   { "File": "whirlpool.ogg", "Type": "Sound" },
+
+	// Blue Sphere grab sound.
+	// Taken from Mania's sound effects.
+	"bluesphere_mania":	   { "File": "bluesphere_mania.ogg", "Type": "Sound" },
+
+	// The previous game's spring sound.
+	// Taken from Mania's sound effects.
+	"legacy_spring":	   { "File": "legacy_spring.ogg", "Type": "Sound" },
+
+	// The previous game's spike appear sound.
+	// Taken from Mania's sound effects.
+	"legacy_spikespop":	   { "File": "spikes_pop.ogg", "Type": "Sound" },
+
+	// LBZ Spinlauncher gimmick.
+	// Sound taken from Sonic 2.
+	"lbz_spinlauncher":	   { "File": "lbzspinlauncher.ogg", "Type": "Sound" },
+
+	// TICK!
+	// Sound taken from Sonic CD.
+	"tick":	   { "File": "tick.ogg", "Type": "Sound" },
+
+	// Super Mecha Sonic charges his electric ball attack.
+	// Sound taken from Sonic 2.
+	"smm_charge":	   { "File": "smm_charge.ogg", "Type": "Sound" },
+
+	// Mushmeanie hoppin' and hoppin'!
+	// Sound taken from Sonic Chaos.
+	"mushmeanie_bounce":  { "File": "mushmeanie_bounce.ogg", "Type": "Sound" },
+
+	// DEZ Platform returning back.
+	// Sound taken from Sonic Mania.
+	"platform_retract":	   { "File": "platform_retract.ogg", "Type": "Sound" },
+
+	// ----------------------------------------
+	// MUSIC SECTION
+	// ----------------------------------------
+
+	// Exclusive Knuckles' HPZ battle 1.
+	// by Bouncy Glow's Music Room.
+	// https://www.youtube.com/watch?v=M3JELpo1eHY
+	"FA":	   { "File": "Music/finalknux_bouncy.ogg", "Type": "Music", "LoopStart": "20756" },
+
+	// Exclusive Knuckles' HPZ battle 2.
+	// By MastaGambit.
+	// https://www.youtube.com/watch?v=MR1bCH_gISs
+	"FB":	   { "File": "Music/finalknux_alt.ogg", "Type": "Music" },
+
+	// MHZ1 Zone Start from Album.
+	// By SiivaGunner.
+	// https://www.youtube.com/watch?v=BqeqPLVxBGg
+	"mhzcut":		 { "File": "Music/mhzcut.ogg", "Type": "Music" },
+
+	// Sky Sanctuary' DEZ Cutscene.
+	// From album to Genesis, made by SiivaGunner.
+	// https://www.youtube.com/watch?v=S9PFtFEnMiQ
+	"sszclimb":	   { "File": "Music/dezcut.ogg", "Type": "Music" },
+
+	// NO WAY? NO WAY!
+	// Remixed by John Tay.
+	// https://www.youtube.com/watch?v=k-oe3tWhSQY
+	"bs_start":		 { "File": "Music/bs_start.ogg", "Type": "Music", "LoopStart": "120512"  },
+
+	// Blue Spheres' Difficulty screen.
+	// Music by carlrev.
+	// https://www.youtube.com/watch?v=CMlVE8GcO7M
+	"bs_diff":		 { "File": "Music/bs_diff.ogg", "Type": "Music", "LoopStart": "88268"  },
+
+	// Sonic Origins track.
+	// Remixed by Lu9 Music.
+	// https://www.youtube.com/watch?v=y1FXYn5UfBU
+	"super_theme":		 { "File": "Music/super_theme.ogg", "Type": "Music" },
+
+	// Sonic Origins track again lol.
+	// Remixed by John Tay.
+	// https://www.youtube.com/watch?v=FnPVduH-HCo
+	"hyper_theme":		 { "File": "Music/hyper_theme_jt.ogg", "Type": "Music", "LoopStart": "126017"  }, // the old one (by Ross McK/AIKOCHO)'s loop point is 128657
+
+	// Alternate HPZ music track.
+	// By Bouncy Glow Music Room.
+	// Thanks to RetroForever for the help!
+	// https://www.youtube.com/watch?v=GAabeInoR8U
+	"hpz":	   { "File": "Music/bouncyhpz.ogg", "Type": "Music", "LoopStart": "66070"  },
+	"hpz_fast":	   { "File": "Music/bouncyhpz_f.ogg", "Type": "Music", "LoopStart": "52856"  },
+
+	// Chaos Emerald jingle from Sonic 2 used in Origins.
+	// S3&K one has a lower pitch near the end.
+	"chaosemerald_fix": { "File": "Music/chaosemerald.ogg", "Type": "Jingle" },
+}

@@ -1,0 +1,6 @@
+include sfxadd_options
+include sfxadd_origins_sounds
+include sfxadd_new_sounds
+include sfxadd_modded_sounds
+include sfxadd_jump_sounds
+include sfxadd_mania_sounds

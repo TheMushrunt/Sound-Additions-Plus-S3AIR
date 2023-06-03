@@ -1,0 +1,48 @@
+// This section has the sounds Sonic Mania added/changed.
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Act 2 Whirlpool.
+// ----------------------------------------
+
+//# address-hook(0x06a2a0) end(0x06a2b4)
+function void fn06a2a0()
+{
+	base.fn06a2a0()
+
+	if ((objA0.flags38 & 0x01) == 0)
+	{
+		if (mania_sounds)
+		{
+			Audio.playAudio("whirlpool", AudioContext.CONTEXT_SOUND)
+		}
+	}
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Water slides sound.
+// ----------------------------------------
+
+function void fn00717c()
+{
+	base.fn00717c()
+
+	if ((u8[A1 + 0x2a] & char.flag.IN_AIR) == 0)
+	{
+		if (u8[A1 + 0x46] != 0x0c)
+		{
+			while (D1.s16 >= 0)
+			{
+				--D1.s16
+				if (D0.u8 == u8[A2-=1])
+				{
+					if (mania_sounds)
+					{
+						Audio.playAudio(0xc8, AudioContext.CONTEXT_SOUND)
+					}
+				}
+			}
+		}
+	}
+}

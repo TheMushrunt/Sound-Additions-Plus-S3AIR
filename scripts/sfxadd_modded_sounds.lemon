@@ -1,0 +1,496 @@
+// This file contains music and sound replacements that can only
+// fit in one function or aren't really additions.
+
+// ----------------------------------------
+// LAVA REEF ZONE:
+// Silence Stomp Platform if off-screen quicker.
+// ----------------------------------------
+
+//# address-hook(0x0431aa) end(0x0432da)
+function void fn0431aa()
+{
+	D2.u16 = u16[A0 + 0x34]
+	if (D2.u16 != 0)
+	{
+		--D2.u16
+		u16[A0 + 0x34] = D2.u16
+		objA0.animation.sprite += 8
+		objA0.animation.sprite &= 0x08
+
+		// This will silence it if not visible.
+		if (new_sounds)
+		{
+			if (objA0.render_flags & render_flag.VISIBLE)
+			{
+				D0.u8 = level.framecounter.low & 0x1f
+				if (D0.u8 == 0)
+				{
+					playSound(0x48)
+				}
+			}
+		}
+		else
+		{
+			D0.u8 = level.framecounter.low & 0x1f
+			if (D0.u8 == 0)
+			{
+				playSound(0x48)
+			}
+		}
+	}
+	else
+	{
+		u8[A0 + 0x32] = 0
+		objA0.animation.sprite = 0
+	}
+
+	fn0431e0()
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Manage Knuckles' theme here.
+// Old method made the music play again
+// for Eggman's part.
+// ----------------------------------------
+
+#if STANDALONE
+function u8 BossHPZKnuckles.chooseMusicTrack()
+{
+	if !(knuckles_hpz_music)
+	{
+		return base.BossHPZKnuckles.chooseMusicTrack()
+	}
+	else
+	{
+		if (knuckles_hpz_music) == 1
+		{
+			return 0xfa
+		}
+		else if (knuckles_hpz_music) == 2
+		{
+			return 0xfb
+		}
+	}
+
+	return MUSIC_KNUCKLES		// Fallback value, should not get reached
+}
+#endif
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// Play new climb music.
+// ----------------------------------------
+
+//# address-hook(0x0572ba) end(0x057342)
+function void fn0572ba()
+{
+	base.fn0572ba()
+
+	if (sky_sanctuary_climb_music)
+	{
+		if (level.results_done)
+		{
+			Audio.playAudio("sszclimb", AudioContext.CONTEXT_MUSIC)
+		}
+	}
+}
+
+// ----------------------------------------
+// Standalone function to replace existing audio.
+// ----------------------------------------
+
+function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegType)
+{
+
+// ----------------------------------------
+// Music Section
+// ----------------------------------------
+
+
+	// New music added by yours truly.
+	if (mushroom_hill_intro_music)
+	{
+
+		// MHZ Act 1 introduction zone
+		if (sfxId == MUSIC_MHZ1 && global.zone_act == 0x0700 && global.characters != 0x0003 && (checkpoint.number) == 0)
+		{
+			soundKey = "mhzcut"
+			soundRegType = SoundRegType.TYPE_MUSIC
+		}
+	}
+
+
+	// Change Super/Hyper theme depending of the option.
+	if (sfxId == MUSIC_SUPER)
+    {
+        if (Game.getSetting(SETTING_AUDIO_SUPER_THEME) > 1)
+        {
+            if (unique_super_music)
+            {
+                if (super.active == 0x01 || super.active.tails == 0x01)
+                {
+                    soundKey = "super_theme"
+                    soundRegType = SoundRegType.TYPE_MUSIC
+                }
+            }
+
+            // The amount of options here is just, dumb. lol
+            if (unique_hyper_music)
+            {
+                if (super.active == 0xff || super.active.tails == 0xff)
+                {
+                    if (unique_hyper_music == 1)
+                    {
+                        soundKey = "hyper_theme"
+                        soundRegType = SoundRegType.TYPE_MUSIC
+                    }
+                    else if (unique_hyper_music == 2)
+                    {
+                        soundKey = "supertheme_sonic2"
+                        soundRegType = SoundRegType.TYPE_MUSIC
+                    }
+                    else if (unique_hyper_music == 3)
+                    {
+                        soundKey = "2c_sonic3"
+                        soundRegType = SoundRegType.TYPE_MUSIC
+                    }
+                    else if (unique_hyper_music == 4)
+                    {
+                        soundKey = MUSIC_INVINCIBLE
+                        soundRegType = SoundRegType.TYPE_MUSIC
+                    }
+                    else if (unique_hyper_music == 5) // Not one to my liking, but welp...
+                    {
+                        soundKey = "2e_proto"
+                        soundRegType = SoundRegType.TYPE_MUSIC
+                    }
+                }
+            }
+        }
+    }
+
+
+	// Hidden Palace Zone unique music.
+	if (hidden_palace_music)
+	{
+		if (sfxId == MUSIC_LRZ2)
+		{
+			if (global.zone_act == 0x1601 || global.zone_act == 0x1701)
+			{
+				if (hidden_palace_music) == 1
+				{
+					soundKey = "hpz"
+					soundRegType = SoundRegType.TYPE_MUSIC
+				}
+				else if (hidden_palace_music) == 2
+				{
+					soundKey = MUSIC_SSZ
+					soundRegType = SoundRegType.TYPE_MUSIC
+				}
+			}
+		}
+	}
+
+
+	// Blue Spheres' Main Menu (NO WAY? NO WAY!)
+	if (global.game_mode == 0x2c)
+	{
+		if (sfxId == MUSIC_CONTINUE)
+		{
+			if (blue_sphere_menu_music) == 0
+			{
+				soundKey = 0x28
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+			else if (blue_sphere_menu_music) == 1
+			{
+				soundKey = "28_sonic3"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+			else
+			{
+				soundKey = "bs_start"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+		}
+	}
+
+
+	// Blue Spheres' Difficulty Screen
+	if (global.game_mode == 0x2c)
+	{
+		if (sfxId == MUSIC_INVINCIBLE)
+		{
+			if (blue_sphere_results_music) == 1
+			{
+				soundKey = "2e_proto"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+
+			else if (blue_sphere_results_music) == 2
+			{
+				soundKey = "bs_diff"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+		}
+	}
+
+// ----------------------------------------
+// Sounds Section
+// ----------------------------------------
+
+	// Sonic Mania sound replacements.
+	if (mania_sounds)
+	{
+		// Water Pipe new sound.
+		if (global.zone == 0x01 && sfxId == 0x57)
+		{
+			soundKey = "waterpipe"
+			soundRegType = SoundRegType.TYPE_SOUND
+		}
+
+		// Blue Sphere grab sound.
+		if (sfxId == 0x65)
+		{
+			soundKey = "bluesphere_mania"
+			soundRegType = SoundRegType.TYPE_SOUND
+		}
+	}
+
+
+	// Slot Machine sound effects.
+	if (slot_machine_sounds)
+	{
+		if (global.zone_act == 0x1500)
+		{
+			if (sfxId == 0xad)
+			{
+				soundKey = 0x6b
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+
+			if (sfxId == 0xae)
+			{
+				soundKey = 0xb5
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+	}
+
+
+	// Sound replacements Origins did.
+	if (origins_sounds)
+	{
+
+		// Competition Mode - Balloon Pop / Bumper Hit
+		if (competition_mode.active && global.zone == 0x0f)
+		{
+			if (sfxId == 0x7b)
+			{
+				if (objA0.update_address == 0x035db2) // is it a balloon?
+					soundKey = 0x77
+				else // it's a bumper
+					soundKey = 0xaa
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// Chaos Emerald jingle.
+		if (sfxId == 0x2b)
+		{
+			soundKey = "chaosemerald_fix"
+			soundRegType = SoundRegType.TYPE_JINGLE
+		}
+
+		// Hydrocity's fan appears.
+		if (objA0.update_address == 0x03093c && global.zone == 0x01)
+		{
+			if (sfxId == 0x58)
+			{
+				soundKey = 0x76
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+		
+		// Hydrocity's closing gate with fans.
+		if (objA0.update_address == 0x030850 && global.zone == 0x01)
+		{
+			if (sfxId == 0x58)
+			{
+				soundKey = 0x9a
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// Fix LBZ Ride Grapple Grab sound.
+		if (objA0.update_address == 0x0290f2 && global.zone == 0x06)
+		{
+			if (sfxId == 0x5b)
+			{
+				soundKey = 0x4a
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// Fix LBZ Grapple Grab sound.
+		if (objA0.update_address == 0x029086 && global.zone == 0x06)
+		{
+			if (sfxId == 0x5b)
+			{
+				soundKey = 0x4a
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// LBZ Tube Transport new charge sound.
+		if (objA0.update_address == 0x029d4a && global.zone == 0x06)
+		{
+			if (sfxId == 0x3c)
+			{
+				soundKey = "peelout_charge"
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// LBZ Booster Tube.
+		if (objA0.update_address == 0x0295e8 && global.zone == 0x06)
+		{
+			if (sfxId == 0x3c)
+			{
+				soundKey = "peelout_release"
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// Fix HPZ Knuckles' Spindash sound.
+		if (objA0.update_address == 0x064184 && global.zone_act == 0x1601)
+		{
+			if (sfxId == 0x3c)
+			{
+				soundKey = 0xab
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+	}
+
+
+	// Sound replacements I did.
+	if (new_sounds)
+	{
+
+		// Competition Mode - CGZ Bounce Pad.
+		if (competition_mode.active && global.zone == 0x11)
+		{
+			if (sfxId == 0x7b)
+			{
+				soundKey = 0xb1
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// ANGEL ISLAND ZONE ACT 2
+		// After Boss bridge opens/closes.
+		if (objA0.update_address == 0x02b26c && global.zone_act == 0x0001)
+		{
+			if (u8[0xfffffaa3] != 0)
+			{
+				if (u8[A0 + 0x36] == 0x01)
+				{
+					if (sfxId == 0x56)
+					{
+						soundKey = "bridge"
+						soundRegType = SoundRegType.TYPE_SOUND
+					}
+
+					if (objA0.flags38 == 0 && objA0.flags38 == 0x80)
+					{
+						if (sfxId == 0x56)
+						{
+							soundKey = "bridge_end"
+							soundRegType = SoundRegType.TYPE_SOUND
+						}
+					}
+				}
+			}
+		}
+
+		// HYDROCITY ZONE
+		if (global.zone == 0x01)
+		{
+
+			// Hand Launcher.
+			if (objA0.update_address == 0x030b58)
+			{
+				if (sfxId == 0x3c)
+				{
+					soundKey = "peelout_charge"
+					soundRegType = SoundRegType.TYPE_SOUND
+				}
+				else if (sfxId == 0xb6)
+				{
+					soundKey = "peelout_release"
+					soundRegType = SoundRegType.TYPE_SOUND
+				}
+			}
+		}
+
+		// CARNIVAL NIGHT ZONE
+		if (global.zone == 0x03)
+		{
+			// CNZ's Bounce Pad
+			if (objA0.update_address == 0x0329a6)
+			{
+				if (sfxId == 0x7b)
+				{
+					soundKey = 0xb1
+					soundRegType = SoundRegType.TYPE_SOUND
+				}
+			}
+		}
+
+		// MUSHROOM HILL ZONE ACT 2
+		if (global.zone_act == 0x0701)
+		{
+
+			// New wind effect for MHZ Wind Blow.
+			if (sfxId == 0xce)
+			{
+				soundKey = 0xcf
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// SANDOPOLIS ZONE
+		if (global.zone == 0x08)
+		{
+
+			// Replace Sandworm duplicate sound
+			// with another game sound.
+			if (sfxId == 0x6c)
+			{
+				soundKey = 0x47
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// DEATH EGG ZONE
+		if (global.zone == 0x0b)
+		{
+
+			// Replace Hang Carrier grab sound.
+			if (objA0.update_address == 0x046fc2 || objA0.update_address == 0x046ff2 || objA0.update_address == 0x04702c)
+			{
+				if (sfxId == 0x5b)
+				{
+					soundKey = 0x4a
+					soundRegType = SoundRegType.TYPE_SOUND
+				}
+			}
+		}
+	}
+
+
+	// Play it.
+	return soundKey
+}

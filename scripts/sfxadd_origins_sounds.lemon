@@ -1,0 +1,1587 @@
+// This section has the sounds Sonic Origins added to many objects.
+
+// ----------------------------------------
+// GUMBALL MACHINE:
+// Ground below springs breaking apart
+// ----------------------------------------
+
+//# address-hook(0x06101e) end(0x06102e)
+function void fn06101e()
+{
+	base.fn06101e()
+
+	if (origins_sounds)
+	{
+		playSound(0x59)
+	}
+}
+
+// ----------------------------------------
+// SLOT MACHINE:
+// Slot chosen comes to a halt.
+// Detail taken from Sonic the Hedgehog 2.
+// ----------------------------------------
+
+// This makes it so sound isn't played at all times.
+global bool HasPicked1 = false
+global bool HasPicked2 = false
+global bool HasPicked3 = false
+
+// ----------------------------------------
+//# address-hook(0x04c576) end(0x04c5b0)
+function void fn04c576()
+{
+	base.fn04c576()
+
+	if (origins_sounds)
+	{
+		if (u8[A4 + 0x09] == 0x0c && HasPicked1 == false)
+		{
+			playSound(0x4a)
+			HasPicked3 = false
+			HasPicked1 = true
+		}
+
+		if (u8[A4 + 0x0d] == 0x0c && HasPicked2 == false)
+		{
+			playSound(0x4a)
+			HasPicked2 = true
+		}
+
+		if (u8[A4 + 0x11] == 0x0c && HasPicked3 == false)
+		{
+			playSound(0x4a)
+			HasPicked1 = false
+			HasPicked2 = false
+			HasPicked3 = true
+		}
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Sonic Introduction: Jumping off the tornado.
+// ----------------------------------------
+
+//# address-hook(0x067572) end(0x067592)
+function void fn067572()
+{
+	if isMainCharacter(CHARACTER_SONIC)
+	{
+		if (origins_sounds)
+		{
+			playSound(SFX_JUMP)
+		}
+	}
+
+	base.fn067572()
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Jump sound for Tails.
+// (Support for Tails AIZ Plane Intro)
+// ----------------------------------------
+
+//# address-hook(0x067a08) end(0x067a1e)
+function void fn067a08()
+{
+	base.fn067a08()
+
+	if (Mods.isModActive("tails aiz plane intro") && isMainCharacter(CHARACTER_TAILS) && camera.position.x.u16 == 0x0760)
+	{
+		if (origins_sounds)
+		{
+			playSound(SFX_JUMP)
+		}
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Sonic Introduction: Transforming to Super.
+// ----------------------------------------
+
+//# address-hook(0x067996) end(0x0679b6)
+function void fn067996()
+{
+	base.fn067996()
+
+	if (origins_sounds)
+	{
+		playSound(0x9f)
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Knuckles Introduction: He lands on his back.
+// ----------------------------------------
+
+//# address-hook(0x0635c8) end(0x0635f0)
+function void fn0635c8()
+{
+	base.fn0635c8()
+
+	if (D1.s16 >= 0)
+		return
+
+	if (origins_sounds)
+	{
+		playSound(0x90)
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Falling logs appear from waterfall.
+// ----------------------------------------
+
+//# address-hook(0x02b5d4) end(0x02b69a)
+function void AIZWaterfall.Update()
+{
+	base.AIZWaterfall.Update()
+
+	if (((level.framecounter + u16[A0 + 0x34]) & objA0.value32) == 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x4b)
+		}
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Pushing off a rock.
+// ----------------------------------------
+
+//# address-hook(0x0200cc) end(0x02011c)
+function void fn0200cc()
+{
+	base.fn0200cc()
+
+	u32 bit = (1 << D6)
+	if ((D3 & bit) && (D2.u16 < objA1.position.x.u16) && (D0 & 0x20))
+	{
+		if (objA0.value42 != 0)
+		{
+			if (origins_sounds)
+			{
+				if (D1.u8 = global.framecounter & 0x1d) == 0
+				{
+					playSound(0x69)
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Water level button is pressed.
+// ----------------------------------------
+
+// Makes this less annoying.
+global bool HasPlayed = false
+
+// ----------------------------------------
+//# address-hook(0x006dde) end(0x006e6c)
+function void UpdateWaterSurfaceLevel.AIZ2()
+{
+	base.UpdateWaterSurfaceLevel.AIZ2()
+
+	if (water.height.target == 0x0618)
+	{
+		if (origins_sounds) && HasPlayed == false
+		{
+			Audio.playAudio("door_reveal", AudioContext.CONTEXT_SOUND)
+			HasPlayed = true
+		}
+	}
+	else
+	{
+		HasPlayed = false
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Knuckles jumping in the final cutscene.
+// ----------------------------------------
+
+//# address-hook(0x06207a) end(0x06207a)
+function void fn06207a()
+{
+	base.fn06207a()
+
+	if (origins_sounds)
+	{
+		playSound(SFX_JUMP)
+	}
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
+// Welcome to Hydrossity! ...Hydro City.
+// Hydrocity- HYDROSUSSY!!!
+// ----------------------------------------
+
+//# address-hook(0x01e6ec) end(0x01e718)
+function void fn01e6ec()
+{
+	base.fn01e6ec()
+
+	if (origins_sounds)
+	{
+		playSound(0x5b)
+	}
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Act 1 starting button is pressed.
+// ----------------------------------------
+
+//# address-hook(0x02fe34) end(0x02fe58)
+function void fn02fe34()
+{
+	if (origins_sounds)
+	{
+		if (level.trigger00 != 0)
+		{
+			playSound(0x5b)
+		}
+	}
+
+	base.fn02fe34()
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Grab onto and jump off a conveyor belt.
+// ----------------------------------------
+
+global bool InitialGrab = true // this is to ensure that the variable does not get lost within the functions.
+
+//# address-hook(0x031226) end(0x031458)
+function void fn031226()
+{
+	if (origins_sounds)
+	{
+		if (u8[A2] != 0)
+		{
+			D1.u8 &= CONTROL_ABC
+			if (InitialGrab && (u8[0xffffb04a + 0x2a]) == 0)
+				playSound(0x4a) // it there is a second player, do not play the grab sound at all (fixes a really dumb bug)
+			InitialGrab = false
+			if (D1.u8 != 0)
+			{
+				InitialGrab = true
+				playSound(SFX_JUMP)
+			}
+		}
+	}
+	base.fn031226()
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Grab a breakable pole in the wind sections.
+// ----------------------------------------
+
+//# address-hook(0x01edec) end(0x01eeea)
+function void fn01edec()
+{
+	base.fn01edec()
+
+	if (u8[A2] != 0 && D1.u16 != 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x4a)
+		}
+	}
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Big Shaker appears from the top.
+// ----------------------------------------
+
+//# address-hook(0x06a010) end(0x06a02a)
+function void fn06a010()
+{
+	base.fn06a010()
+
+	if (origins_sounds)
+	{
+		playSound(0x70)
+	}
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// Knuckles loves jumping on buttons.
+// Don't you think?
+// ----------------------------------------
+
+//# address-hook(0x062232) end(0x06223e)
+function void fn062232()
+{
+	base.fn062232()
+
+	if (origins_sounds)
+	{
+		playSound(SFX_JUMP)
+	}
+}
+
+// ----------------------------------------
+// HYDROCITY ZONE:
+// That button Knuckles jumped on triggers.
+// ----------------------------------------
+
+//# address-hook(0x065c72) end(0x065c76)
+function void fn065c72()
+{
+	base.fn065c72()
+
+	if (origins_sounds)
+	{
+		playSound(0x5b)
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Spinwheel is triggered from the sides.
+// ----------------------------------------
+
+//# address-hook(0x025d9c) end(0x025ea0)
+function void fn025d9c()
+{
+	base.fn025d9c()
+	if Mods.isModActive("Origins Parity Galore")
+		return
+	if (D6.u16 == 0)
+	{
+		if (D0.u8 != 0)
+		{
+			if (objA1.state == char.state.SPINDASH)
+			{
+				if (origins_sounds)
+				{
+					if (D1.u8 = global.framecounter & 0x0f) == 0
+					{
+						playSound(0x8e)
+					}
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Spinwheel is triggered from the top
+// (you know, the one that bounces you off).
+// ----------------------------------------
+
+//# address-hook(0x025ea6) end(0x025f0c)
+function void fn025ea6()
+{
+	base.fn025ea6()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (origins_sounds)
+	{
+		playSound(0x8e)
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Tunnelbot appears from the top.
+// ----------------------------------------
+
+//# address-hook(0x088716) end(0x088746)
+function void fn088716()
+{
+	base.fn088716()
+	if (origins_sounds)
+	{
+		playSound(0x59)
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Debris falls from the top after Eggman appears
+// in any part of the level.
+// ----------------------------------------
+
+//# address-hook(0x06c1d4) end(0x06c1fa)
+function void fn06c1d4()
+{
+	base.fn06c1d4()
+
+	CheckCeilingCollision()
+	if (D1.s16 < 0) && (objA0.base_state) == 0x16
+	{
+		if (origins_sounds)
+		{
+			playSound(0x59)
+		}
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Drill Mobile hits the ground with its drill
+// (Sonic/Tails version of the boss).
+// ----------------------------------------
+
+//# address-hook(0x06c4be) end(0x06c4f0)
+function void fn06c4be()
+{
+	base.fn06c4be()
+
+	if (origins_sounds)
+	{
+		playSound(0x59)
+	}
+}
+
+// ----------------------------------------
+// MARBLE GARDEN ZONE:
+// Drill Mobile attaches the drill on the ceiling.
+// (Knuckles version of the boss).
+// ----------------------------------------
+
+//# address-hook(0x06cc0e) end(0x06cc30)
+function void fn06cc0e()
+{
+	base.fn06cc0e()
+
+	if (origins_sounds)
+	{
+		playSound(0x91)
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Helix shooting you with full force.
+// ----------------------------------------
+
+//# address-hook(0x0332a2) end(0x03331e)
+function void fn0332a2()
+{
+	base.fn0332a2()
+
+	D0.u16 = D4.u16 - objA1.position.x.u16
+	D1.u16 = D5.u16 - objA1.position.y.u16
+
+	if (D1.u16 >= D0.u16)
+	{
+		if (origins_sounds) && (objA1.velocity.y > 0)
+		{
+			playSound(0x81)
+		}
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Shooting the cannon.
+// ----------------------------------------
+
+//# address-hook(0x0319f4) end(0x031b16)
+function void fn0319f4()
+{
+	base.fn0319f4()
+
+	if (u8[A2] == 3)
+	{
+		if (u8[A2 + 0x02] == 2)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x81)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Knuckles' Cutscene: He presses the button to
+// turn off the lights.
+// ----------------------------------------
+
+//# address-hook(0x065cac) end(0x065d14)
+function void fn065cac()
+{
+	base.fn065cac()
+
+	if (origins_sounds)
+	{
+		playSound(0x5b)
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Graviton Mobile drops the black sphere.
+// ----------------------------------------
+
+//# address-hook(0x06e5a4) end(0x06e5b4)
+function void fn06e5a4()
+{
+	base.fn06e5a4()
+
+	if (origins_sounds)
+	{
+		playSound(0x51)
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Graviton Mobile grabs the black sphere back.
+// ----------------------------------------
+
+//# address-hook(0x06e680) end(0x06e6a8)
+function void fn06e680()
+{
+	base.fn06e680()
+
+	if (origins_sounds)
+	{
+		if (D0.u16 == D1.u16)
+		{
+			playSound(0x76)
+		}
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Sonic/Tails jumping off the snow after
+// the avalanche.
+// ----------------------------------------
+
+//# address-hook(0x053a4c) end(0x053ad2)
+function void fn053a4c()
+{
+	if (objA0.position.y.u16 == 0x070e && player1.control_override != 0)
+	{
+		if (control.pad1.pressed & CONTROL_ABC)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x82)
+			}
+		}
+	}
+
+	base.fn053a4c()
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Freezer... freezes you.
+// ----------------------------------------
+
+//# address-hook(0x08a7ae) end(0x08a80a)
+function void fn08a7ae()
+{
+	base.fn08a7ae()
+
+	if (origins_sounds)
+	{
+		playSound(0x80)
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Pushing that one ice platform near the checkpoint.
+// ----------------------------------------
+
+//# address-hook(0x089ff2) end(0x08a034)
+function void fn089ff2()
+{
+	base.fn089ff2()
+
+	if (objA0.flags2a & object.flag.P1_PUSHING) && (control.pad1.state & (CONTROL_LEFT | CONTROL_RIGHT))
+	{
+		if (objA0.value39 >= 0x10)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x69)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Sliding ice platform breaks/collapses near
+// the wall.
+// ----------------------------------------
+
+//# address-hook(0x08a036) end(0x08a0fa)
+function void fn08a036()
+{
+	base.fn08a036()
+	if (objA0.base_state == 0x0c && origins_sounds)
+        playSound(0x49)
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Swinging platform chains break.
+// ----------------------------------------
+
+//# address-hook(0x08ad9c)
+function void fn08ad9c()
+{
+	base.fn08ad9c()
+
+	if (origins_sounds)
+	{
+		playSound(0x80)
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Swinging platform lands.
+// ----------------------------------------
+
+//# address-hook(0x08ae0c) end(0x08ae5e)
+function void fn08ae0c()
+{
+	base.fn08ae0c()
+
+	D0.u16 = objA0.velocity.y
+
+	if (origins_sounds)
+	{
+		if (D1.s16 < -2 && D0.u16 < -0x100)
+		{
+			playSound(0x5f)
+		}
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Swinging platform sliding on the ground.
+// ----------------------------------------
+
+//# address-hook(0x08ae62) end(0x08ae9c)
+function void fn08ae62()
+{
+	base.fn08ae62()
+
+	if (origins_sounds)
+	{
+		if ((level.framecounter.low & 0x0f) == 0)
+		{
+			playSound(0xc8)
+		}
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Big Icedus snow rocks get attracted by
+// its magnetic force (?)
+// ----------------------------------------
+
+//# address-hook(0x07153a) end(0x071558)
+function void fn07153a()
+{
+	base.fn07153a()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (objA0.subtype2c == 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0xa0)
+		}
+	}
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
+// Big Icedus snow rocks get thrown to the sky.
+// ----------------------------------------
+
+//# address-hook(0x071600) end(0x071634)
+function void fn071600()
+{
+	base.fn071600()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (D0.u8 == u8[A0 + 0x42])
+	{
+		if (origins_sounds)
+		{
+			playSound(0xa0)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Grab a ride grapple.
+// ----------------------------------------
+
+//# address-hook(0x0267a4) end(0x02682c)
+function void fn0267a4()
+{
+	base.fn0267a4()
+
+	if (origins_sounds)
+	{
+		if (u8[A2] == 1)
+		{
+			playSound(0x4a)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Tube transporter moves up/down.
+// ----------------------------------------
+
+//# address-hook(0x029eb2) end(0x029f32)
+function void fn029eb2()
+{
+	if (u16[A0 + 0x3c] >= 0x0180)
+	{
+		if (origins_sounds && Mods.isModActive("Origins Parity Galore"))
+		{
+			Audio.playAudio("peelout_release")
+		}
+	}
+
+	base.fn029eb2()
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Tube transporter closes its door.
+// ----------------------------------------
+
+//# address-hook(0x02a018) end(0x02a07c)
+function void fn02a018()
+{
+	base.fn02a018()
+
+	D0.u8 = objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT)
+
+	if (origins_sounds)
+	{
+		if (D0.u8 == 0)
+		{
+			playSound(0x58)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Bouncing off a Snailblaster.
+// ----------------------------------------
+
+//# translated(0x08c23c) end(0x08c264)
+function bool fn08c23c()
+{
+	CheckDistanceToPlayers()
+	if (D2.u16 < 0x30 && D3.u16 < 0x30)
+	{
+		if (u8[A1 + 0x20] == 2)
+		{
+			if (origins_sounds)
+			{
+				Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
+			}
+		}
+	}
+	return base.fn08c23c()
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Teacup Elevator breaks after spinning a lot
+// (this is part 1).
+// ----------------------------------------
+
+//# address-hook(0x026c6c) end(0x026d04)
+function void fn026c6c()
+{
+	base.fn026c6c()
+
+	if (objA0.countdown_value == 0x1000)
+	{
+		if ((objA0.flags2a & 0x01) == 0)
+		{
+			if (D0.u8 >= 0xf0)
+			{
+				if (origins_sounds)
+				{
+					playSound(0x80)
+				}
+			}
+		}
+		else
+		{
+			if (D0.u8 >= 0xf0)
+			{
+				if (origins_sounds)
+				{
+					playSound(0x80)
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Teacup Elevator breaks after spinning a lot
+// (this is part 2).
+// ----------------------------------------
+
+//# address-hook(0x026d06) end(0x026d72)
+function void fn026d06()
+{
+	base.fn026d06()
+
+	if (objA0.countdown_value == 0x1000)
+	{
+		if (D0.u8 >= 0xf0)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x80)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Teacup Elevator crashes near a wall.
+// ----------------------------------------
+
+//# address-hook(0x026de0) end(0x026e52)
+function void fn026de0()
+{
+	base.fn026de0()
+
+	if (origins_sounds)
+	{
+		playSound(0x5d)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Ribot Weights land on the ground.
+// ----------------------------------------
+
+//# address-hook(0x08c456) end(0x08c468)
+function void fn08c456()
+{
+	base.fn08c456()
+
+	if (origins_sounds)
+	{
+		if (D0.u16 >= 0x0200)
+		{
+			playSound(0x96)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Knuckles' Bomb explodes in his cutscene.
+// ----------------------------------------
+
+//# address-hook(0x06273e) end(0x06275a)
+function void fn06273e()
+{
+	base.fn06273e()
+
+	if (origins_sounds)
+	{
+		playSound(0x4e)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Twin Hammer is placed on the wall by Eggman.
+// ----------------------------------------
+
+//# address-hook(0x08cce8) end(0x08cd2a)
+function void fn08cce8()
+{
+	base.fn08cce8()
+
+	if (origins_sounds)
+	{
+		if (objA0.position.y.u16 == 0x012c)
+		{
+			playSound(0x91)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Spinlauncher propells you upwards.
+// ----------------------------------------
+
+//# address-hook(0x028e76) end(0x028f3e)
+function void fn028e76()
+{
+	base.fn028e76()
+
+	if (origins_sounds)
+	{
+		Audio.playAudio("lbz_spinlauncher", AudioContext.CONTEXT_SOUND)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Egg Mobile gets damaged by Knuckles' punch.
+// ----------------------------------------
+
+//# address-hook(0x08d3f2) end(0x08d40c)
+function void fn08d3f2()
+{
+	base.fn08d3f2()
+	if (origins_sounds)
+	{
+		playSound(0x6e)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Big Arms grabs you.
+// ----------------------------------------
+
+//# address-hook(0x074c8c) end(0x074cc8)
+function void fn074c8c()
+{
+	base.fn074c8c()
+
+	if (origins_sounds)
+	{
+		playSound(0x4a)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Support for Minor Sonic 3 Tweaks's Fleeing Eggman.
+// ----------------------------------------
+
+function void fleeingegg()
+{
+	if (origins_sounds)
+	{
+		playSound(0x60)
+	}
+
+    base.fleeingegg()
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Eggrobo drops a bomb to Knuckles.
+// ----------------------------------------
+
+//# address-hook(0x074d62) end(0x074d7a)
+function void fn074d62()
+{
+	base.fn074d62()
+	if (origins_sounds)
+	{
+		playSound(0x51)
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Dropped bomb bounces.
+// ----------------------------------------
+
+//# address-hook(0x074d90) end(0x074de4)
+function void fn074d90()
+{
+	base.fn074d90()
+	if (origins_sounds)
+	{
+		if (D0.u16 >= 0x0100)
+		{
+			playSound(0x5d)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Dropped bomb goes KA-BOOM!
+// ----------------------------------------
+
+//# address-hook(0x074d90) end(0x074de4)
+function void fn074d90()
+{
+	D0.u16 = objA0.velocity.y
+	if (D0.u16 >= 0x0100)
+	{
+		D0.s16 >>= 1
+		D0.s16 = -D0.s16
+		objA0.velocity.y = D0.u16
+		return
+	}
+	if (origins_sounds)
+	{
+		playSound(0x4e)
+	}
+
+	objA0.update_address = 0x074dea
+	objA0.value39 = 0x7f
+
+	A1 = 0xffff0000 + u16[A0 + 0x46]
+	u8[A1 + 0x38] |= 0x08
+
+	// Spawn explosions
+	// "spawnChildObjects(0x0690d8)" replaced by:
+	spawnChildObject(0x068d88, 0x00, 0, -36)
+	spawnChildObject(0x068d88, 0x02, 8, -28)
+	spawnChildObject(0x068d88, 0x04, -8, -28)
+	spawnChildObject(0x068d88, 0x06, 4, -20)
+	spawnChildObject(0x068d88, 0x08, -4, -20)
+	spawnChildObject(0x068d88, 0x0a, 4, -4)
+	spawnChildObject(0x068d88, 0x0c, -4, -4)
+
+	D0.u16 = 0x1000
+	screenmover_target.bottom = D0.u16
+	move_area.bottom.target = D0.u16
+	screenmover_target.right = 0x6000
+	screenmover_target.top = 0
+
+	// "spawnChildObjects(0x085de8)" replaced by:
+	spawnChildObject(0x084a48, 0x00, 0, 0)		// Screen mover for the right border
+	spawnChildObject(0x084aa4, 0x02, 0, 0)		// Screen mover for the upper border
+	spawnChildObject(0x084ad2, 0x04, 0, 0)		// Screen mover for the lower border
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Mushmeanie gets its hat thrown away.
+// ----------------------------------------
+
+//# address-hook(0x08dc24) end(0x08dc5c)
+function void fn08dc24()
+{
+	base.fn08dc24()
+
+	if ((u8[A1 + 0x2a] & 0x40) != 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x7b)
+		}
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Jet Mobile crashes near the big tree.
+// ----------------------------------------
+
+//# address-hook(0x076164) end(0x0761ac)
+function void fn076164()
+{
+	base.fn076164()
+
+	if (origins_sounds)
+	{
+		if (objA0.position.x.u16 >= 0x44d0)
+		{
+			playSound(0x5f)
+		}
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Blaster shoots a projectile.
+// ----------------------------------------
+
+//# address-hook(0x089626) end(0x08963c)
+function void fn089626()
+{
+	base.fn089626()
+
+	if (origins_sounds)
+	{
+		playSound(0x4d)
+		playSound(0x9a)
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Platform block closes.
+// ----------------------------------------
+
+//# address-hook(0x03c3a8) end(0x03c410)
+function void fn03c3a8()
+{
+	base.fn03c3a8()
+
+	D0.u16 = u16[0xffffb000 + 0x14] - objA0.position.y.u16
+
+	if (D0.s16 < -0x28)
+	{
+		if (objA0.value32 != 0)
+		{
+			if (objA0.value32) == 0x08
+			{
+				if (origins_sounds)
+				{
+					playSound(0x9a)
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Grab a vertical propeller.
+// ----------------------------------------
+
+//# address-hook(0x03c0d0) end(0x03c19a)
+function void fn03c0d0()
+{
+	base.fn03c0d0()
+
+	if (u8[A2] != 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x4a)
+		}
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Pushing the spikes.
+// ----------------------------------------
+
+//# address-hook(0x02438a) end(0x0243b8)
+function void fn02438a()
+{
+	base.fn02438a()
+
+	if ((D3 & (1 << D6)) && (D2.u16 >= objA1.position.x.u16) && (D0 & 0x20))
+	{
+		if (origins_sounds)
+		{
+			if (D0.u8 = global.framecounter & 0x08) == 0
+			{
+				playSound(0x67)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Gapsule opens.
+// ----------------------------------------
+
+//# address-hook(0x06f7a6) end(0x06f7be)
+function void fn06f7a6()
+{
+	base.fn06f7a6()
+
+	if (origins_sounds)
+	{
+		playSound(0x50)
+	}
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Spider grabs you.
+// ----------------------------------------
+
+//# address-hook(0x03d11e) end(0x03d1ac)
+function void fn03d11e()
+{
+	base.fn03d11e()
+
+	if (origins_sounds)
+	{
+		if (D0.u16 < 0x20)
+		{
+			if (D0.u16 < 0x14)
+			{
+				if ((u8[A1 + 0x2a] & char.flag.IN_AIR) == 0)
+				{
+					playSound(0x4a)
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// SANDOPOLIS ZONE:
+// Slower push sound for the brick.
+// ----------------------------------------
+
+//# address-hook(0x0406e4) end(0x04076c)
+//# translated(0x04076e) end(0x040770)
+function void fn0406e4()
+{
+	if ((D3 & (1 << D6)) == 0)
+		return
+
+	if ((D0 & 0x20) == 0)
+		return
+
+	s8 sign = (D2.u16 < objA1.position.x.u16) ? -1 : 1
+
+	--objA0.value32
+	if (s16(objA0.value32) < 0)
+	{
+		objA0.value32 = 4
+	#if STANDALONE
+		// Tweak: Gotta push fast! (Except for rolling demo, as this would break the SOZ one)
+		if (Game.getSetting(SETTING_FASTER_PUSH) && !global.rolling_demo)
+		{
+			// ...and even faster when spindashing
+			objA0.value32 = (u8[A1 + 0x3d] != 0) ? 0 : 1
+		}
+	#endif
+
+		objA0.position.x.u16 += sign
+		objA1.position.x.u16 += sign
+
+		if (origins_sounds)
+		{
+			if (D1.u8 = global.framecounter & 0x1c) == 0
+			{
+				playSound(0x69)
+			}
+		}
+		else
+		{
+			playSound(0x69)
+		}
+
+		D3.u16 = objA0.position.x.u16 - sign * 0x10
+		CheckGroundCollisionFixedX()
+
+		if (D1.s16 > 0x0e)
+		{
+			objA0.flags2a |= 0x02
+			objA0.update_address = 0x0405d8
+		}
+		else
+		{
+			objA0.position.y.u16 += D1.u16
+		}
+	}
+	D5 = 1
+}
+
+// ----------------------------------------
+// LAVA REEF ZONE:
+// Grab a Turbine Ladder.
+// ----------------------------------------
+
+//# address-hook(0x044434) end(0x044508)
+function void fn044434()
+{
+	base.fn044434()
+
+	if (u8[A2] != 0)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x4a)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAVA REEF ZONE:
+// Knuckles hits the boulder.
+// ----------------------------------------
+
+//# address-hook(0x063af2) end(0x063b0a)
+function void fn063af2()
+{
+	base.fn063af2()
+
+	if (origins_sounds)
+	{
+		playSound(0x49)
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Knuckles blocks off your attack.
+// ----------------------------------------
+
+//# address-hook(0x063f7a) end(0x063fd2)
+function void fn063f7a()
+{
+	base.fn063f7a()
+
+	if !((Mods.isModActive("Metal Knuckles in Hpz") || Mods.isModActive("Metal Knuckles in Hpz Green Eyes Ver.")) && isMainCharacter(CHARACTER_KNUCKLES))
+	{
+		if (origins_sounds)
+		{
+			playSound(0x9a)
+		}
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Master Emerald is stolen from its resting place
+// (this is the shake sound, Origins adds another one
+// to make it end better).
+// ----------------------------------------
+
+//# address-hook(0x06518a) end(0x0651a8)
+function void fn06518a()
+{
+	base.fn06518a()
+
+	if (origins_sounds)
+	{
+		playSound(0xcc)
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Knuckles grabs his precious.
+// ----------------------------------------
+
+//# address-hook(0x06482a) end(0x064844)
+function void fn06482a()
+{
+	base.fn06482a()
+
+	if (origins_sounds)
+	{
+		playSound(0x4a)
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Knuckles lands after getting shocked.
+// ----------------------------------------
+
+//# address-hook(0x0648b8) end(0x0648dc)
+function void fn0648b8()
+{
+	base.fn0648b8()
+
+	if (origins_sounds)
+	{
+		playSound(0x90)
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Knuckles lands after falling from many meters.
+// ----------------------------------------
+
+//# address-hook(0x06498a) end(0x0649a8)
+function void fn06498a()
+{
+	base.fn06498a()
+
+	if (origins_sounds)
+	{
+		playSound(0x90)
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Gravity Chamber has been completed.
+// ----------------------------------------
+
+// Check to play once.
+global bool AlreadyPlayed
+
+// ----------------------------------------
+//# address-hook(0x049a0e) end(0x049a58)
+function void fn049a0e()
+{
+	base.fn049a0e()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (u8[0xfffff7c0] == 0x3f)
+	{
+		if (AlreadyPlayed) == false
+		{
+			playSound(0xad)
+			AlreadyPlayed = true
+		}
+	}
+	else
+	{
+		AlreadyPlayed = false
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Red Eye laser has stopped.
+// ----------------------------------------
+
+//# address-hook(0x07ea3c) end(0x07ea66)
+function void fn07ea3c()
+{
+	base.fn07ea3c()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (origins_sounds)
+	{
+		if ((u8[A1 + 0x38] & 0x02) == 0)
+		{
+			playSound(0xc5)
+		}
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Kyodai Eggman Robo shuts its door
+// (this is the one at the start).
+// ----------------------------------------
+
+//# address-hook(0x07fe96) end(0x07fee0)
+function void fn07fe96()
+{
+	base.fn07fe96()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
+	if (origins_sounds)
+	{
+		if (u8[0xfffffab8] & 0x02)
+		{
+			playSound(0x91)
+		}
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Jumping off Kyodai Eggman Robo's nose.
+// ----------------------------------------
+
+//# address-hook(0x08060c) end(0x080676)
+function void fn08060c()
+{
+	base.fn08060c()
+
+	if (origins_sounds)
+	{
+		Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Kyodai Eggman Robo's mouth opens.
+// ----------------------------------------
+
+//# address-hook(0x080634) end(0x080676)
+function void fn080634()
+{
+	base.fn080634()
+
+	if (D0.u16 == 0x64)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x56)
+		}
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Kyodai Eggman Robo's mouth closes.
+// ----------------------------------------
+
+//# address-hook(0x0806a6) end(0x0806d6)
+function void fn0806a6()
+{
+	base.fn0806a6()
+
+	if (D0.u16 <= 0x28)
+	{
+		if (origins_sounds)
+		{
+			playSound(0x91)
+		}
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Master Emerald lands on the floor
+// (this is when Eggman drops it on defeat).
+// ----------------------------------------
+
+//# address-hook(0x080782) end(0x0807a6)
+function void fn080782()
+{
+	base.fn080782()
+
+	// Here's a check that prevents it from being
+	// heard if you don't have all Chaos/Super Emeralds.
+	if (global.chaos_emeralds != 7)
+	{
+		if (objA0.position.y.u16 >= 0xcf)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x5f)
+			}
+		}
+	}
+}

@@ -1,0 +1,166 @@
+{
+	"Metadata": {
+		"Name": "New Sound Additions",
+		"Author": "LeaningLean & TheMushrunt",
+		"Description": "This mod adds more gameplay sounds, including Origins' additions, and more new sounds and music in use.",
+		"URL": "https://gamebanana.com/mods/406112 (deprecated)",
+		"ModVersion": "2.2",
+		"GameVersion": "22.09.10.0"
+	},
+  "Settings": {
+		"List":
+			[
+			  {
+				"InternalName": "soundadditions_originssfx",
+				"DisplayName": "Sonic Origins sounds:",
+				"Variable": "origins_sounds",
+				"DefaultValue": "1",
+				"Category": "Sound Managing",
+				"Options":	{
+					"0": "No",
+					"1": "Yes"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_newsfx",
+				"DisplayName": "New music & sounds:",
+				"Variable": "new_sounds",
+				"DefaultValue": "1",
+				"Category": "Sound Managing",
+				"Options":	{
+					"0": "No",
+					"1": "Yes"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_maniasfx",
+				"DisplayName": "Sonic Mania sounds:",
+				"Variable": "mania_sounds",
+				"DefaultValue": "1",
+				"Category": "Sound Managing",
+				"Options":	{
+					"0": "No",
+					"1": "Yes"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_slotsfx",
+				"DisplayName": "Slot Machine Alternate:",
+				"Variable": "slot_machine_sounds",
+				"DefaultValue": "0",
+				"Category": "Sound Managing",
+				"Options":	{
+					"0": "No",
+					"1": "Yes"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_bsmainmusic",
+				"DisplayName": "Blue Sphere Main:",
+				"Variable": "blue_sphere_menu_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "Sonic & Knuckles",
+					"1": "Sonic 3",
+					"2": "Unique"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_bsresultsmusic",
+				"DisplayName": "Blue Sphere Results:",
+				"Variable": "blue_sphere_results_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "No change",
+					"1": "Sonic Origins",
+					"2": "Unique"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_sszendmusic",
+				"DisplayName": "SSZ Climbing Cutscene:",
+				"Variable": "sky_sanctuary_climb_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "No music",
+					"1": "New"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_mhz1intromusic",
+				"DisplayName": "MHZ1 Start Area:",
+				"Variable": "mushroom_hill_intro_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "No change",
+					"1": "New"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_uniquesupermusic",
+				"DisplayName": "Super Form Theme:",
+				"Variable": "unique_super_music",
+				"DefaultValue": "0",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "Use menu option",
+					"1": "Sonic Origins"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_uniquehypermusic",
+				"DisplayName": "Hyper Form Theme:",
+				"Variable": "unique_hyper_music",
+				"DefaultValue": "0",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "Share with Super",
+					"1": "Sonic Origins",
+					"2": "Sonic 2",
+					"3": "Sonic 3",
+					"4": "Sonic & Knuckles",
+					"5": "S3 Prototype"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_hiddenpalacemusic",
+				"DisplayName": "Hidden Palace Zone:",
+				"Variable": "hidden_palace_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "No change",
+					"1": "Unique",
+					"2": "Sky Sanctuary"
+							}
+				},
+
+			  {
+				"InternalName": "soundadditions_hpzknucklesmusic",
+				"DisplayName": "HPZ Knuckles Battle:",
+				"Variable": "knuckles_hpz_music",
+				"DefaultValue": "1",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "Use menu option",
+					"1": "Bouncy Glow Proto Remix",
+					"2": "MastaGambit's Fusion"
+							}
+				}
+			]
+		}
+}
