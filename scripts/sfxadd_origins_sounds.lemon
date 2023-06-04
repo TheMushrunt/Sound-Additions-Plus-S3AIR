@@ -802,21 +802,16 @@ function void fn02a018()
 // Bouncing off a Snailblaster.
 // ----------------------------------------
 
-//# translated(0x08c23c) end(0x08c264)
-function bool fn08c23c()
+//# address-hook(0x00ffd4) end(0x010214)
+function void Character.OnCollisionWithDynamicObject() // this is the script that handles the character's interactions with objects, we use this to make the sound play whenever they COLLIDE, and not overlap in general
 {
-	CheckDistanceToPlayers()
-	if (D2.u16 < 0x30 && D3.u16 < 0x30)
+	D1.u8 = (objA1.collision_attributes & collision_attributes.flags)
+	if (D1.u8 == 0) // if you're colliding with an enemy
 	{
-		if (u8[A1 + 0x20] == 2)
-		{
-			if (origins_sounds)
-			{
-				Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
-			}
-		}
+		if (objA1.update_address == 0x08bfb4 && objA1.base_state != 0x02 && (char.flags & char.flag.ROLLING)) // update address of Snailblaster
+			Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
 	}
-	return base.fn08c23c()
+	base.Character.OnCollisionWithDynamicObject()
 }
 
 // ----------------------------------------
