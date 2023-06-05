@@ -6,6 +6,7 @@ global u8 slot_machine_sounds
 global u8 sandopolis_boss_music
 global u8 blue_sphere_menu_music
 global u8 blue_sphere_results_music
+global u8 competition_results_music
 global u8 sky_sanctuary_climb_music
 global u8 mushroom_hill_intro_music
 global u8 unique_super_music

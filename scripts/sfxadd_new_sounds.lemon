@@ -1098,7 +1098,25 @@ function void fn079022()
 
 // ----------------------------------------
 // HIDDEN PALACE ZONE:
-// Knuckles wants to help!
+// Knuckles lands from gliding.
+// ----------------------------------------
+
+//# address-hook(0x064164) end(0x06417e)
+function void fn064164()
+{
+	base.fn064164()
+
+	// Bro, he didn't play a sound before.
+	// MF became weightless.
+	if (new_sounds)
+	{
+		playSound(0x4c)
+	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Knuckles is a hypocrite! /j
 // ----------------------------------------
 
 //# address-hook(0x064a36) end(0x064a36)

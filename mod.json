@@ -85,6 +85,19 @@
 				},
 
 			  {
+				"InternalName": "soundadditions_cmresultsmusic",
+				"DisplayName": "Competition Mode Results:",
+				"Variable": "competition_results_music",
+				"DefaultValue": "0",
+				"Category": "Music Managing",
+				"Options":	{
+					"0": "No change",
+					"1": "Unused Theme",
+					"2": "Unique"
+							}
+				},
+
+			  {
 				"InternalName": "soundadditions_sszendmusic",
 				"DisplayName": "SSZ Climbing Cutscene:",
 				"Variable": "sky_sanctuary_climb_music",

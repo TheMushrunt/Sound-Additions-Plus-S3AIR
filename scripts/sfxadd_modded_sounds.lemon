@@ -50,8 +50,6 @@ function void fn0431aa()
 // ----------------------------------------
 // HIDDEN PALACE ZONE:
 // Manage Knuckles' theme here.
-// Old method made the music play again
-// for Eggman's part.
 // ----------------------------------------
 
 #if STANDALONE
@@ -73,7 +71,7 @@ function u8 BossHPZKnuckles.chooseMusicTrack()
 		}
 	}
 
-	return MUSIC_KNUCKLES		// Fallback value, should not get reached
+	return MUSIC_KNUCKLES		// Fallback value, should not get reached.
 }
 #endif
 
@@ -160,7 +158,7 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
                         soundKey = MUSIC_INVINCIBLE
                         soundRegType = SoundRegType.TYPE_MUSIC
                     }
-                    else if (unique_hyper_music == 5) // Not one to my liking, but welp...
+                    else if (unique_hyper_music == 5)
                     {
                         soundKey = "2e_proto"
                         soundRegType = SoundRegType.TYPE_MUSIC
@@ -229,6 +227,26 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			}
 
 			else if (blue_sphere_results_music) == 2
+			{
+				soundKey = "bs_diff"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+		}
+	}
+
+
+	// Competition Results Screen
+	if (global.game_mode == 0x44)
+	{
+		if (sfxId == MUSIC_CONTINUE)
+		{
+			if (competition_results_music) == 1
+			{
+				soundKey = "2e_proto"
+				soundRegType = SoundRegType.TYPE_MUSIC
+			}
+
+			else if (competition_results_music) == 2
 			{
 				soundKey = "bs_diff"
 				soundRegType = SoundRegType.TYPE_MUSIC
