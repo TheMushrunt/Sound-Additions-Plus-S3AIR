@@ -268,7 +268,7 @@ function void fn035a20()
 
 // ----------------------------------------
 // CARNIVAL NIGHT ZONE:
-// Clamer shoots its spiky ball.
+// Clamer shoots it's spiky ball.
 // ----------------------------------------
 
 //# address-hook(0x089064) end(0x089088)
@@ -817,7 +817,7 @@ function void fn0758fc()
 
 // ----------------------------------------
 // MUSHROOM HILL ZONE:
-// Hey-Ho head gets back on its parent.
+// Hey-Ho head gets back on it's parent.
 // ----------------------------------------
 
 //# address-hook(0x0759d0) end(0x0759f6)
@@ -1138,6 +1138,90 @@ function void fn064a36()
 
 // ----------------------------------------
 // SKY SANCTUARY ZONE:
+// A horizontal bridge collapses!
+// ----------------------------------------
+
+//# address-hook(0x044c76) end(0x044d20)
+function void fn044c76()
+{
+	base.fn044c76()
+
+	if (s8[A0 + 0x2c] >= 0 && objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT))
+	{
+		if (new_sounds)
+		{
+			playSound(0x59)
+		}
+	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// A diagonal bridge collapses!
+// ----------------------------------------
+
+//# address-hook(0x044d98) end(0x044eb8)
+function void fn044d98()
+{
+	base.fn044d98()
+
+	if (s8[A0 + 0x2c] >= 0)
+	{
+		D0.u16 = objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT)
+		if (D0.u16 != 0)
+		{
+			if (new_sounds)
+			{
+				playSound(0x59)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// Generic Eggrobo appearing from the background.
+// ----------------------------------------
+
+//# address-hook(0x091526) end(0x091594)
+function void fn091526()
+{
+	base.fn091526()
+
+	if (new_sounds)
+	{
+		if (objA0.velocity.y) == 0x06
+		{
+			playSound(0xa0)
+		}
+	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// Generic Eggrobo appearing from inside a tower.
+// ----------------------------------------
+
+//# address-hook(0x0915f6) end(0x091648)
+function void fn0915f6()
+{
+	base.fn0915f6()
+	
+	D0.u8 = global.framecounter.low & 0x0f
+	if (D0.u8 == 0 && s8[A0 + 0x04] < 0)
+	{
+		if (s8[A0 + 0x39] < 0)
+		{
+			if (new_sounds)
+			{
+				playSound(0xa0)
+			}
+		}
+	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
 // Mecha Sonic's decoy balloon appears.
 // ----------------------------------------
 
@@ -1289,7 +1373,7 @@ function void fn04757a()
 
 // ----------------------------------------
 // DEATH EGG ZONE:
-// Red Eye balls bounce on the ground.
+// Red Eye balls bounce on the ground (lol).
 // ----------------------------------------
 
 //# address-hook(0x07dec6) end(0x07def4)
@@ -1307,7 +1391,7 @@ function void fn07dec6()
 
 // ----------------------------------------
 // DEATH EGG ZONE:
-// Red Eye prepares its laser.
+// Red Eye prepares it's laser.
 // ----------------------------------------
 
 //# address-hook(0x07e98c) end(0x07e9d0)
@@ -1331,7 +1415,7 @@ function void fn07e98c()
 
 // ----------------------------------------
 // DEATH EGG ZONE:
-// Red Eye shoots its laser.
+// Red Eye shoots it's laser.
 // ----------------------------------------
 
 //# address-hook(0x07e9fc) end(0x07ea10)

@@ -2,7 +2,7 @@
 
 // ----------------------------------------
 // GUMBALL MACHINE:
-// Ground below springs breaking apart
+// Ground below springs breaking apart.
 // ----------------------------------------
 
 //# address-hook(0x06101e) end(0x06102e)
@@ -182,7 +182,7 @@ function void fn0200cc()
 // Water level button is pressed.
 // ----------------------------------------
 
-// Makes this less annoying.
+// Makes this less annoying to manage.
 global bool HasPlayed = false
 
 // ----------------------------------------
@@ -224,7 +224,7 @@ function void fn06207a()
 // ----------------------------------------
 // ANGEL ISLAND ZONE:
 // Welcome to Hydrossity! ...Hydro City.
-// Hydrocity- HYDROSUSSY!!!
+// Hydrosussy- TOILET TOWN!!!
 // ----------------------------------------
 
 //# address-hook(0x01e6ec) end(0x01e718)
@@ -438,7 +438,7 @@ function void fn06c1d4()
 
 // ----------------------------------------
 // MARBLE GARDEN ZONE:
-// Drill Mobile hits the ground with its drill
+// Drill Mobile hits the ground with it's drill
 // (Sonic/Tails version of the boss).
 // ----------------------------------------
 
@@ -700,7 +700,7 @@ function void fn08ae62()
 // ----------------------------------------
 // ICECAP ZONE:
 // Big Icedus snow rocks get attracted by
-// its magnetic force (?)
+// it's magnetic force (?)
 // ----------------------------------------
 
 //# address-hook(0x07153a) end(0x071558)
@@ -778,7 +778,7 @@ function void fn029eb2()
 
 // ----------------------------------------
 // LAUNCH BASE ZONE:
-// Tube transporter closes its door.
+// Tube transporter closes it's door.
 // ----------------------------------------
 
 //# address-hook(0x02a018) end(0x02a07c)
@@ -1108,9 +1108,25 @@ function void fn08dc24()
 
 // ----------------------------------------
 // MUSHROOM HILL ZONE:
-// Hey-Ho leaves at the start of the battle.
-// TODO: Find way to make it not play whenever
-// he comes back after picking their head back.
+// Hey-Ho leaves at the start of the battle 1.
+// ----------------------------------------
+
+// Avoid them playing the sound again
+// when coming from another state.
+global bool HeyHoDashedBefore = false
+
+//# address-hook(0x0752e6) end(0x0752fc)
+function void fn0752e6()
+{
+	base.fn0752e6()
+
+	// Reset variable so it isn't true.
+	HeyHoDashedBefore = false
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho leaves at the start of the battle 2.
 // ----------------------------------------
 
 //# address-hook(0x075330) end(0x075354)
@@ -1120,7 +1136,11 @@ function void fn075330()
 
 	if (origins_sounds)
 	{
-		playSound(0xb6)
+		if !(HeyHoDashedBefore)
+		{
+			playSound(0xb6)
+			HeyHoDashedBefore = true
+		}
 	}
 }
 
@@ -1386,7 +1406,7 @@ function void fn063f7a()
 
 // ----------------------------------------
 // HIDDEN PALACE ZONE:
-// Master Emerald is stolen from its resting place
+// Master Emerald is stolen from it's resting place
 // (this is the shake sound, Origins adds another one
 // to make it end better).
 // ----------------------------------------
@@ -1501,7 +1521,7 @@ function void fn07ea3c()
 
 // ----------------------------------------
 // DEATH EGG ZONE:
-// Kyodai Eggman Robo shuts its door
+// Kyodai Eggman Robo shuts it's door
 // (this is the one at the start).
 // ----------------------------------------
 

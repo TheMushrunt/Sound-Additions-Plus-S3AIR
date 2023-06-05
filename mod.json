@@ -4,7 +4,7 @@
 		"Author": "LeaningLean & TheMushrunt",
 		"Description": "This mod adds more gameplay sounds, including Origins' additions, and more new sounds and music in use.",
 		"URL": "https://gamebanana.com/mods/406112 (deprecated)",
-		"ModVersion": "2.2",
+		"ModVersion": "2.5",
 		"GameVersion": "22.09.10.0"
 	},
   "Settings": {
@@ -88,7 +88,7 @@
 				"InternalName": "soundadditions_cmresultsmusic",
 				"DisplayName": "Competition Mode Results:",
 				"Variable": "competition_results_music",
-				"DefaultValue": "0",
+				"DefaultValue": "2",
 				"Category": "Music Managing",
 				"Options":	{
 					"0": "No change",
@@ -125,7 +125,7 @@
 				"InternalName": "soundadditions_uniquesupermusic",
 				"DisplayName": "Super Form Theme:",
 				"Variable": "unique_super_music",
-				"DefaultValue": "0",
+				"DefaultValue": "1",
 				"Category": "Music Managing",
 				"Options":	{
 					"0": "Use menu option",
@@ -137,7 +137,7 @@
 				"InternalName": "soundadditions_uniquehypermusic",
 				"DisplayName": "Hyper Form Theme:",
 				"Variable": "unique_hyper_music",
-				"DefaultValue": "0",
+				"DefaultValue": "1",
 				"Category": "Music Managing",
 				"Options":	{
 					"0": "Share with Super",

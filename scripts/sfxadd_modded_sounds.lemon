@@ -236,7 +236,7 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 
 
 	// Competition Results Screen
-	if (global.game_mode == 0x44)
+	if (global.game_mode == 0x44 || global.game_mode == 0x50)
 	{
 		if (sfxId == MUSIC_CONTINUE)
 		{
@@ -248,7 +248,7 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 
 			else if (competition_results_music) == 2
 			{
-				soundKey = "bs_diff"
+				soundKey = "cm_results"
 				soundRegType = SoundRegType.TYPE_MUSIC
 			}
 		}

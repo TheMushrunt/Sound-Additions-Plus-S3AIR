@@ -41,14 +41,6 @@
 	// Taken from Mania's sound effects.
 	"bluesphere_mania":	   { "File": "bluesphere_mania.ogg", "Type": "Sound" },
 
-	// The previous game's spring sound.
-	// Taken from Mania's sound effects.
-	"legacy_spring":	   { "File": "legacy_spring.ogg", "Type": "Sound" },
-
-	// The previous game's spike appear sound.
-	// Taken from Mania's sound effects.
-	"legacy_spikespop":	   { "File": "spikes_pop.ogg", "Type": "Sound" },
-
 	// LBZ Spinlauncher gimmick.
 	// Sound taken from Sonic 2.
 	"lbz_spinlauncher":	   { "File": "lbzspinlauncher.ogg", "Type": "Sound" },
@@ -103,12 +95,18 @@
 	// https://www.youtube.com/watch?v=CMlVE8GcO7M
 	"bs_diff":		 { "File": "Music/bs_diff.ogg", "Type": "Music", "LoopStart": "88268"  },
 
-	// Sonic Origins track.
-	// Remixed by Lu9 Music.
-	// https://www.youtube.com/watch?v=y1FXYn5UfBU
-	"super_theme":		 { "File": "Music/super_theme.ogg", "Type": "Music" },
+	// Competition Results screen.
+	// Music composed by Tatsuyuki Maeda.
+	// Originally from J.League Pro Striker 2.
+	// https://www.youtube.com/watch?v=CMlVE8GcO7M
+	"cm_results":		 { "File": "Music/cm_results.ogg", "Type": "Music", "LoopStart": "54943"  },
 
-	// Sonic Origins track again lol.
+	// Sonic Origins track 1.
+	// Remixed by PoloBlue.
+	// https://soundcloud.com/poloschiptuneemporium/sonic-origins-s3k-super-sonic-sega-genesis-cover
+	"super_theme":		 { "File": "Music/super_theme.ogg", "Type": "Music", "LoopStart": "132429"  },
+
+	// Sonic Origins track 2.
 	// Remixed by John Tay.
 	// https://www.youtube.com/watch?v=FnPVduH-HCo
 	"hyper_theme":		 { "File": "Music/hyper_theme_jt.ogg", "Type": "Music", "LoopStart": "126017"  }, // the old one (by Ross McK/AIKOCHO)'s loop point is 128657
