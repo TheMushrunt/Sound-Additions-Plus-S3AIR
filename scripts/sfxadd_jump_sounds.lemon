@@ -53,15 +53,14 @@ function void fn032784()
 	base.fn032784()
 
 	u8 bit = (1 << D6.u8)
-	
+
 	if (origins_sounds)
 	{
 		if ((objA1.render_flags & render_flag.VISIBLE) && u8[A1 + 0x05] < 0x04)
 		{
 			if ((objA0.flags2a & bit) != 0)
 			{
-				D5.u8 &= CONTROL_ABC
-				if (D5.u8 != 0)
+				if ((D5.u8 & CONTROL_ABC) != 0)
 				{
 					playSound(SFX_JUMP)
 				}
@@ -100,8 +99,7 @@ function void fn033ade()
 
 	if (debug_mode.state == 0)
 	{
-		D5.u16 &= CONTROL_ABC
-		if (D5.u16 != 0)
+		if ((D5.u16 & CONTROL_ABC) != 0)
 		{
 			if (origins_sounds)
 			{
@@ -121,24 +119,8 @@ function void fn0266b0()
 {
 	if (u8[A2] != 0)
 	{
-
-		// Forced code.
-		D0.u8 &= CONTROL_ABC
-		if (D0.u8 != 0)
+		if ((D0.u8 & CONTROL_ABC) != 0)
 		{
-			u8[A1 + 0x2e] = 0
-			u8[A2] = 0
-			u8[A2 + 2] = (D0.u16 & 0x0f00) ? 0x3c : 0x12		// Any direction held?
-
-			objA1.velocity.x = objA0.velocity.x
-			objA1.velocity.y = -0x380
-			u8[A1 + 0x1e] = 0x0e
-			u8[A1 + 0x1f] = 0x07
-			u8[A1 + 0x20] = char.state.ROLLING
-			u8[A1 + 0x2a] |= char.flag.IN_AIR
-			u8[A1 + 0x2a] |= char.flag.ROLLING
-			u8[A1 + 0x40] = 0x01
-
 			if (origins_sounds)
 			{
 				playSound(SFX_JUMP)
@@ -152,6 +134,8 @@ function void fn0266b0()
 // ----------------------------------------
 // LAUNCH BASE ZONE:
 // Grapple.
+// (This has more code than usual because
+// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x0290f2) end(0x029214)
@@ -159,43 +143,76 @@ function void fn0290f2()
 {
 	if (u8[A2] != 0)
 	{
-
-		// Forced code.
-		// Check if jump button pressed
-		if ((D0.u8 & CONTROL_ABC) == 0)
+		if ((objA1.render_flags & render_flag.VISIBLE) && u8[A1 + 0x05] < 0x04)
 		{
-			objA1.position.y.u16 = objA0.position.y.u16 + 0x94
-			return
+			// Check if jump button pressed
+			if ((D0.u8 & CONTROL_ABC) == 0)
+			{
+				objA1.position.y.u16 = objA0.position.y.u16 + 0x94
+				return
+			}
+
+			u8[A1 + 0x2e] = 0
+			u8[A2] = 0
+			u8[A2+2] = ((D0.u16 & 0x0f00) == 0) ? 0x12 : 0x3c	// Any direction held?
+			if (D0 & 0x0400)		// CONTROL_LEFT held
+			{
+				objA1.velocity.x = -0x200
+			}
+			if (D0 & 0x0800)		// CONTROL_RIGHT held
+			{
+				objA1.velocity.x = 0x200
+			}
+
+			objA1.velocity.y = -0x380
+			u8[A1 + 0x1e] = 0x0e
+			u8[A1 + 0x1f] = 0x07
+			objA1.state = char.state.ROLLING
+			u8[A1 + 0x27] = 0
+			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
+			objA1.flags2a &= ~char.flag.CONTROL_LOCK
+			u8[A1 + 0x40] = 1
+
+			if (origins_sounds)
+			{
+				playSound(SFX_JUMP)
+			}
 		}
-
-		u8[A1 + 0x2e] = 0
-		u8[A2] = 0
-		u8[A2+2] = ((D0.u16 & 0x0f00) == 0) ? 0x12 : 0x3c	// Any direction held?
-		if (D0 & 0x0400)		// CONTROL_LEFT held
+		else
 		{
-			objA1.velocity.x = -0x200
-		}
-		if (D0 & 0x0800)		// CONTROL_RIGHT held
-		{
-			objA1.velocity.x = 0x200
-		}
-
-		objA1.velocity.y = -0x380
-		u8[A1 + 0x1e] = 0x0e
-		u8[A1 + 0x1f] = 0x07
-		objA1.state = char.state.ROLLING
-		u8[A1 + 0x27] = 0
-		objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-		objA1.flags2a &= ~char.flag.CONTROL_LOCK
-		u8[A1 + 0x40] = 1
-
-		if (origins_sounds)
-		{
-			playSound(SFX_JUMP)
+			u8[A1 + 0x2e] = 0
+			u8[A2] = 0
+			u8[A2+2] = 0x3c
 		}
 	}
+	else
+	{
+		if (u8[A2+2] != 0)
+		{
+			--u8[A2+2]
+			if (u8[A2+2] != 0)
+				return
+		}
 
-	base.fn0290f2()
+		D0.u16 = objA1.position.x.u16 - objA0.position.x.u16 + 0x10
+		D1.u16 = objA1.position.y.u16 - objA0.position.y.u16 - 0x88
+		if (D0.u16 < 0x20 && D1.u16 < 0x18)
+		{
+			if (s8[A1 + 0x2e] >= 0 && u8[A1 + 0x05] < 0x04 && debug_mode.state == 0)
+			{
+				objA1.velocity.x = 0
+				objA1.velocity.y = 0
+				u16[A1 + 0x1c] = 0
+				objA1.position.x.u16 = objA0.position.x.u16
+				objA1.position.y.u16 = objA0.position.y.u16 + 0x94
+				objA1.state = char.state.HANGING
+				u8[A1 + 0x2e] = 0x01
+				u8[A2] = 0x01
+
+				playSound(SFX_CLICK)
+			}
+		}
+	}
 }
 
 // ----------------------------------------
@@ -210,21 +227,8 @@ function void fn026eda()
 	{
 		if (u8[A2] != 0)
 		{
-			D0.u8 &= CONTROL_ABC
-			if (D0.u8 != 0 && u8[0xfffffaa9] == 0)
+			if (D0.u8 & CONTROL_ABC != 0 && u8[0xfffffaa9] == 0)
 			{
-
-				// Forced inclusion.
-				if (D0 & 0x00000400)
-				{
-					objA1.velocity.x = -0x200
-				}
-				if (D0 & 0x00000800)
-				{
-					objA1.velocity.x = 0x200
-				}
-				objA1.velocity.y = -0x480
-
 				playSound(SFX_JUMP)
 			}
 		}
@@ -298,6 +302,31 @@ function void fn02291a()
 }
 
 // ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Parachute.
+// ----------------------------------------
+
+//# address-hook(0x03f5c2) end(0x03f6a2)
+function void fn03f5c2()
+{
+	if (origins_sounds)
+	{
+		if (u8[A2] != 0)
+		{
+			if (u16[A0 + 0x34] == objA1.velocity.x && u16[A0 + 0x36] == objA1.velocity.y)
+			{
+				if ((D0.u8 & CONTROL_ABC) != 0)
+				{
+					playSound(SFX_JUMP)
+				}
+			}
+		}
+	}
+
+	base.fn03f5c2()
+}
+
+// ----------------------------------------
 // FLYING BATTERY ZONE:
 // Monkey Bars.
 // ----------------------------------------
@@ -309,8 +338,7 @@ function void fn03aa7e()
 	{
 		if (u8[A2] != 0)
 		{
-			D0.u8 &= CONTROL_ABC
-			if (D0.u8 != 0)
+			if ((D0.u8 & CONTROL_ABC) != 0)
 			{
 				playSound(SFX_JUMP)
 			}
@@ -323,46 +351,45 @@ function void fn03aa7e()
 // ----------------------------------------
 // FLYING BATTERY ZONE:
 // Hanging Monkey Bars.
+// (This has more code than usual because
+// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x03a8b8) end(0x03aa58)
 function void fn03a8b8()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0)
 	{
-		if (u8[A2] != 0)
+		if ((D0.u8 & CONTROL_ABC) != 0)
 		{
-			D0.u8 &= CONTROL_ABC
-			if (D0.u8 != 0)
+			u8[A1 + 0x2e] = 0
+			u8[A2] = 0
+			u8[A2 + 0x02] = 0x12
+			D0.u16 &= 0x0f00			// Any direction held?
+			if (D0.u16 != 0)
 			{
+				u8[A2 + 0x02] = 0x3c
+			}
+			if (D0 & 0x0400)		// CONTROL_LEFT held
+			{
+				objA1.velocity.x = -0x200
+			}
+			if (D0 & 0x0800)		// CONTROL_RIGHT held
+			{
+				objA1.velocity.x = 0x0200
+			}
+			objA1.velocity.y = -0x380
+			u8[A1 + 0x1e] = 0x0e
+			u8[A1 + 0x1f] = 0x07
+			objA1.state = char.state.ROLLING
+			u8[A1 + 0x27] = 0
+			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
+			objA1.flags2a &= ~(char.flag.ON_OBJECT | char.flag.CONTROL_LOCK)
+			u8[A1 + 0x40] = 1
+			u16[A1 + 0x42] = 0
 
-				// Yet more forced inclusion.
-				u8[A1 + 0x2e] = 0
-				u8[A2] = 0
-				u8[A2 + 0x02] = 0x12
-				D0.u16 &= 0x0f00			// Any direction held?
-				if (D0.u16 != 0)
-				{
-					u8[A2 + 0x02] = 0x3c
-				}
-				if (D0 & 0x0400)		// CONTROL_LEFT held
-				{
-					objA1.velocity.x = -0x200
-				}
-				if (D0 & 0x0800)		// CONTROL_RIGHT held
-				{
-					objA1.velocity.x = 0x0200
-				}
-				objA1.velocity.y = -0x380
-				u8[A1 + 0x1e] = 0x0e
-				u8[A1 + 0x1f] = 0x07
-				objA1.state = char.state.ROLLING
-				u8[A1 + 0x27] = 0
-				objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-				objA1.flags2a &= ~(char.flag.ON_OBJECT | char.flag.CONTROL_LOCK)
-				u8[A1 + 0x40] = 1
-				u16[A1 + 0x42] = 0
-
+			if (origins_sounds)
+			{
 				playSound(SFX_JUMP)
 			}
 		}
@@ -390,6 +417,8 @@ function void fn03c068()
 // ----------------------------------------
 // SANDOPOLIS ZONE:
 // Light Switch.
+// (This has more code than usual because
+// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x040f52) end(0x04108e)
@@ -399,11 +428,8 @@ function void fn040f52()
 	{
 		if (u8[A2] != 0)
 		{
-			D0.u8 &= CONTROL_ABC
-			if (D0.u8 != 0)
+			if ((D0.u8 & CONTROL_ABC) != 0)
 			{
-				
-				// You know what I'll say here.
 				u8[A1 + 0x2e] = 0
 				u8[A2] = 0
 				u8[A2+2] = 0x12
@@ -502,6 +528,8 @@ function void fn0658ba()
 // ----------------------------------------
 // DEATH EGG ZONE:
 // Hang Carrier.
+// (This has more code than usual because
+// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x04703e) end(0x04717c)
@@ -513,10 +541,6 @@ function void fn04703e()
 		{
 			if ((D0.u8 & CONTROL_ABC) != 0)
 			{
-				// Repeat with me:
-				// IT'S FORCED INCLUSION TO AVOID
-				// WEIRD BUGS WHERE PHYSICS AREN'T
-				// APPLIED CORRECTLY.
 				u8[A2] = 0
 				u8[A2 + 0x02] = 0x12
 

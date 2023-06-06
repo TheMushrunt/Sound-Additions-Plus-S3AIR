@@ -1056,6 +1056,41 @@ function void fn0779c0()
 
 // ----------------------------------------
 // LAVA REEF ZONE:
+// Heat Arms wheels appear.
+// ----------------------------------------
+
+//# address-hook(0x078868) end(0x07888e)
+function void fn078868()
+{
+	base.fn078868()
+
+	if (u8[A1 + 0x38] & 0x08)
+	{
+		if (new_sounds)
+		{
+			//playSound(0xd8)
+		}
+	}
+}
+
+// ----------------------------------------
+// LAVA REEF ZONE:
+// Heat Arms detects players!
+// ----------------------------------------
+
+//# address-hook(0x0786a6) end(0x0786ba)
+function void fn0786a6()
+{
+	base.fn0786a6()
+
+	if (new_sounds)
+	{
+		playSound(0x5c)
+	}
+}
+
+// ----------------------------------------
+// LAVA REEF ZONE:
 // Eggman's Hovering Alarm shouldn't shut up.
 // ----------------------------------------
 
@@ -1108,6 +1143,31 @@ function void fn064a36()
 			}
 		}
 	}
+}
+
+// ----------------------------------------
+// HIDDEN PALACE ZONE:
+// Sound played twice here for no reason. lol
+// ----------------------------------------
+
+//# address-hook(0x06471a) end(0x064752)
+function void fn06471a()
+{
+	u8[A1 + 0x2a] |= 0x40
+	objA0.base_state = 0x34
+	u16[A0 + 0x44] = 0
+	objA0.mapping_offset = 0x14a8d6
+	objA0.animation.sprite = 0x9a
+	objA0.velocity.x = -0x200
+	objA0.velocity.y = -0x200
+
+	if !(new_sounds)
+	{
+		playSound(SFX_JUMP)
+	}
+
+	A1 = 0x0667c1
+	fn084580()
 }
 
 // ----------------------------------------
