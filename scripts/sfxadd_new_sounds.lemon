@@ -817,6 +817,19 @@ function void fn0758fc()
 
 // ----------------------------------------
 // FLYING BATTERY ZONE:
+// Enemies pop out of the capsules.
+// ----------------------------------------
+
+//# address-hook(0x089dde) end(0x089dea)
+function void fn089dde()
+{
+	if (new_sounds)
+		playSound(0x87)
+	base.fn089dde()
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
 // Mine detects you. Inspired by STT 16-Bit.
 // ----------------------------------------
 
