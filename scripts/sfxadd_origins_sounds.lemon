@@ -1108,25 +1108,7 @@ function void fn08dc24()
 
 // ----------------------------------------
 // MUSHROOM HILL ZONE:
-// Hey-Ho leaves at the start of the battle 1.
-// ----------------------------------------
-
-// Avoid them playing the sound again
-// when coming from another state.
-global bool HeyHoDashedBefore = false
-
-//# address-hook(0x0752e6) end(0x0752fc)
-function void fn0752e6()
-{
-	base.fn0752e6()
-
-	// Reset variable so it isn't true.
-	HeyHoDashedBefore = false
-}
-
-// ----------------------------------------
-// MUSHROOM HILL ZONE:
-// Hey-Ho leaves at the start of the battle 2.
+// Hey-Ho leaves at the start of the battle.
 // ----------------------------------------
 
 //# address-hook(0x075330) end(0x075354)
@@ -1134,13 +1116,149 @@ function void fn075330()
 {
 	base.fn075330()
 
-	if (origins_sounds)
+	if (origins_sounds && objA0.value3b == 0)
 	{
-		if !(HeyHoDashedBefore)
+		playSound(0xb6)
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho chops the bottom of the tree. (Sonic fight)
+// ----------------------------------------
+
+//# address-hook(0x0754e0) end(0x075506)
+function void fn0754e0()
+{
+	base.fn0754e0()
+	if (!_equal())
+	{
+		if (objA0.animation.frame == 0x0a && origins_sounds)
 		{
-			playSound(0xb6)
-			HeyHoDashedBefore = true
+			playSound(0x9e)
 		}
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho frees itself from the tree. (Sonic fight)
+// ----------------------------------------
+
+//# address-hook(0x075508) end(0x075530)
+function void fn075508()
+{
+	base.fn075508()
+	if (origins_sounds)
+		playSound(0x80)
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho lands on the ground from flinging itself. (Sonic fight)
+// ----------------------------------------
+
+//# address-hook(0x075532) end(0x075562)
+function void fn075532()
+{
+	base.fn075532()
+	if (objA0.base_state == 0x18 && origins_sounds)
+	{
+		playSound(0x96)
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho starts to fly upward. (Sonic fight)
+// ----------------------------------------
+
+//# address-hook(0x075564) end(0x07559e)
+function void fn075564()
+{
+	if (objA0.velocity.y == 0xf0 && origins_sounds)
+		playSound(0xa0)
+	base.fn075564()
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho moves to chop more trees down. (Sonic fight)
+// ----------------------------------------
+
+//# address-hook(0x0755ae) end(0x07560a)
+function void fn0755ae()
+{
+	base.fn0755ae()
+	if (objA0.velocity.x == 0x0400 && origins_sounds)
+		playSound(0xb6)
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho knocks the bottom of the tree. (Knuckles fight)
+// ----------------------------------------
+
+//# address-hook(0x07560c) end(0x07565a)
+function void fn07560c()
+{
+	base.fn07560c()
+	if (objA0.base_state == 0x22 && origins_sounds)
+	{
+		playSound(0x9e)
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho's head flies to its body. (Knuckles fight)
+// ----------------------------------------
+
+//# address-hook(0x07594c) end(0x075984)
+function void fn07594c()
+{
+	if (origins_sounds)
+		playSound(0xa0)
+	base.fn07594c()
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho head gets back on its parent. (Knuckles fight)
+// ----------------------------------------
+
+//# address-hook(0x0759d0) end(0x0759f6)
+function void fn0759d0()
+{
+	base.fn0759d0()
+
+	if (u8[A1 + 0x2a] & 0x80)
+	{
+		if (origins_sounds)
+			Audio.playAudio("heyho_head", AudioContext.CONTEXT_SOUND)
+	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Hey-Ho dashes towards you, then to the right for more tree chopping. (Knuckles fight)
+// ----------------------------------------
+
+//# address-hook(0x07571c) end(0x07579e)
+function void fn07571c()
+{
+	base.fn07571c()
+
+	D0.u16 = objA0.velocity.y - 0x48
+	if (D0.s16 >= 0x650)
+	{
+		if (origins_sounds)
+			playSound(0x60)
+	}
+	if (objA0.velocity.x == 0x0400)
+	{
+		if (origins_sounds)
+			playSound(0xb6)
 	}
 }
 

@@ -60,6 +60,10 @@
 	// DEZ Platform returning back.
 	// Sound taken from Sonic Mania.
 	"platform_retract":	   { "File": "platform_retract.ogg", "Type": "Sound" },
+	
+	// Hey-Ho's head locks back into its body.
+	// Sound taken from Sonic Mania.
+	"heyho_head":	   { "File": "heyho_headlock.ogg", "Type": "Sound" },
 
 	// ----------------------------------------
 	// MUSIC SECTION

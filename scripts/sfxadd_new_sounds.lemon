@@ -816,45 +816,6 @@ function void fn0758fc()
 }
 
 // ----------------------------------------
-// MUSHROOM HILL ZONE:
-// Hey-Ho head gets back on it's parent.
-// ----------------------------------------
-
-//# address-hook(0x0759d0) end(0x0759f6)
-function void fn0759d0()
-{
-	base.fn0759d0()
-
-	if (u8[A1 + 0x2a] & 0x80)
-	{
-		if (new_sounds)
-		{
-			playSound(0x4a)
-		}
-	}
-}
-
-// ----------------------------------------
-// MUSHROOM HILL ZONE:
-// Hey-Ho dashes towards you.
-// ----------------------------------------
-
-//# address-hook(0x07571c) end(0x07579e)
-function void fn07571c()
-{
-	base.fn07571c()
-
-	D0.u16 = objA0.velocity.y - 0x48
-	if (D0.s16 >= 0x650)
-	{
-		if (new_sounds)
-		{
-			playSound(0xb6)
-		}
-	}
-}
-
-// ----------------------------------------
 // FLYING BATTERY ZONE:
 // Mine detects you. Inspired by STT 16-Bit.
 // ----------------------------------------
