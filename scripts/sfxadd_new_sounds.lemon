@@ -175,6 +175,19 @@ function void fn035f8c()
 
 // ----------------------------------------
 // ANGEL ISLAND ZONE:
+// Fire Breath is on screen.
+// ----------------------------------------
+
+//# address-hook(0x068f62) end(0x068fe0)
+function void Boss.AIZ1.RegularUpdate()
+{
+	base.Boss.AIZ1.RegularUpdate()
+	if (new_sounds && (level.framecounter & 0x01) && (objA0.render_flags & render_flag.VISIBLE))
+		playSound(0xc2)
+}
+
+// ----------------------------------------
+// ANGEL ISLAND ZONE:
 // Knuckles Intro: Eggrobo's Bomb Fuse.
 // ----------------------------------------
 
@@ -813,6 +826,19 @@ function void fn0758fc()
 	{
 		playSound(0x48)
 	}
+}
+
+// ----------------------------------------
+// MUSHROOM HILL ZONE:
+// Egg Scrambler flames are active.
+// ----------------------------------------
+
+//# address-hook(0x076782) end(0x076872)
+function void fn076782()
+{
+	base.fn076782()
+	if (new_sounds && (objA0.flags38 & 0x40) && (level.framecounter & 0x01) && (objA0.render_flags & render_flag.VISIBLE))
+		playSound(0xc2)
 }
 
 // ----------------------------------------
