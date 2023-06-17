@@ -224,6 +224,22 @@ function void fn06b77c()
 }
 
 // ----------------------------------------
+// HYDROCITY ZONE:
+// Big Shaker propeller still moves.
+// ----------------------------------------
+
+//# address-hook(0x06a51e) end(0x06a530)
+function void fn06a51e()
+{
+	base.fn06a51e()
+
+	if (u8[A1 + 0x38] & 0x04)
+	{
+		playSoundRepeatedly(0xc0)
+	}
+}
+
+// ----------------------------------------
 // MARBLE GARDEN ZONE:
 // Yo-Yo string moving.
 // ----------------------------------------
@@ -486,6 +502,38 @@ function void fn06e5d8()
 		{
 			playSound(0x53)
 		}
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Graviton Mobile stops shocking.
+// ----------------------------------------
+
+//# address-hook(0x06e650) end(0x06e66a)
+function void fn06e650()
+{
+	base.fn06e650()
+
+	if (new_sounds)
+	{
+		playSound(0x54)
+	}
+}
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Graviton Mobile slowly goes down.
+// ----------------------------------------
+
+//# address-hook(0x06e66c) end(0x06e67e)
+function void fn06e66c()
+{
+	base.fn06e66c()
+
+	if (new_sounds)
+	{
+		Audio.playAudio("platform_retract", AudioContext.CONTEXT_SOUND)
 	}
 }
 

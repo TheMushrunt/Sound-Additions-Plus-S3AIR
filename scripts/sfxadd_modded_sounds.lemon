@@ -168,7 +168,6 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
         }
     }
 
-
 	// Hidden Palace Zone unique music.
 	if (hidden_palace_music)
 	{
@@ -507,7 +506,46 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 		}
 	}
 
+// ----------------------------------------
+// Cliffs Section
+// ----------------------------------------
 
+	if (new_sounds)
+	{
+
+		// Rocks, AIZ Collapsing Bridge, ICZ Breakables
+		if (objA0.update_address == 0x01fc16 || objA0.update_address == 0x02af70 || (global.zone == 0x05) && objA0.update_address == 0x02a5f8)
+		{
+			if (sfxId == 0x59)
+			{
+				soundKey = "cliff3"
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// ICZ Bridges
+		if (global.zone == 0x05) && (objA0.update_address == 0x0205de || objA0.update_address == 0x020b8c)
+		{
+			if (sfxId == 0x59)
+			{
+				soundKey = "cliff1"
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+		// LBZ Corkfloors
+		if (global.zone == 0x06 && objA0.update_address == 0x02a5f8)
+		{
+			if (sfxId == 0x59)
+			{
+				soundKey = "cliff2"
+				soundRegType = SoundRegType.TYPE_SOUND
+			}
+		}
+
+	}
+
+// ----------------------------------------
 	// Play it.
 	return soundKey
 }
