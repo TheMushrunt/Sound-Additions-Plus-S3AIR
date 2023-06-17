@@ -65,6 +65,12 @@
 	// Sound taken from Sonic Mania.
 	"heyho_head":	   { "File": "heyho_headlock.ogg", "Type": "Sound" },
 
+	// Cliffs breaking, for variety purposes.
+	// Sounds taken from S1 and CD respectively.
+	"cliff1":	   { "File": "cliff1.ogg", "Type": "Sound" },
+	"cliff2":	   { "File": "cliff2.ogg", "Type": "Sound" },
+	"cliff3":	   { "File": "cliff3.ogg", "Type": "Sound" },
+
 	// ----------------------------------------
 	// MUSIC SECTION
 	// ----------------------------------------
