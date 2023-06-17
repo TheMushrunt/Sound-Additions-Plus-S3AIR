@@ -492,6 +492,32 @@ function void fn0332a2()
 	}
 }
 
+#if GAMEAPP < 0x22121500 // for versions before the v22.12.15.0 Test Build
+
+// ----------------------------------------
+// CARNIVAL NIGHT ZONE:
+// Shooting the cannon.
+// ----------------------------------------
+
+//# address-hook(0x0319f4) end(0x031b16)
+function void fn0319f4()
+{
+	base.fn0319f4()
+
+	if (u8[A2] == 3)
+	{
+		if (u8[A2 + 0x02] == 2)
+		{
+			if (origins_sounds)
+			{
+				playSound(0x81)
+			}
+		}
+	}
+}
+
+#endif
+
 // ----------------------------------------
 // CARNIVAL NIGHT ZONE:
 // Knuckles' Cutscene: He presses the button to
