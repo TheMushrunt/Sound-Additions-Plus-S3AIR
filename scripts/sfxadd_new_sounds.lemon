@@ -182,8 +182,8 @@ function void fn035f8c()
 function void Boss.AIZ1.RegularUpdate()
 {
 	base.Boss.AIZ1.RegularUpdate()
-	if (new_sounds && (level.framecounter & 0x01) && (objA0.render_flags & render_flag.VISIBLE))
-		playSound(0xc2)
+	if (new_sounds && (objA0.render_flags & render_flag.VISIBLE))
+		playSound(0xd1)
 }
 
 // ----------------------------------------
