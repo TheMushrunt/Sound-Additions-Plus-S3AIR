@@ -539,6 +539,19 @@ function void fn06e66c()
 
 // ----------------------------------------
 // ICECAP ZONE:
+// Automated breaking out of the ice block the player's encased in.
+// ----------------------------------------
+
+//# address-hook(0x08a8dc) end(0x08a912)
+function void fn08a8dc()
+{
+	base.fn08a8dc()
+	if (new_sounds && objA0.subtype2c == 0x00)
+		playSound(0x6E)
+}
+
+// ----------------------------------------
+// ICECAP ZONE:
 // Swinging Platform hits a wall.
 // ----------------------------------------
 
