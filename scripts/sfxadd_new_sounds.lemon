@@ -798,18 +798,12 @@ function void fn08db76()
 // Knuckles makes players get blown to the sky.
 // ----------------------------------------
 
-//# address-hook(0x0632ae) end(0x0632b6)
-function void fn0632ae()
+//# address-hook(0x06338e) end(0x0633d4)
+function void fn06338e()
 {
-	base.fn0632ae()
-
-	if !(objA0.render_flags & render_flag.VISIBLE)
-	{
-		if (new_sounds)
-		{
-			playSound(0xa0)
-		}
-	}
+	if (new_sounds)
+		playSound(0xa0)
+	base.fn06338e()
 }
 
 // ----------------------------------------
