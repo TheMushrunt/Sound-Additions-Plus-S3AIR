@@ -892,8 +892,8 @@ function void fn0758fc()
 function void fn076782()
 {
 	base.fn076782()
-	if (new_sounds && (objA0.flags38 & 0x40) && (level.framecounter & 0x01) && (objA0.render_flags & render_flag.VISIBLE))
-		playSound(0xc2)
+	if (new_sounds && (objA0.flags38 & 0x40) && (objA0.render_flags & render_flag.VISIBLE))
+		playSoundRepeatedly(0xc2)
 }
 
 // ----------------------------------------
