@@ -1244,7 +1244,7 @@ function void fn06471a()
 
 	if !(new_sounds)
 	{
-		playSound(SFX_JUMP)
+		SAP.determineJumpSound()
 	}
 
 	A1 = 0x0667c1

@@ -70,7 +70,7 @@ function void fn067572()
 	{
 		if (origins_sounds)
 		{
-			playSound(SFX_JUMP)
+			SAP.determineJumpSound()
 		}
 	}
 
@@ -92,7 +92,7 @@ function void fn067a08()
 	{
 		if (origins_sounds)
 		{
-			playSound(SFX_JUMP)
+			SAP.determineJumpSound()
 		}
 	}
 }
@@ -278,7 +278,7 @@ function void fn031226()
 			if (D1.u8 != 0)
 			{
 				InitialGrab = true
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -568,29 +568,6 @@ function void fn06e680()
 			playSound(0x76)
 		}
 	}
-}
-
-// ----------------------------------------
-// ICECAP ZONE:
-// Sonic/Tails jumping off the snow after
-// the avalanche.
-// ----------------------------------------
-
-//# address-hook(0x053a4c) end(0x053ad2)
-function void fn053a4c()
-{
-	if (objA0.position.y.u16 == 0x070e && player1.control_override != 0)
-	{
-		if (control.pad1.pressed & CONTROL_ABC)
-		{
-			if (origins_sounds)
-			{
-				playSound(0x82)
-			}
-		}
-	}
-
-	base.fn053a4c()
 }
 
 // ----------------------------------------

@@ -2,6 +2,35 @@
 
 // ----------------------------------------
 // GENERAL GAMEPLAY:
+// Determine sounds to use for jumping.
+// ----------------------------------------
+
+function void SAP.determineJumpSound() // used for the non-Extra Slot characters, usually.
+{
+	if (A1 == 0xffffb000)
+	{
+#if EXTRA_CHARACTERS_ACTIVE
+		if (global.xtrachar)
+		{
+			SAP.determineESJumpSound()
+			return
+		}
+#endif
+		playSound(SFX_JUMP)
+	}
+	else
+	{
+		playSound(SFX_JUMP)
+	}
+}
+
+function void SAP.determineESJumpSound() // This is to allow extra character slots to use their own jump SFX if they choose to. (Only works for main characters being Extra Slots)
+{
+	playSound(SFX_JUMP)
+}
+
+// ----------------------------------------
+// GENERAL GAMEPLAY:
 // Jumping off a wall with Knuckles.
 // ----------------------------------------
 
@@ -14,7 +43,7 @@ function void fn016e60()
 	{
 		if (origins_sounds)
 		{
-			playSound(SFX_JUMP)
+			SAP.determineJumpSound()
 		}
 	}
 }
@@ -34,7 +63,7 @@ function void fn0220c2()
 		{
 			if (origins_sounds)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -62,7 +91,7 @@ function void fn032784()
 			{
 				if ((D5.u8 & CONTROL_ABC) != 0)
 				{
-					playSound(SFX_JUMP)
+					SAP.determineJumpSound()
 				}
 			}
 		}
@@ -80,7 +109,7 @@ function void fn0349ba()
 	{
 		if (u8[A2] != 0) && (D0.u8 & CONTROL_ABC) != 0
 		{
-			playSound(SFX_JUMP)
+			SAP.determineJumpSound()
 		}
 	}
 
@@ -103,7 +132,7 @@ function void fn033ade()
 		{
 			if (origins_sounds)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -123,7 +152,7 @@ function void fn0266b0()
 		{
 			if (origins_sounds)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -134,83 +163,17 @@ function void fn0266b0()
 // ----------------------------------------
 // LAUNCH BASE ZONE:
 // Grapple.
-// (This has more code than usual because
-// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x0290f2) end(0x029214)
 function void fn0290f2()
 {
-	if (u8[A2] != 0)
+	base.fn0290f2()
+	if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
 	{
-		if ((objA1.render_flags & render_flag.VISIBLE) && u8[A1 + 0x05] < 0x04)
+		if (origins_sounds)
 		{
-			// Check if jump button pressed
-			if ((D0.u8 & CONTROL_ABC) == 0)
-			{
-				objA1.position.y.u16 = objA0.position.y.u16 + 0x94
-				return
-			}
-
-			u8[A1 + 0x2e] = 0
-			u8[A2] = 0
-			u8[A2+2] = ((D0.u16 & 0x0f00) == 0) ? 0x12 : 0x3c	// Any direction held?
-			if (D0 & 0x0400)		// CONTROL_LEFT held
-			{
-				objA1.velocity.x = -0x200
-			}
-			if (D0 & 0x0800)		// CONTROL_RIGHT held
-			{
-				objA1.velocity.x = 0x200
-			}
-
-			objA1.velocity.y = -0x380
-			u8[A1 + 0x1e] = 0x0e
-			u8[A1 + 0x1f] = 0x07
-			objA1.state = char.state.ROLLING
-			u8[A1 + 0x27] = 0
-			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-			objA1.flags2a &= ~char.flag.CONTROL_LOCK
-			u8[A1 + 0x40] = 1
-
-			if (origins_sounds)
-			{
-				playSound(SFX_JUMP)
-			}
-		}
-		else
-		{
-			u8[A1 + 0x2e] = 0
-			u8[A2] = 0
-			u8[A2+2] = 0x3c
-		}
-	}
-	else
-	{
-		if (u8[A2+2] != 0)
-		{
-			--u8[A2+2]
-			if (u8[A2+2] != 0)
-				return
-		}
-
-		D0.u16 = objA1.position.x.u16 - objA0.position.x.u16 + 0x10
-		D1.u16 = objA1.position.y.u16 - objA0.position.y.u16 - 0x88
-		if (D0.u16 < 0x20 && D1.u16 < 0x18)
-		{
-			if (s8[A1 + 0x2e] >= 0 && u8[A1 + 0x05] < 0x04 && debug_mode.state == 0)
-			{
-				objA1.velocity.x = 0
-				objA1.velocity.y = 0
-				u16[A1 + 0x1c] = 0
-				objA1.position.x.u16 = objA0.position.x.u16
-				objA1.position.y.u16 = objA0.position.y.u16 + 0x94
-				objA1.state = char.state.HANGING
-				u8[A1 + 0x2e] = 0x01
-				u8[A2] = 0x01
-
-				playSound(SFX_CLICK)
-			}
+			SAP.determineJumpSound()
 		}
 	}
 }
@@ -229,7 +192,7 @@ function void fn026eda()
 		{
 			if (D0.u8 & CONTROL_ABC != 0 && u8[0xfffffaa9] == 0)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -249,9 +212,9 @@ function void fn08d47c()
 
 	if (origins_sounds)
 	{
-		if (objA0.position.x.u16 >= 0x4440)
+		if (objA0.position.x.u16 >= 0x4440 && !Mods.isModActive("Origins Parity Galore"))
 		{
-			playSound(SFX_JUMP)
+			SAP.determineJumpSound()
 		}
 	}
 }
@@ -271,7 +234,7 @@ function void fn03e508()
 			D1.u16 = D0.u16 & CONTROL_ABC
 			if (D1.u8 != 0)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -293,7 +256,7 @@ function void fn02291a()
 		{
 			if ((D0.u8 & CONTROL_ABC) != 0)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -317,7 +280,7 @@ function void fn03f5c2()
 			{
 				if ((D0.u8 & CONTROL_ABC) != 0)
 				{
-					playSound(SFX_JUMP)
+					SAP.determineJumpSound()
 				}
 			}
 		}
@@ -340,7 +303,7 @@ function void fn03aa7e()
 		{
 			if ((D0.u8 & CONTROL_ABC) != 0)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -351,8 +314,6 @@ function void fn03aa7e()
 // ----------------------------------------
 // FLYING BATTERY ZONE:
 // Hanging Monkey Bars.
-// (This has more code than usual because
-// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x03a8b8) end(0x03aa58)
@@ -362,39 +323,12 @@ function void fn03a8b8()
 	{
 		if ((D0.u8 & CONTROL_ABC) != 0)
 		{
-			u8[A1 + 0x2e] = 0
-			u8[A2] = 0
-			u8[A2 + 0x02] = 0x12
-			D0.u16 &= 0x0f00			// Any direction held?
-			if (D0.u16 != 0)
-			{
-				u8[A2 + 0x02] = 0x3c
-			}
-			if (D0 & 0x0400)		// CONTROL_LEFT held
-			{
-				objA1.velocity.x = -0x200
-			}
-			if (D0 & 0x0800)		// CONTROL_RIGHT held
-			{
-				objA1.velocity.x = 0x0200
-			}
-			objA1.velocity.y = -0x380
-			u8[A1 + 0x1e] = 0x0e
-			u8[A1 + 0x1f] = 0x07
-			objA1.state = char.state.ROLLING
-			u8[A1 + 0x27] = 0
-			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-			objA1.flags2a &= ~(char.flag.ON_OBJECT | char.flag.CONTROL_LOCK)
-			u8[A1 + 0x40] = 1
-			u16[A1 + 0x42] = 0
-
 			if (origins_sounds)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
-
 	base.fn03a8b8()
 }
 
@@ -410,59 +344,26 @@ function void fn03c068()
 
 	if (new_sounds)
 	{
-		playSound(SFX_JUMP)
+		SAP.determineJumpSound()
 	}
 }
 
 // ----------------------------------------
 // SANDOPOLIS ZONE:
 // Light Switch.
-// (This has more code than usual because
-// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x040f52) end(0x04108e)
 function void fn040f52()
 {
-	if (origins_sounds)
+	base.fn040f52()
+	if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
 	{
-		if (u8[A2] != 0)
+		if (origins_sounds)
 		{
-			if ((D0.u8 & CONTROL_ABC) != 0)
-			{
-				u8[A1 + 0x2e] = 0
-				u8[A2] = 0
-				u8[A2+2] = 0x12
-
-				if (D0.u16 & 0x0f00)		// Any direction held?
-				{
-					u8[A2+2] = 0x3c
-				}
-
-				if (D0.u16 & 0x0800)		// CONTROL_RIGHT held
-				{
-					objA1.velocity.x = 0x200
-				}
-				else if (D0.u16 & 0x0400)		// CONTROL_LEFT held
-				{
-					objA1.velocity.x = -0x200
-				}
-
-				objA1.velocity.y = -0x380
-				u8[A1 + 0x1e] = 0x0e
-				u8[A1 + 0x1f] = 0x07
-				objA1.state = char.state.ROLLING
-				u8[A1 + 0x27] = 0
-				objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-				objA1.flags2a &= ~char.flag.CONTROL_LOCK
-				u8[A1 + 0x40] = 1
-
-				playSound(SFX_JUMP)
-			}
+			SAP.determineJumpSound()
 		}
 	}
-
-	base.fn040f52()
 }
 
 // ----------------------------------------
@@ -479,7 +380,7 @@ function void fn044338()
 		{
 			if (D1.u16 & CONTROL_ABC)
 			{
-				playSound(SFX_JUMP)
+				SAP.determineJumpSound()
 			}
 		}
 	}
@@ -528,47 +429,17 @@ function void fn0658ba()
 // ----------------------------------------
 // DEATH EGG ZONE:
 // Hang Carrier.
-// (This has more code than usual because
-// otherwise, it will not work correctly).
 // ----------------------------------------
 
 //# address-hook(0x04703e) end(0x04717c)
 function void fn04703e()
 {
-	if (origins_sounds)
+	base.fn04703e()
+	if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
 	{
-		if (u8[A2] != 0)
+		if (origins_sounds)
 		{
-			if ((D0.u8 & CONTROL_ABC) != 0)
-			{
-				u8[A2] = 0
-				u8[A2 + 0x02] = 0x12
-
-				if (D0.u16 & 0x0f00)	// Any direction held?
-				{
-					u8[A2 + 0x02] = 0x3c
-					if (D0 & 0x0800)		// CONTROL_RIGHT held
-					{
-						objA1.velocity.x = 0x200
-					}
-					else if (D0 & 0x0400)		// CONTROL_LEFT held
-					{
-						objA1.velocity.x = -0x200
-					}
-				}
-				objA1.velocity.y = -0x380
-				u8[A1 + 0x1e] = 0x0e
-				u8[A1 + 0x1f] = 0x07
-				u8[A1 + 0x20] = char.state.ROLLING
-				u8[A1 + 0x27] = 0
-				objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-				objA1.flags2a &= ~char.flag.CONTROL_LOCK
-				u8[A1 + 0x2e] = 0
-				u8[A1 + 0x40] = 1
-				playSound(SFX_JUMP)
-			}
+			SAP.determineJumpSound()
 		}
 	}
-
-	base.fn04703e()
 }
