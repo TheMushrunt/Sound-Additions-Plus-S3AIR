@@ -233,9 +233,12 @@ function void fn06a51e()
 {
 	base.fn06a51e()
 
-	if (u8[A1 + 0x38] & 0x04)
+	if (new_sounds)
 	{
-		playSoundRepeatedly(0xc0)
+		if (u8[A1 + 0x38] & 0x04)
+		{
+			playSoundRepeatedly(0xc0)
+		}
 	}
 }
 
@@ -1137,25 +1140,6 @@ function void fn0779c0()
 
 // ----------------------------------------
 // LAVA REEF ZONE:
-// Heat Arms wheels appear.
-// ----------------------------------------
-
-//# address-hook(0x078868) end(0x07888e)
-function void fn078868()
-{
-	base.fn078868()
-
-	if (u8[A1 + 0x38] & 0x08)
-	{
-		if (new_sounds)
-		{
-			//playSound(0xd8)
-		}
-	}
-}
-
-// ----------------------------------------
-// LAVA REEF ZONE:
 // Heat Arms detects players!
 // ----------------------------------------
 
@@ -1253,6 +1237,46 @@ function void fn06471a()
 
 // ----------------------------------------
 // SKY SANCTUARY ZONE:
+// Cybershell moment.
+// ----------------------------------------
+
+//# address-hook(0x065fde) end(0x066024)
+function void fn065fde()
+{
+	// This is the check for Knuckles' "shoo away" animation
+	if (objA0.flags38 & 0x08)
+		return
+
+	A1 = 0xffffb000
+	CheckDistanceToObjectA1()
+	if (D3.u16 >= 0x20)
+		return
+
+	D2.u16 -= 0x30
+	if (D2.u16 >= 0x20 || D0.u16 == 0)
+		return
+
+	if ((objA1.render_flags & render_flag.FLIP_X) == 0 || u8[A1 + 0x20] != char.state.COWERING)
+		return
+
+#if STANDALONE
+	// Additional check so that animation does not get restarted every frame while cowering
+	if (u32[A0 + 0x30] != 0x06671f)
+		return
+
+	u8[0x065fde] = 0x93
+#endif
+
+	if (new_sounds)
+	{
+		playSound(0x7b)
+	}
+
+	Object.ResetAnimationProgress(0x06672a)		// Cutscene Knuckles tired shooing animation data
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
 // A horizontal bridge collapses!
 // ----------------------------------------
 
@@ -1289,6 +1313,39 @@ function void fn044d98()
 			{
 				playSound(0x59)
 			}
+		}
+	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// Teleporter approaches.
+// ----------------------------------------
+
+// This should be obvious.
+global bool PlayTeleOnce = false
+
+function void fn0455cc_sub()
+{
+	base.fn0455cc_sub()
+
+	if (objA0.subtype2c & 0x80)
+	{
+		if ((u8[A1] & 0x80) == 0)
+			return
+
+		if (objA0.velocity.y != 0)
+		{
+			if !(PlayTeleOnce) && (new_sounds)
+			{
+				playSound(0xa1)
+				PlayTeleOnce = true
+				return
+			}
+		}
+		else
+		{
+			PlayTeleOnce = false
 		}
 	}
 }
@@ -1500,7 +1557,10 @@ function void fn07dec6()
 	D1.u16 = u16[A0 + 0x3c] + D0.u16
 	if (D1.u16 >= 0x7000)
 	{
-		playSound(0x96)
+		if (new_sounds)
+		{
+			playSound(0x96)
+		}
 	}
 }
 
@@ -1554,9 +1614,12 @@ function void fn07e342()
 {
 	base.fn07e342()
 
-	if (objA0.countdown_value == 0)
+	if (new_sounds)
 	{
-		playSound(0x59)
+		if (objA0.countdown_value == 0)
+		{
+			Audio.playAudio("cliff2", AudioContext.CONTEXT_SOUND)
+		}
 	}
 }
 
@@ -1684,6 +1747,22 @@ function void fn07f900()
 
 // ----------------------------------------
 // DEATH EGG ZONE:
+// Kyodai Eggrobo about to close fingers.
+// ----------------------------------------
+
+//# address-hook(0x08000e) end(0x08001a)
+function void fn08000e()
+{
+	base.fn08000e()
+
+	if (new_sounds)
+	{
+		playSound(0x6d)
+	}
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
 // Eggman is escaping with the Master Emerald.
 // ----------------------------------------
 
@@ -1695,5 +1774,24 @@ function void fn080184()
 	if (new_sounds)
 	{
 		playSound(0x60)
+	}
+}
+
+// ----------------------------------------
+// DOOMSDAY ZONE:
+// Kyodai Eggrobo shooting these yellow orbs.
+// ----------------------------------------
+
+//# address-hook(0x081eca)
+function void fn081eca()
+{
+	base.fn081eca()
+
+	if (objA0.countdown_value == 0)
+	{
+		if (new_sounds)
+		{
+			playSound(0x4d)
+		}
 	}
 }

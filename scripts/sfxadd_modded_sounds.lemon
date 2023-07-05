@@ -512,7 +512,7 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 	if (new_sounds)
 	{
 
-		// MGZ Spinning Top Walls, ICZ Bridges
+		// MGZ Spinning Top Walls, ICZ Bridges, LRZ Collapsing Rocks, SSZ Post MS
 		if (global.zone == 0x02 && objA0.update_address == 0x020a56) || (global.zone == 0x05 && objA0.update_address == 0x0205de || objA0.update_address == 0x020b8c)
 		{
 			if (sfxId == 0x59)
@@ -532,8 +532,8 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			}
 		}
 
-		// Rocks, AIZ Collapsing Bridge, ICZ Breakables
-		if (objA0.update_address == 0x01fc16 || objA0.update_address == 0x02af70 || (global.zone == 0x05) && objA0.update_address == 0x02a5f8)
+		// Rocks, AIZ Collapsing Bridge, ICZ Breakables, SSZ Pillars
+		if (objA0.update_address == 0x01fc16 || objA0.update_address == 0x02af70 || (global.zone == 0x05) && objA0.update_address == 0x02a5f8 || objA0.update_address == 0x039ce8 || objA0.update_address == 0x044b30)
 		{
 			if (sfxId == 0x59)
 			{
