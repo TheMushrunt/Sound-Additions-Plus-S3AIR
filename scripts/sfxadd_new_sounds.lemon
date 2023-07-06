@@ -1259,20 +1259,15 @@ function void fn065fde()
 	if ((objA1.render_flags & render_flag.FLIP_X) == 0 || u8[A1 + 0x20] != char.state.COWERING)
 		return
 
-#if STANDALONE
 	// Additional check so that animation does not get restarted every frame while cowering
 	if (u32[A0 + 0x30] != 0x06671f)
 		return
-
-	u8[0x065fde] = 0x93
-#endif
 
 	if (new_sounds)
 	{
 		playSound(0x7b)
 	}
-
-	Object.ResetAnimationProgress(0x06672a)		// Cutscene Knuckles tired shooing animation data
+	base.fn065fde()
 }
 
 // ----------------------------------------
@@ -1409,6 +1404,19 @@ function void fn07ae22()
 			playSound(0x8a)
 		}
 	}
+}
+
+// ----------------------------------------
+// SKY SANCTUARY ZONE:
+// Mecha Sonic jumps.
+// ----------------------------------------
+
+//# address-hook(0x07b5e8) end(0x07b62c)
+function void fn07b5e8()
+{
+	if (new_sounds)
+		playSound(0x8C)
+	base.fn07b5e8()
 }
 
 // ----------------------------------------
