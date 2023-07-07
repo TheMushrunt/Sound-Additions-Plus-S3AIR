@@ -259,10 +259,8 @@ function void fn02fe34()
 
 // ----------------------------------------
 // HYDROCITY ZONE:
-// Grab onto and jump off a conveyor belt.
+// Jump off a conveyor belt.
 // ----------------------------------------
-
-global bool InitialGrab = true // this is to ensure that the variable does not get lost within the functions.
 
 //# address-hook(0x031226) end(0x031458)
 function void fn031226()
@@ -272,12 +270,8 @@ function void fn031226()
 		if (u8[A2] != 0)
 		{
 			D1.u8 &= CONTROL_ABC
-			if (InitialGrab && (u8[0xffffb04a + 0x2a]) == 0)
-				playSound(0x4a) // it there is a second player, do not play the grab sound at all (fixes a really dumb bug)
-			InitialGrab = false
 			if (D1.u8 != 0)
 			{
-				InitialGrab = true
 				SAP.determineJumpSound()
 			}
 		}
