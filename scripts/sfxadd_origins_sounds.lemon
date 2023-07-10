@@ -5,15 +5,12 @@
 // Ground below springs breaking apart.
 // ----------------------------------------
 
-//# address-hook(0x06101e) end(0x06102e)
-function void fn06101e()
+//# address-hook(0x060d7e) end(0x060da6)
+function void fn060d7e()
 {
-	base.fn06101e()
-
-	if (origins_sounds)
-	{
+	if ((objA0.flags38 & 0x02) != 0 && origins_sounds)
 		playSound(0x59)
-	}
+	base.fn060d7e()
 }
 
 // ----------------------------------------
