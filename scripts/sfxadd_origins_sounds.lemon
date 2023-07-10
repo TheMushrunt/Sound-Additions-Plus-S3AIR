@@ -609,6 +609,8 @@ function void fn089ff2()
 function void fn08a036()
 {
 	base.fn08a036()
+	if (Mods.isModActive("Origins Parity Galore"))
+		return
 	if (objA0.base_state == 0x0c && origins_sounds)
         playSound(0x49)
 }
@@ -739,7 +741,7 @@ function void fn029eb2()
 {
 	if (u16[A0 + 0x3c] >= 0x0180)
 	{
-		if (origins_sounds && Mods.isModActive("Origins Parity Galore"))
+		if (origins_sounds && !Mods.isModActive("Origins Parity Galore"))
 		{
 			Audio.playAudio("peelout_release")
 		}
