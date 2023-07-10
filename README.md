@@ -1,5 +1,5 @@
 ![header](https://media.discordapp.net/attachments/708852212922712118/1127814412254855169/image.png?width=1900&height=528)
-## Sound Additions Plus is a mod created by LeaningLean and TheMushrunt.
+## Sound Additions Plus is a mod created by leanycat/LeaningLean and TheMushrunt.
 
 Ever felt like Sonic 3 & Knuckles (and to a further extent, [Sonic 3 A.I.R.](https://sonic3air.org)) was a bit...*lacking* with its usage of sounds? Well, you wouldn't be the first to think that!
 
