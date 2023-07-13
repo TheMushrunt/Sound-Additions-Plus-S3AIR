@@ -148,15 +148,26 @@ function void fn0266b0()
 {
 	if (u8[A2] != 0)
 	{
-		if ((D0.u8 & CONTROL_ABC) != 0)
+		// Check if jump button pressed
+		D0.u8 &= CONTROL_ABC
+		
+		if (D0.u8 != 0)
 		{
+			u8[A1 + 0x2e] = 0
+			u8[A2] = 0
+			u8[A2 + 2] = (D0.u16 & 0x0f00) ? 0x3c : 0x12		// Any direction held?
 			if (origins_sounds)
-			{
 				SAP.determineJumpSound()
-			}
+			objA1.velocity.x = objA0.velocity.x
+			objA1.velocity.y = -0x380
+			u8[A1 + 0x1e] = 0x0e
+			u8[A1 + 0x1f] = 0x07
+			objA1.state = char.state.ROLLING
+			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
+			u8[A1 + 0x40] = 0x01
+			return
 		}
 	}
-
 	base.fn0266b0()
 }
 
@@ -170,7 +181,7 @@ function void fn0290f2()
 {
 	if (u8[A2] != 0)
 	{
-		if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
+		if ((D0.u8 & CONTROL_ABC) != 0)
 		{
 			if (origins_sounds)
 			{
@@ -179,6 +190,26 @@ function void fn0290f2()
 		}
 	}
 	base.fn0290f2()
+	if (u8[A2])
+	{
+		D0.u16 &= 0x0f00		// Any direction held?
+		if (D0.u16 != 0)
+		{
+			u8[A2 + 0x02] = 0x3c
+		}
+		else
+		{
+			objA1.velocity.x = 0
+		}
+		if (D0 & 0x0400)		// CONTROL_LEFT held
+		{
+			objA1.velocity.x = -0x200
+		}
+		if (D0 & 0x0800)		// CONTROL_RIGHT held
+		{
+			objA1.velocity.x = 0x200
+		}
+	}
 }
 
 // ----------------------------------------
@@ -200,6 +231,26 @@ function void fn026eda()
 		}
 	}
 	base.fn026eda()
+	if (u8[A2])
+	{
+		D0.u16 &= 0x0f00		// Any direction held?
+		if (D0.u16 != 0)
+		{
+			u8[A2 + 0x02] = 0x3c
+		}
+		else
+		{
+			objA1.velocity.x = 0
+		}
+		if (D0 & 0x0400)		// CONTROL_LEFT held
+		{
+			objA1.velocity.x = -0x200
+		}
+		if (D0 & 0x0800)		// CONTROL_RIGHT held
+		{
+			objA1.velocity.x = 0x200
+		}
+	}
 }
 
 // ----------------------------------------
