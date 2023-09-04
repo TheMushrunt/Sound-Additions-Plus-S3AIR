@@ -782,7 +782,7 @@ function void Character.OnCollisionWithDynamicObject() // this is the script tha
 	D1.u8 = (objA1.collision_attributes & collision_attributes.flags)
 	if (D1.u8 == 0) // if you're colliding with an enemy
 	{
-		if (objA1.update_address == 0x08bfb4 && objA1.base_state != 0x02 && (char.flags & char.flag.ROLLING) && origins_sounds) // update address of Snailblaster
+		if (objA1.update_address == 0x08bfb4 && u8[A1 + 0x29] == 0x7f && (char.flags & char.flag.ROLLING) && origins_sounds) // update address of Snailblaster
 			Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
 	}
 	base.Character.OnCollisionWithDynamicObject()
