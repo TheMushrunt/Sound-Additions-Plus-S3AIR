@@ -372,6 +372,11 @@ function void fn03aa7e()
 //# address-hook(0x03a8b8) end(0x03aa58)
 function void fn03a8b8()
 {
+	if (Mods.isModActive("Misc. Fixes and Tweaks"))
+	{
+		base.fn03a8b8()
+		return
+	}
 	if ((objA1.render_flags & render_flag.VISIBLE) && debug_mode.state == 0 && u8[A1 + 0x05] < 0x04)
 	{
 		if ((D0.u8 & CONTROL_ABC) != 0 && u8[A2])
