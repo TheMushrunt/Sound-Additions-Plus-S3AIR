@@ -67,9 +67,9 @@
 
 	// Cliffs breaking, for variety purposes.
 	// Sounds taken from S1 and CD respectively.
-	"cliff1":	   { "File": "cliff1.ogg", "Type": "Sound" },
-	"cliff2":	   { "File": "cliff2.ogg", "Type": "Sound" },
-	"cliff3":	   { "File": "cliff3.ogg", "Type": "Sound" },
+	"cliff1":	   { "File": "cliff1.ogg", "Type": "Sound", "Channel": "9B" },
+	"cliff2":	   { "File": "cliff2.ogg", "Type": "Sound", "Channel": "9B" },
+	"cliff3":	   { "File": "cliff3.ogg", "Type": "Sound", "Channel": "9B" },
 
 	// ----------------------------------------
 	// MUSIC SECTION
