@@ -66,9 +66,7 @@ function void fn067572()
 	if isMainCharacter(CHARACTER_SONIC)
 	{
 		if (origins_sounds)
-		{
 			SAP.determineJumpSound()
-		}
 	}
 
 	base.fn067572()
@@ -84,13 +82,10 @@ function void fn067572()
 function void fn067a08()
 {
 	base.fn067a08()
-
 	if (Mods.isModActive("tails aiz plane intro") && isMainCharacter(CHARACTER_TAILS) && camera.position.x.u16 == 0x0760)
 	{
 		if (origins_sounds)
-		{
 			SAP.determineJumpSound()
-		}
 	}
 }
 
@@ -103,11 +98,8 @@ function void fn067a08()
 function void fn067996()
 {
 	base.fn067996()
-
 	if (origins_sounds)
-	{
 		playSound(0x9f)
-	}
 }
 
 // ----------------------------------------
@@ -124,9 +116,7 @@ function void fn0635c8()
 		return
 
 	if (origins_sounds)
-	{
 		playSound(0x90)
-	}
 }
 
 // ----------------------------------------
@@ -142,9 +132,7 @@ function void AIZWaterfall.Update()
 	if (((level.framecounter + u16[A0 + 0x34]) & objA0.value32) == 0)
 	{
 		if (origins_sounds)
-		{
 			playSound(0x4b)
-		}
 	}
 }
 
@@ -163,13 +151,8 @@ function void fn0200cc()
 	{
 		if (objA0.value42 != 0)
 		{
-			if (origins_sounds)
-			{
-				if (D1.u8 = global.framecounter & 0x1d) == 0
-				{
-					playSound(0x69)
-				}
-			}
+			if (origins_sounds && global.framecounter & 0x1d == 0)
+				playSound(0x69)
 		}
 	}
 }
@@ -190,16 +173,13 @@ function void UpdateWaterSurfaceLevel.AIZ2()
 
 	if (water.height.target == 0x0618)
 	{
-		if (origins_sounds) && HasPlayed == false
+		if (origins_sounds && HasPlayed == false)
 		{
 			Audio.playAudio("door_reveal", AudioContext.CONTEXT_SOUND)
 			HasPlayed = true
 		}
 	}
-	else
-	{
-		HasPlayed = false
-	}
+	else HasPlayed = false
 }
 
 // ----------------------------------------
@@ -348,22 +328,12 @@ function void fn065c72()
 function void fn025d9c()
 {
 	base.fn025d9c()
-	if Mods.isModActive("Origins Parity Galore")
-		return
-	if (D6.u16 == 0)
+	if (D6.u16 == 0 && D0.u8 != 0 && objA1.state == char.state.SPINDASH && !Mods.isModActive("Origins Parity Galore"))
 	{
-		if (D0.u8 != 0)
+		if (objA1.state == char.state.SPINDASH)
 		{
-			if (objA1.state == char.state.SPINDASH)
-			{
-				if (origins_sounds)
-				{
-					if (D1.u8 = global.framecounter & 0x0f) == 0
-					{
-						playSound(0x8e)
-					}
-				}
-			}
+			if (origins_sounds && (global.framecounter & 0x0f) == 0)
+				playSound(0x8e)
 		}
 	}
 }
@@ -378,12 +348,8 @@ function void fn025d9c()
 function void fn025ea6()
 {
 	base.fn025ea6()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (origins_sounds)
-	{
+	if (origins_sounds && !Mods.isModActive("Origins Parity Galore"))
 		playSound(0x8e)
-	}
 }
 
 // ----------------------------------------
@@ -396,9 +362,7 @@ function void fn088716()
 {
 	base.fn088716()
 	if (origins_sounds)
-	{
 		playSound(0x59)
-	}
 }
 
 // ----------------------------------------
@@ -416,9 +380,7 @@ function void fn06c1d4()
 	if (D1.s16 < 0) && (objA0.base_state) == 0x16
 	{
 		if (origins_sounds)
-		{
 			playSound(0x59)
-		}
 	}
 }
 
@@ -432,11 +394,8 @@ function void fn06c1d4()
 function void fn06c4be()
 {
 	base.fn06c4be()
-
 	if (origins_sounds)
-	{
 		playSound(0x59)
-	}
 }
 
 // ----------------------------------------
@@ -451,9 +410,7 @@ function void fn06cc0e()
 	base.fn06cc0e()
 
 	if (origins_sounds)
-	{
 		playSound(0x91)
-	}
 }
 
 // ----------------------------------------
@@ -472,9 +429,7 @@ function void fn0332a2()
 	if (D1.u16 >= D0.u16)
 	{
 		if (origins_sounds) && (objA1.velocity.y > 0)
-		{
 			playSound(0x81)
-		}
 	}
 }
 
@@ -490,15 +445,10 @@ function void fn0319f4()
 {
 	base.fn0319f4()
 
-	if (u8[A2] == 3)
+	if (u8[A2] == 3 && (u8[A2 + 0x02] == 2)
 	{
-		if (u8[A2 + 0x02] == 2)
-		{
-			if (origins_sounds)
-			{
-				playSound(0x81)
-			}
-		}
+		if (origins_sounds)
+			playSound(0x81)
 	}
 }
 
@@ -514,11 +464,8 @@ function void fn0319f4()
 function void fn065cac()
 {
 	base.fn065cac()
-
 	if (origins_sounds)
-	{
 		playSound(0x5b)
-	}
 }
 
 // ----------------------------------------
@@ -532,9 +479,7 @@ function void fn06e5a4()
 	base.fn06e5a4()
 
 	if (origins_sounds)
-	{
 		playSound(0x51)
-	}
 }
 
 // ----------------------------------------
@@ -546,14 +491,8 @@ function void fn06e5a4()
 function void fn06e680()
 {
 	base.fn06e680()
-
-	if (origins_sounds)
-	{
-		if (D0.u16 == D1.u16)
-		{
-			playSound(0x76)
-		}
-	}
+	if (origins_sounds && D0.u16 == D1.u16)
+		playSound(0x76)
 }
 
 // ----------------------------------------
@@ -565,11 +504,8 @@ function void fn06e680()
 function void fn08a7ae()
 {
 	base.fn08a7ae()
-
 	if (origins_sounds)
-	{
 		playSound(0x80)
-	}
 }
 
 // ----------------------------------------
@@ -584,13 +520,8 @@ function void fn089ff2()
 
 	if (objA0.flags2a & object.flag.P1_PUSHING) && (control.pad1.state & (CONTROL_LEFT | CONTROL_RIGHT))
 	{
-		if (objA0.value39 >= 0x10)
-		{
-			if (origins_sounds)
-			{
-				playSound(0x69)
-			}
-		}
+		if (objA0.value39 >= 0x10 && origins_sounds)
+			playSound(0x69)
 	}
 }
 
@@ -604,9 +535,7 @@ function void fn089ff2()
 function void fn08a036()
 {
 	base.fn08a036()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (objA0.base_state == 0x0c && origins_sounds)
+	if (objA0.base_state == 0x0c && origins_sounds && !Mods.isModActive("Origins Parity Galore"))
         playSound(0x49)
 }
 
@@ -619,11 +548,8 @@ function void fn08a036()
 function void fn08ad9c()
 {
 	base.fn08ad9c()
-
 	if (origins_sounds)
-	{
 		playSound(0x80)
-	}
 }
 
 // ----------------------------------------
@@ -635,16 +561,9 @@ function void fn08ad9c()
 function void fn08ae0c()
 {
 	base.fn08ae0c()
-
 	D0.u16 = objA0.velocity.y
-
-	if (origins_sounds)
-	{
-		if (D1.s16 < -2 && D0.u16 < -0x100)
-		{
-			playSound(0x5f)
-		}
-	}
+	if (origins_sounds && D1.s16 < -2 && D0.u16 < -0x100)
+		playSound(0x5f)
 }
 
 // ----------------------------------------
@@ -656,14 +575,8 @@ function void fn08ae0c()
 function void fn08ae62()
 {
 	base.fn08ae62()
-
-	if (origins_sounds)
-	{
-		if ((level.framecounter.low & 0x0f) == 0)
-		{
-			playSound(0xc8)
-		}
-	}
+	if (origins_sounds && (level.framecounter.low & 0x0f) == 0)
+		playSound(0xc8)
 }
 
 // ----------------------------------------
@@ -676,15 +589,8 @@ function void fn08ae62()
 function void fn07153a()
 {
 	base.fn07153a()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (objA0.subtype2c == 0)
-	{
-		if (origins_sounds)
-		{
-			playSound(0xa0)
-		}
-	}
+	if (objA0.subtype2c == 0 && origins_sounds && !Mods.isModActive("Origins Parity Galore"))
+		playSound(0xa0)
 }
 
 // ----------------------------------------
@@ -696,15 +602,8 @@ function void fn07153a()
 function void fn071600()
 {
 	base.fn071600()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (D0.u8 == u8[A0 + 0x42])
-	{
-		if (origins_sounds)
-		{
-			playSound(0xa0)
-		}
-	}
+	if (D0.u8 == u8[A0 + 0x42] && origins_sounds && !Mods.isModActive("Origins Parity Galore"))
+		playSound(0xa0)
 }
 
 // ----------------------------------------
@@ -716,14 +615,8 @@ function void fn071600()
 function void fn0267a4()
 {
 	base.fn0267a4()
-
-	if (origins_sounds)
-	{
-		if (u8[A2] == 1)
-		{
-			playSound(0x4a)
-		}
-	}
+	if (origins_sounds && u8[A2] == 1 && !Mods.isModActive("Misc. Fixes and Tweaks"))
+		playSound(0x4a)
 }
 
 // ----------------------------------------
@@ -734,14 +627,8 @@ function void fn0267a4()
 //# address-hook(0x029eb2) end(0x029f32)
 function void fn029eb2()
 {
-	if (u16[A0 + 0x3c] >= 0x0180)
-	{
-		if (origins_sounds && !Mods.isModActive("Origins Parity Galore"))
-		{
-			Audio.playAudio("peelout_release")
-		}
-	}
-
+	if (u16[A0 + 0x3c] >= 0x0180 && origins_sounds && !Mods.isModActive("Origins Parity Galore") && (Mods.isModActive("Misc. Fixes and Tweaks") && System.getGlobalVariableValueByName("MFT_LBZ_TubeTransport_SFX") != 2))
+		Audio.playAudio("peelout_release")
 	base.fn029eb2()
 }
 
@@ -750,20 +637,20 @@ function void fn029eb2()
 // Tube transporter closes it's door.
 // ----------------------------------------
 
-//# address-hook(0x02a018) end(0x02a07c)
-function void fn02a018()
+
+//# address-hook(0x02a07e) end(0x02a0aa)
+function void fn02a07e()
 {
-	base.fn02a018()
-
-	D0.u8 = objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT)
-
-	if (origins_sounds)
+	if (origins_sounds && objA0.animation.sprite == 5 && objA0.value26)
 	{
-		if (D0.u8 == 0)
-		{
-			playSound(0x58)
-		}
+		objA0.value26 = 0
+		u8[A4] += 2
+		objA0.animation.sprite = 0
+		playSound(0x58)
+		//... why do any of this?
+		// it's meant to speed up the process of closing the door. i don't know if it actually does, but hey, still looks cool!
 	}
+	base.fn02a07e()
 }
 
 // ----------------------------------------
@@ -793,30 +680,8 @@ function void Character.OnCollisionWithDynamicObject() // this is the script tha
 function void fn026c6c()
 {
 	base.fn026c6c()
-
-	if (objA0.countdown_value == 0x1000)
-	{
-		if ((objA0.flags2a & 0x01) == 0)
-		{
-			if (D0.u8 >= 0xf0)
-			{
-				if (origins_sounds)
-				{
-					playSound(0x80)
-				}
-			}
-		}
-		else
-		{
-			if (D0.u8 >= 0xf0)
-			{
-				if (origins_sounds)
-				{
-					playSound(0x80)
-				}
-			}
-		}
-	}
+	if (objA0.countdown_value == 0x1000 && D0.u8 >= 0xf0 && origins_sounds)
+		playSound(0x80)
 }
 
 // ----------------------------------------
@@ -830,16 +695,8 @@ function void fn026d06()
 {
 	base.fn026d06()
 
-	if (objA0.countdown_value == 0x1000)
-	{
-		if (D0.u8 >= 0xf0)
-		{
-			if (origins_sounds)
-			{
-				playSound(0x80)
-			}
-		}
-	}
+	if (objA0.countdown_value == 0x1000 && D0.u8 >= 0xf0 && origins_sounds)
+		playSound(0x80)
 }
 
 // ----------------------------------------
@@ -851,11 +708,8 @@ function void fn026d06()
 function void fn026de0()
 {
 	base.fn026de0()
-
 	if (origins_sounds)
-	{
 		playSound(0x5d)
-	}
 }
 
 // ----------------------------------------
@@ -868,13 +722,8 @@ function void fn08c456()
 {
 	base.fn08c456()
 
-	if (origins_sounds)
-	{
-		if (D0.u16 >= 0x0200)
-		{
-			playSound(0x96)
-		}
-	}
+	if (origins_sounds && D0.u16 >= 0x0200)
+		playSound(0x96)
 }
 
 // ----------------------------------------
@@ -886,11 +735,8 @@ function void fn08c456()
 function void fn06273e()
 {
 	base.fn06273e()
-
 	if (origins_sounds)
-	{
 		playSound(0x4e)
-	}
 }
 
 // ----------------------------------------
@@ -903,13 +749,8 @@ function void fn08cce8()
 {
 	base.fn08cce8()
 
-	if (origins_sounds)
-	{
-		if (objA0.position.y.u16 == 0x012c)
-		{
-			playSound(0x91)
-		}
-	}
+	if (origins_sounds && objA0.position.y.u16 == 0x012c)
+		playSound(0x91)
 }
 
 // ----------------------------------------
@@ -921,11 +762,8 @@ function void fn08cce8()
 function void fn028e76()
 {
 	base.fn028e76()
-
 	if (origins_sounds)
-	{
 		Audio.playAudio("lbz_spinlauncher", AudioContext.CONTEXT_SOUND)
-	}
 }
 
 // ----------------------------------------
@@ -938,9 +776,7 @@ function void fn08d3f2()
 {
 	base.fn08d3f2()
 	if (origins_sounds)
-	{
 		playSound(0x6e)
-	}
 }
 
 // ----------------------------------------
@@ -952,11 +788,8 @@ function void fn08d3f2()
 function void fn074c8c()
 {
 	base.fn074c8c()
-
 	if (origins_sounds)
-	{
 		playSound(0x4a)
-	}
 }
 
 // ----------------------------------------
@@ -967,10 +800,7 @@ function void fn074c8c()
 function void fleeingegg()
 {
 	if (origins_sounds)
-	{
 		playSound(0x60)
-	}
-
     base.fleeingegg()
 }
 
@@ -984,9 +814,7 @@ function void fn074d62()
 {
 	base.fn074d62()
 	if (origins_sounds)
-	{
 		playSound(0x51)
-	}
 }
 
 // ----------------------------------------
@@ -998,13 +826,8 @@ function void fn074d62()
 function void fn074d90()
 {
 	base.fn074d90()
-	if (origins_sounds)
-	{
-		if (D0.u16 >= 0x0100)
-		{
-			playSound(0x5d)
-		}
-	}
+	if (origins_sounds && D0.u16 >= 0x0100)
+		playSound(0x5d)
 }
 
 // ----------------------------------------
@@ -1015,45 +838,10 @@ function void fn074d90()
 //# address-hook(0x074d90) end(0x074de4)
 function void fn074d90()
 {
-	D0.u16 = objA0.velocity.y
-	if (D0.u16 >= 0x0100)
-	{
-		D0.s16 >>= 1
-		D0.s16 = -D0.s16
-		objA0.velocity.y = D0.u16
-		return
-	}
-	if (origins_sounds)
-	{
+
+	if (objA0.velocity.y < 0x0100)
 		playSound(0x4e)
-	}
-
-	objA0.update_address = 0x074dea
-	objA0.value39 = 0x7f
-
-	A1 = 0xffff0000 + u16[A0 + 0x46]
-	u8[A1 + 0x38] |= 0x08
-
-	// Spawn explosions
-	// "spawnChildObjects(0x0690d8)" replaced by:
-	spawnChildObject(0x068d88, 0x00, 0, -36)
-	spawnChildObject(0x068d88, 0x02, 8, -28)
-	spawnChildObject(0x068d88, 0x04, -8, -28)
-	spawnChildObject(0x068d88, 0x06, 4, -20)
-	spawnChildObject(0x068d88, 0x08, -4, -20)
-	spawnChildObject(0x068d88, 0x0a, 4, -4)
-	spawnChildObject(0x068d88, 0x0c, -4, -4)
-
-	D0.u16 = 0x1000
-	screenmover_target.bottom = D0.u16
-	move_area.bottom.target = D0.u16
-	screenmover_target.right = 0x6000
-	screenmover_target.top = 0
-
-	// "spawnChildObjects(0x085de8)" replaced by:
-	spawnChildObject(0x084a48, 0x00, 0, 0)		// Screen mover for the right border
-	spawnChildObject(0x084aa4, 0x02, 0, 0)		// Screen mover for the upper border
-	spawnChildObject(0x084ad2, 0x04, 0, 0)		// Screen mover for the lower border
+	base.fn074d90()
 }
 
 // ----------------------------------------
@@ -1065,14 +853,8 @@ function void fn074d90()
 function void fn08dc24()
 {
 	base.fn08dc24()
-
-	if ((u8[A1 + 0x2a] & 0x40) != 0)
-	{
-		if (origins_sounds)
-		{
-			playSound(0x7b)
-		}
-	}
+	if ((u8[A1 + 0x2a] & 0x40) != 0 && origins_sounds)
+		playSound(0x7b)
 }
 
 // ----------------------------------------
@@ -1084,11 +866,8 @@ function void fn08dc24()
 function void fn075330()
 {
 	base.fn075330()
-
 	if (origins_sounds && objA0.value3b == 0)
-	{
 		playSound(0xb6)
-	}
 }
 
 // ----------------------------------------
@@ -1103,9 +882,7 @@ function void fn0754e0()
 	if (!_equal())
 	{
 		if (objA0.animation.frame == 0x0a && origins_sounds)
-		{
 			playSound(0x9e)
-		}
 	}
 }
 
@@ -1132,9 +909,7 @@ function void fn075532()
 {
 	base.fn075532()
 	if (objA0.base_state == 0x18 && origins_sounds)
-	{
 		playSound(0x96)
-	}
 }
 
 // ----------------------------------------
@@ -1173,9 +948,7 @@ function void fn07560c()
 {
 	base.fn07560c()
 	if (objA0.base_state == 0x22 && origins_sounds)
-	{
 		playSound(0x9e)
-	}
 }
 
 // ----------------------------------------
@@ -1201,11 +974,8 @@ function void fn0759d0()
 {
 	base.fn0759d0()
 
-	if (u8[A1 + 0x2a] & 0x80)
-	{
-		if (origins_sounds)
-			Audio.playAudio("heyho_head", AudioContext.CONTEXT_SOUND)
-	}
+	if (u8[A1 + 0x2a] & 0x80 && origins_sounds)
+		Audio.playAudio("heyho_head", AudioContext.CONTEXT_SOUND)
 }
 
 // ----------------------------------------
@@ -1217,18 +987,12 @@ function void fn0759d0()
 function void fn07571c()
 {
 	base.fn07571c()
-
+	
 	D0.u16 = objA0.velocity.y - 0x48
-	if (D0.s16 >= 0x650)
-	{
-		if (origins_sounds)
-			playSound(0x60)
-	}
-	if (objA0.velocity.x == 0x0400)
-	{
-		if (origins_sounds)
-			playSound(0xb6)
-	}
+	if (D0.s16 >= 0x650 && origins_sounds)
+		playSound(0x60)
+	if (objA0.velocity.x == 0x0400 && origins_sounds)
+		playSound(0xb6)
 }
 
 // ----------------------------------------
@@ -1241,13 +1005,8 @@ function void fn076164()
 {
 	base.fn076164()
 
-	if (origins_sounds)
-	{
-		if (objA0.position.x.u16 >= 0x44d0)
-		{
-			playSound(0x5f)
-		}
-	}
+	if (origins_sounds && objA0.position.x.u16 >= 0x44d0)
+		playSound(0x5f)
 }
 
 // ----------------------------------------
@@ -1279,19 +1038,8 @@ function void fn03c3a8()
 
 	D0.u16 = u16[0xffffb000 + 0x14] - objA0.position.y.u16
 
-	if (D0.s16 < -0x28)
-	{
-		if (objA0.value32 != 0)
-		{
-			if (objA0.value32) == 0x08
-			{
-				if (origins_sounds)
-				{
-					playSound(0x9a)
-				}
-			}
-		}
-	}
+	if (D0.s16 < -0x28 && objA0.value32 == 0x08 && origins_sounds)
+		playSound(0x9a)
 }
 
 // ----------------------------------------
@@ -1304,13 +1052,8 @@ function void fn03c0d0()
 {
 	base.fn03c0d0()
 
-	if (u8[A2] != 0)
-	{
-		if (origins_sounds)
-		{
-			playSound(0x4a)
-		}
-	}
+	if (u8[A2] != 0 && origins_sounds)
+		playSound(0x4a)
 }
 
 // ----------------------------------------
@@ -1325,13 +1068,8 @@ function void fn02438a()
 
 	if ((D3 & (1 << D6)) && (D2.u16 >= objA1.position.x.u16) && (D0 & 0x20))
 	{
-		if (origins_sounds)
-		{
-			if (D0.u8 = global.framecounter & 0x08) == 0
-			{
-				playSound(0x67)
-			}
-		}
+		if (origins_sounds && (global.framecounter & 0x08) == 0)
+			playSound(0x67)
 	}
 }
 
@@ -1346,9 +1084,7 @@ function void fn06f7a6()
 	base.fn06f7a6()
 
 	if (origins_sounds)
-	{
 		playSound(0x50)
-	}
 }
 
 // ----------------------------------------
@@ -1360,20 +1096,8 @@ function void fn06f7a6()
 function void fn03d11e()
 {
 	base.fn03d11e()
-
-	if (origins_sounds)
-	{
-		if (D0.u16 < 0x20)
-		{
-			if (D0.u16 < 0x14)
-			{
-				if ((u8[A1 + 0x2a] & char.flag.IN_AIR) == 0)
-				{
-					playSound(0x4a)
-				}
-			}
-		}
-	}
+	if (origins_sounds && D0.u16 < 0x14 && (u8[A1 + 0x2a] & char.flag.IN_AIR) == 0)
+		playSound(0x4a)
 }
 
 // ----------------------------------------
@@ -1385,6 +1109,11 @@ function void fn03d11e()
 //# translated(0x04076e) end(0x040770)
 function void fn0406e4()
 {
+	if (Mods.isModActive("Misc. Fixes and Tweaks"))
+	{
+		base.fn0406e4()
+		return
+	}
 	if ((D3 & (1 << D6)) == 0)
 		return
 
@@ -1447,13 +1176,8 @@ function void fn044434()
 {
 	base.fn044434()
 
-	if (u8[A2] != 0)
-	{
-		if (origins_sounds)
-		{
-			playSound(0x4a)
-		}
-	}
+	if (u8[A2] != 0 && origins_sounds)
+		playSound(0x4a)
 }
 
 // ----------------------------------------
@@ -1467,9 +1191,7 @@ function void fn063af2()
 	base.fn063af2()
 
 	if (origins_sounds)
-	{
 		playSound(0x49)
-	}
 }
 
 // ----------------------------------------
@@ -1482,13 +1204,8 @@ function void fn063f7a()
 {
 	base.fn063f7a()
 
-	if !((Mods.isModActive("Metal Knuckles in Hpz") || Mods.isModActive("Metal Knuckles in Hpz Green Eyes Ver.")) && isMainCharacter(CHARACTER_KNUCKLES))
-	{
-		if (origins_sounds)
-		{
-			playSound(0x9a)
-		}
-	}
+	if (origins_sounds && !((Mods.isModActive("Metal Knuckles in Hpz") || Mods.isModActive("Metal Knuckles in Hpz Green Eyes Ver.")) && isMainCharacter(CHARACTER_KNUCKLES)))
+		playSound(0x9a)
 }
 
 // ----------------------------------------
@@ -1504,9 +1221,7 @@ function void fn06518a()
 	base.fn06518a()
 
 	if (origins_sounds)
-	{
 		playSound(0xcc)
-	}
 }
 
 // ----------------------------------------
@@ -1520,9 +1235,7 @@ function void fn06482a()
 	base.fn06482a()
 
 	if (origins_sounds)
-	{
 		playSound(0x4a)
-	}
 }
 
 // ----------------------------------------
@@ -1536,9 +1249,7 @@ function void fn0648b8()
 	base.fn0648b8()
 
 	if (origins_sounds)
-	{
 		playSound(0x90)
-	}
 }
 
 // ----------------------------------------
@@ -1552,9 +1263,7 @@ function void fn06498a()
 	base.fn06498a()
 
 	if (origins_sounds)
-	{
 		playSound(0x90)
-	}
 }
 
 // ----------------------------------------
@@ -1570,7 +1279,7 @@ global bool AlreadyPlayed
 function void fn049a0e()
 {
 	base.fn049a0e()
-	if (Mods.isModActive("Origins Parity Galore"))
+	if (Mods.isModActive("Origins Parity Galore") || !origins_sounds)
 		return
 	if (u8[0xfffff7c0] == 0x3f)
 	{
@@ -1581,9 +1290,7 @@ function void fn049a0e()
 		}
 	}
 	else
-	{
 		AlreadyPlayed = false
-	}
 }
 
 // ----------------------------------------
@@ -1595,15 +1302,8 @@ function void fn049a0e()
 function void fn07ea3c()
 {
 	base.fn07ea3c()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (origins_sounds)
-	{
-		if ((u8[A1 + 0x38] & 0x02) == 0)
-		{
-			playSound(0xc5)
-		}
-	}
+	if (origins_sounds && (u8[A1 + 0x38] & 0x02) == 0 && !Mods.isModActive("Origins Parity Galore"))
+		playSound(0xc5)
 }
 
 // ----------------------------------------
@@ -1616,15 +1316,8 @@ function void fn07ea3c()
 function void fn07fe96()
 {
 	base.fn07fe96()
-	if (Mods.isModActive("Origins Parity Galore"))
-		return
-	if (origins_sounds)
-	{
-		if (u8[0xfffffab8] & 0x02)
-		{
-			playSound(0x91)
-		}
-	}
+	if (origins_sounds && u8[0xfffffab8] & 0x02 && !Mods.isModActive("Origins Parity Galore"))
+		playSound(0x91)
 }
 
 // ----------------------------------------
@@ -1636,11 +1329,8 @@ function void fn07fe96()
 function void fn08060c()
 {
 	base.fn08060c()
-
 	if (origins_sounds)
-	{
 		Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
-	}
 }
 
 // ----------------------------------------
@@ -1652,14 +1342,8 @@ function void fn08060c()
 function void fn080634()
 {
 	base.fn080634()
-
-	if (D0.u16 == 0x64)
-	{
-		if (origins_sounds)
-		{
-			playSound(0x56)
-		}
-	}
+	if (D0.u16 == 0x64 && origins_sounds)
+		playSound(0x56)
 }
 
 // ----------------------------------------
@@ -1671,14 +1355,8 @@ function void fn080634()
 function void fn0806a6()
 {
 	base.fn0806a6()
-
-	if (D0.u16 <= 0x28)
-	{
-		if (origins_sounds)
-		{
-			playSound(0x91)
-		}
-	}
+	if (D0.u16 <= 0x28 && origins_sounds)
+		playSound(0x91)
 }
 
 // ----------------------------------------
@@ -1691,17 +1369,6 @@ function void fn0806a6()
 function void fn080782()
 {
 	base.fn080782()
-
-	// Here's a check that prevents it from being
-	// heard if you don't have all Chaos/Super Emeralds.
-	if (global.chaos_emeralds != 7)
-	{
-		if (objA0.position.y.u16 >= 0xcf)
-		{
-			if (origins_sounds)
-			{
-				playSound(0x5f)
-			}
-		}
-	}
+	if (global.chaos_emeralds != 7 && origins_sounds && objA0.position.y.u16 >= 0xcf) // only heard without all Chaos Emeralds
+		playSound(0x5f)
 }
