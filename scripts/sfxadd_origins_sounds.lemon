@@ -262,18 +262,13 @@ function void fn02fe34()
 //# address-hook(0x031226) end(0x031458)
 function void fn031226()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D1.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			D1.u8 &= CONTROL_ABC
-			if (D1.u8 != 0)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn031226()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-	base.fn031226()
+	else base.fn031226()
 }
 
 // ----------------------------------------

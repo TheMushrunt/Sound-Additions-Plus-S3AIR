@@ -38,14 +38,8 @@ function void SAP.determineESJumpSound() // This is to allow extra character slo
 function void fn016e60()
 {
 	base.fn016e60()
-
-	if (control.player1 & CONTROL_ABC)
-	{
-		if (origins_sounds)
-		{
-			SAP.determineJumpSound()
-		}
-	}
+	if ((control.player1 & CONTROL_ABC) && origins_sounds && !Mods.isModActive("Misc. Fixes and Tweaks"))
+		SAP.determineJumpSound()
 }
 
 // ----------------------------------------
@@ -56,19 +50,13 @@ function void fn016e60()
 //# address-hook(0x0220c2) end(0x02219c)
 function void fn0220c2()
 {
-	if (s8[A2] != 0)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		D1.u8 = D0.u8 & CONTROL_ABC
-		if (D1.u8 != 0)
-		{
-			if (origins_sounds)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn0220c2()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn0220c2()
+	else base.fn0220c2()
 }
 
 // ----------------------------------------
@@ -79,23 +67,13 @@ function void fn0220c2()
 //# address-hook(0x032784) end(0x0328c2)
 function void fn032784()
 {
-	base.fn032784()
-
-	u8 bit = (1 << D6.u8)
-
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D5.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if ((objA1.render_flags & render_flag.VISIBLE) && u8[A1 + 0x05] < 0x04)
-		{
-			if ((objA0.flags2a & bit) != 0)
-			{
-				if ((D5.u8 & CONTROL_ABC) != 0)
-				{
-					SAP.determineJumpSound()
-				}
-			}
-		}
+		base.fn032784()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
+	else base.fn032784()
 }
 
 // ----------------------------------------
@@ -105,15 +83,13 @@ function void fn032784()
 
 function void fn0349ba()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0) && (D0.u8 & CONTROL_ABC) != 0
-		{
+		base.fn0349ba()
+		if (origins_sounds)
 			SAP.determineJumpSound()
-		}
 	}
-
-	base.fn0349ba()
+	else base.fn0349ba()
 }
 
 // ----------------------------------------
@@ -124,18 +100,13 @@ function void fn0349ba()
 //# address-hook(0x033ade) end(0x033c14)
 function void fn033ade()
 {
-	base.fn033ade()
-
-	if (debug_mode.state == 0)
+	if (u8[A2] != 0 && (D5.u16 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if ((D5.u16 & CONTROL_ABC) != 0)
-		{
-			if (origins_sounds)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn033ade()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
+	else base.fn033ade()
 }
 
 // ----------------------------------------
@@ -146,29 +117,13 @@ function void fn033ade()
 //# address-hook(0x0266b0) end(0x026792)
 function void fn0266b0()
 {
-	if (u8[A2] != 0)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		// Check if jump button pressed
-		D0.u8 &= CONTROL_ABC
-		
-		if (D0.u8 != 0)
-		{
-			u8[A1 + 0x2e] = 0
-			u8[A2] = 0
-			u8[A2 + 2] = (D0.u16 & 0x0f00) ? 0x3c : 0x12		// Any direction held?
-			if (origins_sounds)
-				SAP.determineJumpSound()
-			objA1.velocity.x = objA0.velocity.x
-			objA1.velocity.y = -0x380
-			u8[A1 + 0x1e] = 0x0e
-			u8[A1 + 0x1f] = 0x07
-			objA1.state = char.state.ROLLING
-			objA1.flags2a |= (char.flag.IN_AIR | char.flag.ROLLING)
-			u8[A1 + 0x40] = 0x01
-			return
-		}
+		base.fn0266b0()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-	base.fn0266b0()
+	else base.fn0266b0()
 }
 
 // ----------------------------------------
@@ -179,37 +134,13 @@ function void fn0266b0()
 //# address-hook(0x0290f2) end(0x029214)
 function void fn0290f2()
 {
-	if (u8[A2] != 0)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if ((D0.u8 & CONTROL_ABC) != 0)
-		{
-			if (origins_sounds)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn0290f2()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-	base.fn0290f2()
-	if (u8[A2])
-	{
-		D0.u16 &= 0x0f00		// Any direction held?
-		if (D0.u16 != 0)
-		{
-			u8[A2 + 0x02] = 0x3c
-		}
-		else
-		{
-			objA1.velocity.x = 0
-		}
-		if (D0 & 0x0400)		// CONTROL_LEFT held
-		{
-			objA1.velocity.x = -0x200
-		}
-		if (D0 & 0x0800)		// CONTROL_RIGHT held
-		{
-			objA1.velocity.x = 0x200
-		}
-	}
+	else base.fn0290f2()
 }
 
 // ----------------------------------------
@@ -220,37 +151,13 @@ function void fn0290f2()
 //# address-hook(0x026eda) end(0x02702c)
 function void fn026eda()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			if ((D0.u8 & CONTROL_ABC) != 0 && u8[0xfffffaa9] == 0)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn026eda()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-	base.fn026eda()
-	if (u8[A2])
-	{
-		D0.u16 &= 0x0f00		// Any direction held?
-		if (D0.u16 != 0)
-		{
-			u8[A2 + 0x02] = 0x3c
-		}
-		else
-		{
-			objA1.velocity.x = 0
-		}
-		if (D0 & 0x0400)		// CONTROL_LEFT held
-		{
-			objA1.velocity.x = -0x200
-		}
-		if (D0 & 0x0800)		// CONTROL_RIGHT held
-		{
-			objA1.velocity.x = 0x200
-		}
-	}
+	else base.fn026eda()
 }
 
 // ----------------------------------------
@@ -265,7 +172,7 @@ function void fn08d47c()
 
 	if (origins_sounds)
 	{
-		if (objA0.position.x.u16 >= 0x4440 && !Mods.isModActive("Origins Parity Galore"))
+		if (objA0.position.x.u16 >= 0x4440 && !(Mods.isModActive("Origins Parity Galore") || Mods.isModActive("Misc. Fixes and Tweaks")))
 		{
 			SAP.determineJumpSound()
 		}
@@ -280,19 +187,13 @@ function void fn08d47c()
 //# address-hook(0x03e508) end(0x03e596)
 function void fn03e508()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			D1.u16 = D0.u16 & CONTROL_ABC
-			if (D1.u8 != 0)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn03e508()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn03e508()
+	else base.fn03e508()
 }
 
 // ----------------------------------------
@@ -303,18 +204,13 @@ function void fn03e508()
 //# address-hook(0x02291a) end(0x022a22)
 function void fn02291a()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			if ((D0.u8 & CONTROL_ABC) != 0)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn02291a()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn02291a()
+	else base.fn02291a()
 }
 
 // ----------------------------------------
@@ -325,21 +221,13 @@ function void fn02291a()
 //# address-hook(0x03f5c2) end(0x03f6a2)
 function void fn03f5c2()
 {
-	if (origins_sounds)
+	if (u8[A2] != 0 && (D0.u8 & CONTROL_ABC) != 0 && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			if (u16[A0 + 0x34] == objA1.velocity.x && u16[A0 + 0x36] == objA1.velocity.y)
-			{
-				if ((D0.u8 & CONTROL_ABC) != 0)
-				{
-					SAP.determineJumpSound()
-				}
-			}
-		}
+		base.fn03f5c2()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn03f5c2()
+	else base.fn03f5c2()
 }
 
 // ----------------------------------------
@@ -350,18 +238,13 @@ function void fn03f5c2()
 //# address-hook(0x03aa7e) end(0x03ac36)
 function void fn03aa7e()
 {
-	if (origins_sounds)
+	if (u8[A2] && (D0.u8 & CONTROL_ABC) != 0)
 	{
-		if (u8[A2] != 0)
-		{
-			if ((D0.u8 & CONTROL_ABC) != 0)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn03aa7e()
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn03aa7e()
+	else base.fn03aa7e()
 }
 
 // ----------------------------------------
@@ -372,43 +255,13 @@ function void fn03aa7e()
 //# address-hook(0x03a8b8) end(0x03aa58)
 function void fn03a8b8()
 {
-	if (Mods.isModActive("Misc. Fixes and Tweaks"))
+	if ((D0.u8 & CONTROL_ABC) != 0 && u8[A2] && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
 		base.fn03a8b8()
-		return
+		if (origins_sounds)
+			SAP.determineJumpSound()
 	}
-	if ((objA1.render_flags & render_flag.VISIBLE) && debug_mode.state == 0 && u8[A1 + 0x05] < 0x04)
-	{
-		if ((D0.u8 & CONTROL_ABC) != 0 && u8[A2])
-		{
-			if (origins_sounds)
-			{
-				SAP.determineJumpSound()
-			}
-		}
-	}
-	base.fn03a8b8()
-	// fix the initial movement within a jump, to prevent a softlock
-	if (u8[A2])
-	{
-		D0.u16 &= 0x0f00		// Any direction held?
-		if (D0.u16 != 0)
-		{
-			u8[A2 + 0x02] = 0x3c
-		}
-		else
-		{
-			objA1.velocity.x = 0
-		}
-		if (D0 & 0x0400)		// CONTROL_LEFT held
-		{
-			objA1.velocity.x = -0x200
-		}
-		if (D0 & 0x0800)		// CONTROL_RIGHT held
-		{
-			objA1.velocity.x = 0x200
-		}
-	}
+	else base.fn03a8b8()
 }
 
 // ----------------------------------------
@@ -420,11 +273,8 @@ function void fn03a8b8()
 function void fn03c068()
 {
 	base.fn03c068()
-
 	if (new_sounds)
-	{
 		SAP.determineJumpSound()
-	}
 }
 
 // ----------------------------------------
@@ -435,14 +285,13 @@ function void fn03c068()
 //# address-hook(0x040f52) end(0x04108e)
 function void fn040f52()
 {
-	base.fn040f52()
-	if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
+	if ((D0.u8 & CONTROL_ABC) != 0 && u8[A2] && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
+		base.fn040f52()
 		if (origins_sounds)
-		{
 			SAP.determineJumpSound()
-		}
 	}
+	else base.fn040f52()
 }
 
 // ----------------------------------------
@@ -453,18 +302,13 @@ function void fn040f52()
 //# address-hook(0x044338) end(0x0443b2)
 function void fn044338()
 {
-	if (new_sounds)
+	if (u8[A2] != 0 && D1.u16 & CONTROL_ABC && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (u8[A2] != 0)
-		{
-			if (D1.u16 & CONTROL_ABC)
-			{
-				SAP.determineJumpSound()
-			}
-		}
+		base.fn044338()
+		if (new_sounds)
+			SAP.determineJumpSound()
 	}
-
-	base.fn044338()
+	else base.fn044338()
 }
 
 // ----------------------------------------
@@ -513,12 +357,11 @@ function void fn0658ba()
 //# address-hook(0x04703e) end(0x04717c)
 function void fn04703e()
 {
-	base.fn04703e()
-	if (objA1.velocity.y == -0x380 && (D0.u8 & CONTROL_ABC) != 0)
+	if (u8[A2] != 0 && D0.u8 & CONTROL_ABC && !Mods.isModActive("Misc. Fixes and Tweaks"))
 	{
-		if (origins_sounds)
-		{
+		base.fn04703e()
+		if (new_sounds)
 			SAP.determineJumpSound()
-		}
 	}
+	else base.fn04703e()
 }
