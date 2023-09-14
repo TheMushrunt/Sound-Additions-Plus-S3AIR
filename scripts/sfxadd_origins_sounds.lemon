@@ -445,7 +445,7 @@ function void fn0319f4()
 {
 	base.fn0319f4()
 
-	if (u8[A2] == 3 && (u8[A2 + 0x02] == 2)
+	if (u8[A2] == 3 && (u8[A2 + 0x02] == 2))
 	{
 		if (origins_sounds)
 			playSound(0x81)
