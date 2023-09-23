@@ -94,6 +94,8 @@ function void fn0572ba()
 	}
 }
 
+global bool playFanGateSound = true // needed for HCZ fans, check below
+
 // ----------------------------------------
 // Standalone function to replace existing audio.
 // ----------------------------------------
@@ -333,8 +335,11 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 		{
 			if (sfxId == 0x58)
 			{
+				if (!playFanGateSound)
+					return false
 				soundKey = 0x9a
 				soundRegType = SoundRegType.TYPE_SOUND
+				playFanGateSound = false
 			}
 		}
 
@@ -545,4 +550,12 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 		}
 	}
 	return base.Standalone.getModdedSoundKey(soundKey, sfxId, soundRegType)
+}
+
+// Fix for Hydrocity fan gate lock sound multiplying loudness, resetting it after every frame makes it so it can play multiple times EXCEPT on the same frame
+function void waitForNextFrame()
+{
+	if (!playFanGateSound)
+		playFanGateSound = true
+	base.waitForNextFrame()
 }
