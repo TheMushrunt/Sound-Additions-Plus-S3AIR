@@ -11,7 +11,7 @@ The original [Sound Additions](https://gamebanana.com/mods/406112) initially set
 
 - Many sounds that Sound Additions previously not replicated from Origins have now been included to the best of our ability. Some are still missing and it's hard to correct that.
 
-- Proper and full [Origins Parity Galore](https://sonic3air.boards.net/thread/316/new-update-origins-parity-galore) support has been added (this is why we changed the mod name, to ensure nothing was muted on both sides of the mods)
+- Proper and full support for [Misc. Fixes and Tweaks](https://sonic3air.boards.net/thread/594/misc-fixes-tweaks) and [Origins Parity Galore](https://sonic3air.boards.net/thread/316/new-update-origins-parity-galore) has been added (this is why we changed the mod name, to ensure nothing was muted on both sides of the mods)
 
 - Quite a number of completely new instances of sounds in use were added under the "New music & sounds" option, it'll help make your game even more lively! (We can't possibly list them all, it'd ruin the fun of finding out!)
 
