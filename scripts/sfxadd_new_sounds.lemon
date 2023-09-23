@@ -18,114 +18,14 @@ function void Character.GettingHurt()
 	{
 		// It's the second player
 		if (competition_mode.active)
-		{
 			rings = ring_counter.player2
-		}
 		else
-		{
 			canLoseShield = false
-		}
 	}
 
-	if (canLoseShield && (char.bonus_effect & char.bonus.ANY_SHIELD) == 0)
-	{
-		if (!isProtectedByObject)
-		{
-			// No more rings?
-			if (rings == 0)
-			{
-				D0 = getSoundIdByObstacleAddress(u32[A2])
-				Character.Die_internal()
-				return
-			}
-
-			// Create ring spill object
-			if (allocDynamicObjectStd())
-			{
-				objA1.update_address = 0x01a64a
-				objA1.position.x.u16 = char.position.x.u16
-				objA1.position.y.u16 = char.position.y.u16
-				u16[A1 + 0x3e] = A0.u16
-			}
-			spilledRings = true
-
-			// Should be unnecessary, but make sure all shield flags are cleared
-			char.bonus_effect &= ~char.bonus.ALL_SHIELDS
-		}
-	}
-	else
-	{
-	#if STANDALONE
-		// When using e.g. the MGZ spinning top, do not lose your shield
-		if (!isProtectedByObject)
-	#endif
-		{
-			// Lose shield
-			char.bonus_effect &= ~char.bonus.ALL_SHIELDS
-		}
-	}
-
-	char.base_state = 0x04
-	Character.LandingOnGroundNoSpindash()
-	char.flags |= char.flag.IN_AIR
-	if (char.flags & char.flag.UNDERWATER)
-	{
-		char.velocity.x = -0x100
-		char.velocity.y = -0x200
-	}
-	else
-	{
-		char.velocity.x = -0x200
-		char.velocity.y = -0x400
-	}
-	if (char.position.x.u16 >= u16[A2 + 0x10])
-	{
-		char.velocity.x = -char.velocity.x
-	}
-
-	char.groundspeed = 0
-	char.state = char.state.GOT_HURT
-	char.invuln.countdown = 120
-
-#if STANDALONE
-	if (char.character == CHARACTER_SONIC)
-	{
-		// Reset drop dash
-		sonic.dropdash_counter = 0
-	}
-
-	// In standalone, don't play the sound when rings got spilled
-	//  -> This check is not necessary in emulation, as the ring spill sound kills this one (only one of both can be played)
-
-	// ...Except the modder (me) wants to mimic the PC port
-	if (new_sounds)
-	{
-		Audio.playAudio(getSoundIdByObstacleAddressNew(u32[A2]), AudioContext.CONTEXT_SOUND)
-	}
-	else
-	{
-		if (!spilledRings)
-#endif
-		{
-			playSound(getSoundIdByObstacleAddress(u32[A2]))
-		}
-	}
-	D0 = 0xffffffff
-}
-
-function u64 getSoundIdByObstacleAddressNew(u32 obstacleAddress)
-{
-	if (obstacleAddress >= 0x023f84 && obstacleAddress < 0x024280)
-	{
-
-		// Some kind of spikes
-		return 0x37
-	}
-	else
-	{
-		// Anything else
-		return 0x35
-	}
+	if ((canLoseShield && (char.bonus_effect & char.bonus.ANY_SHIELD) == 0 && !isProtectedByObject && rings != 0) && new_sounds)
+		Audio.playAudio(getSoundIdByObstacleAddress(u32[A2]), AudioContext.CONTEXT_SOUND)
+	base.Character.GettingHurt()
 }
 
 // ----------------------------------------
