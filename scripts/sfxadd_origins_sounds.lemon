@@ -640,13 +640,18 @@ function void fn029eb2()
 
 //# address-hook(0x02a07e) end(0x02a0aa)
 function void fn02a07e()
-{
-	if (origins_sounds && objA0.animation.sprite == 5 && objA0.value26)
+{	
+	if (origins_sounds)
 	{
-		objA0.value26 = 0
-		u8[A4] += 2
-		objA0.animation.sprite = 0
-		playSound(0x58)
+		objA0.animation.timer -= 6
+		if (objA0.animation.sprite == 5 && !objA0.value26)
+		{
+			u8[A4] += 2
+			objA0.animation.sprite = 0
+			playSound(0x58)
+		}
+		else if (objA0.animation.sprite == 5 && objA0.value26)
+			objA0.value26 = 0
 		//... why do any of this?
 		// it's meant to speed up the process of closing the door. i don't know if it actually does, but hey, still looks cool!
 	}
