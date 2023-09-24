@@ -528,6 +528,27 @@ function void fn08b9fa()
 }
 
 // ----------------------------------------
+// ICECAP ZONE:
+// Moving through the snow.
+// ----------------------------------------
+
+//# address-hook(0x08b5dc) end(0x08b608)
+function void fn08b5dc()
+{
+	base.fn08b5dc()
+	if (D0.u16 != 0 && u16[A0 + 0x44] != 0 && new_sounds && !Audio.isPlayingAudio(0xcd))
+		playSound(0x7e)
+}
+
+//# address-hook(0x08b616) end(0x08b652)
+function void fn08b616()
+{
+	base.fn08b616()
+	if (D0.u16 != 0 && u16[A0 + 0x44] != 0 && new_sounds && !Audio.isPlayingAudio(0xcd))
+		playSound(0x7e)
+}
+
+// ----------------------------------------
 // LAUNCH BASE ZONE:
 // Wall Button Triggers swaps the doors.
 // ----------------------------------------
