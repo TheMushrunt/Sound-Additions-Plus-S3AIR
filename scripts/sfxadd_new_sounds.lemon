@@ -36,16 +36,10 @@ function void Character.GettingHurt()
 //# address-hook(0x035b16) end(0x035b8a)
 function void fn035b16()
 {
-	base.fn035b16()
-
 	D0.u8 = objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT)
-	if (D0.u8 != 0)
-	{
-		if (new_sounds)
-		{
-			playSoundRepeatedly(0xc0)
-		}
-	}
+	if (D0.u8 != 0 && new_sounds)
+		playSound(0xc0)
+	base.fn035b16()
 }
 
 // ----------------------------------------
@@ -56,21 +50,9 @@ function void fn035b16()
 //# address-hook(0x035f8c) end(0x036020)
 function void fn035f8c()
 {
+	if (new_sounds && objA0.state == 0 && objA0.value3a == 0 && objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT))
+		playSound(0x82)
 	base.fn035f8c()
-
-	if (objA0.state == 0)
-	{
-		if (objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT))
-		{
-			if (objA0.value3a == 0)
-			{
-				if (new_sounds)
-				{
-					playSound(0x82)
-				}
-			}
-		}
-	}
 }
 
 // ----------------------------------------
@@ -97,9 +79,7 @@ function void fn063562()
 	base.fn063562()
 
 	if (new_sounds)
-	{
 		playSound(0xd1)
-	}
 }
 
 // ----------------------------------------
@@ -112,15 +92,8 @@ function void fn06b77c()
 {
 	base.fn06b77c()
 
-	if (new_sounds)
-	{
-
-		// Only play if not in boss.
-		if (level.boss_encounter == 0)
-		{
-			playSound(0x3d)
-		}
-	}
+	if (new_sounds && level.boss_encounter == 0)
+		playSound(0x3d)
 }
 
 // ----------------------------------------
@@ -132,14 +105,8 @@ function void fn06b77c()
 function void fn06a51e()
 {
 	base.fn06a51e()
-
-	if (new_sounds)
-	{
-		if (u8[A1 + 0x38] & 0x04)
-		{
-			playSoundRepeatedly(0xc0)
-		}
-	}
+	if (new_sounds && u8[A1 + 0x38] & 0x04)
+		playSoundRepeatedly(0xc0)
 }
 
 // ----------------------------------------
@@ -151,6 +118,9 @@ function void fn06a51e()
 function void fn034900()
 {
 	base.fn034900()
+	
+	if (!new_sounds)
+	return
 
 	bool goto034966 = false
 
@@ -158,23 +128,10 @@ function void fn034900()
 	{
 		D0.u16 = u16[A0 + 0x3c]
 		if (D0.u16 != u16[A0 + 0x40])
-		{
-			if (new_sounds)
-			{
-				playSound(0xd1)
-			}
-		}
+			playSound(0xd1)
 	}
-	else if (u16[A0 + 0x34] == 0)
-	{
-		if (u16[A0 + 0x3c] != 0)
-		{
-			if (new_sounds)
-			{
-				playSound(0xd1)
-			}
-		}
-	}
+	else if (u16[A0 + 0x34] == 0 && u16[A0 + 0x3c] != 0)
+		playSound(0xd1)
 }
 
 // ----------------------------------------
@@ -189,13 +146,8 @@ function void fn035a20()
 {
 	base.fn035a20()
 
-	if (new_sounds)
-	{
-		if (u16[A0 + 0x30] == 0x04)
-		{
-			playSound(0x5a)
-		}
-	}
+	if (new_sounds && u16[A0 + 0x30] == 0x04)
+		playSound(0x5a)
 }
 
 // ----------------------------------------
@@ -208,13 +160,8 @@ function void fn089064()
 {
 	base.fn089064()
 
-	if (new_sounds)
-	{
-		if (D2.u16 != 0 && objA0.animation.sprite == 8 && u8[A0 + 0x04] & 0x80)
-		{
-			playSound(0x4d)
-		}
-	}
+	if (new_sounds && D2.u16 != 0 && objA0.animation.sprite == 8 && u8[A0 + 0x04] & 0x80)
+		playSound(0x4d)
 }
 
 // ----------------------------------------
@@ -227,9 +174,7 @@ function void fn06daa0()
 {
 	base.fn06daa0()
 	if (new_sounds)
-	{
 		playSound(0x8e)
-	}
 }
 
 // ----------------------------------------
@@ -242,9 +187,7 @@ function void fn06dc34()
 {
 	base.fn06dc34()
 	if (new_sounds)
-	{
 		playSound(0xa6)
-	}
 }
 
 // ----------------------------------------
@@ -257,9 +200,7 @@ function void fn06df4a()
 {
 	base.fn06df4a()
 	if (new_sounds)
-	{
 		playSound(0xd6)
-	}
 }
 
 // ----------------------------------------
@@ -272,9 +213,7 @@ function void fn06db20()
 {
 	base.fn06db20()
 	if (new_sounds)
-	{
 		playSound(0x6d)
-	}
 }
 
 // ----------------------------------------
@@ -287,9 +226,7 @@ function void fn06db44()
 {
 	base.fn06db44()
 	if (new_sounds)
-	{
 		playSound(0xd6)
-	}
 }
 
 // ----------------------------------------
@@ -302,9 +239,7 @@ function void fn06db44()
 function void fn062360()
 {
 	if (new_sounds)
-	{
 		playSound(SFX_JUMP)
-	}
 
 	base.fn062360()
 }
@@ -320,9 +255,7 @@ function void fn065c78()
 	base.fn065c78()
 
 	if (new_sounds)
-	{
 		playSound(0x5b)
-	}
 }
 
 // ----------------------------------------
@@ -349,10 +282,7 @@ function void fn031d74()
 			PlayBulbShatterOnce = true
 		}
 	}
-	else
-	{
-		PlayBulbShatterOnce = false
-	}
+	else PlayBulbShatterOnce = false
 }
 
 // ----------------------------------------
@@ -365,9 +295,7 @@ function void fn031d74()
 function void fn0623e2()
 {
 	if (new_sounds)
-	{
 		playSound(SFX_JUMP)
-	}
 
 	base.fn0623e2()
 }
@@ -384,9 +312,7 @@ function void fn0625a6()
 	base.fn0625a6()
 
 	if (new_sounds)
-	{
 		playSound(SFX_JUMP)
-	}
 }
 
 // ----------------------------------------
@@ -399,13 +325,8 @@ function void fn06e5d8()
 {
 	base.fn06e5d8()
 
-	if (new_sounds)
-	{
-		if (D0.u16 == objA1.position.x.u16)
-		{
-			playSound(0x53)
-		}
-	}
+	if (new_sounds && D0.u16 == objA1.position.x.u16)
+		playSound(0x53)
 }
 
 // ----------------------------------------
@@ -419,9 +340,7 @@ function void fn06e650()
 	base.fn06e650()
 
 	if (new_sounds)
-	{
 		playSound(0x54)
-	}
 }
 
 // ----------------------------------------
@@ -435,9 +354,7 @@ function void fn06e66c()
 	base.fn06e66c()
 
 	if (new_sounds)
-	{
 		Audio.playAudio("platform_retract", AudioContext.CONTEXT_SOUND)
-	}
 }
 
 // ----------------------------------------
@@ -464,16 +381,8 @@ function void fn08aeba()
 	base.fn08aeba()
 
 	A1 = 0xffff0000 + u16[A0 + 0x46]
-	if ((u8[A1 + 0x38] & 0x08) == 0)
-	{
-		if (objA0.render_flags & render_flag.VISIBLE)
-		{
-			if (new_sounds)
-			{
-				playSound(0x49)
-			}
-		}
-	}
+	if ((u8[A1 + 0x38] & 0x08) == 0 && objA0.render_flags & render_flag.VISIBLE && new_sounds)
+		playSound(0x49)
 }
 
 // ----------------------------------------
@@ -487,9 +396,7 @@ function void Boss.ICZ1.GotoState06()
 	base.Boss.ICZ1.GotoState06()
 
 	if (new_sounds)
-	{
 		playSound(0x84)
-	}
 }
 
 // ----------------------------------------
@@ -502,13 +409,8 @@ function void Boss.ICZ1.UpdateState0e()
 {
 	base.Boss.ICZ1.UpdateState0e()
 
-	if !(objA0.flags38 & 0x02)
-	{
-		if (new_sounds)
-		{
-			playSound(0x85)
-		}
-	}
+	if !(objA0.flags38 & 0x02 && new_sounds)
+		playSound(0x85)
 }
 
 // ----------------------------------------
@@ -522,9 +424,7 @@ function void fn08b9fa()
 	base.fn08b9fa()
 
 	if (new_sounds)
-	{
 		playSound(0xae)
-	}
 }
 
 // ----------------------------------------
@@ -537,7 +437,7 @@ function void fn08b5dc()
 {
 	base.fn08b5dc()
 	if (D0.u16 != 0 && u16[A0 + 0x44] != 0 && new_sounds && !Audio.isPlayingAudio(0xcd))
-		playSound(0x7e)
+		Audio.playAudio("snow_traveling", AudioContext.CONTEXT_SOUND)
 }
 
 //# address-hook(0x08b616) end(0x08b652)
@@ -545,7 +445,7 @@ function void fn08b616()
 {
 	base.fn08b616()
 	if (D0.u16 != 0 && u16[A0 + 0x44] != 0 && new_sounds && !Audio.isPlayingAudio(0xcd))
-		playSound(0x7e)
+		Audio.playAudio("snow_traveling", AudioContext.CONTEXT_SOUND)
 }
 
 // ----------------------------------------
@@ -558,13 +458,8 @@ function void fn025d2c()
 {
 	base.fn025d2c()
 
-	if (u8[A1 + 0x20] == 0x02)
-	{
-		if (new_sounds)
-		{
-			playSound(0x76)
-		}
-	}
+	if (u8[A1 + 0x20] == 0x02 && new_sounds)
+		playSound(0x76)
 }
 
 // ----------------------------------------
@@ -578,9 +473,36 @@ function void fn073dc8()
 	base.fn073dc8()
 
 	if (new_sounds)
-	{
-		playSound(0x44)
-	}
+		Audio.playAudio("rockemsockem", AudioContext.CONTEXT_SOUND)
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Act 2 Boss 1 Eggman lands in station.
+// ----------------------------------------
+
+//# address-hook(0x073e3a) end(0x073e5c)
+function void fn073e3a()
+{
+	base.fn073e3a()
+	if (objA0.base_state == 0x04 && new_sounds)
+		Audio.playAudio("heyho_head", AudioContext.CONTEXT_SOUND)
+}
+
+// ----------------------------------------
+// LAUNCH BASE ZONE:
+// Act 2 Boss 1's "Bowling" Ball emits dust.
+// ----------------------------------------
+
+//# address-hook(0x073b3c) end(0x073b7c)
+function void fn073b3c()
+{
+	base.fn073b3c()
+	D0.u16 = objA0.velocity.x + 0x0200
+	if (D0.u16 < 0x0400 || global.framecounter & 0x03)
+		return
+	if (new_sounds)
+		Audio.playAudio("snow_traveling", AudioContext.CONTEXT_SOUND)
 }
 
 // ----------------------------------------
@@ -593,9 +515,7 @@ function void fn0739e6()
 {
 	base.fn0739e6()
 	if (new_sounds)
-	{
 		playSoundRepeatedly(0xd0)
-	}
 }
 
 // ----------------------------------------
@@ -609,9 +529,7 @@ function void fn074448()
 	base.fn074448()
 
 	if (new_sounds)
-	{
 		playSound(0x51)
-	}
 }
 
 // ----------------------------------------
@@ -625,9 +543,7 @@ function void fn07452e()
 	base.fn07452e()
 
 	if (new_sounds)
-	{
 		playSound(0xb6)
-	}
 }
 
 // ----------------------------------------
@@ -641,9 +557,7 @@ function void fn074562()
 	base.fn074562()
 
 	if (new_sounds)
-	{
 		playSound(0xb6)
-	}
 }
 
 // ----------------------------------------
@@ -657,9 +571,7 @@ function void fn0745a8()
 	base.fn0745a8()
 
 	if (new_sounds)
-	{
 		playSound(0x51)
-	}
 }
 
 // ----------------------------------------
@@ -673,13 +585,8 @@ function void fn07473a()
 {
 	base.fn07473a()
 
-	if (new_sounds)
-	{
-		if (level.wait_for_results == 0x00)
-		{
-			PlayMusicAfterLevelResults()
-		}
-	}
+	if (new_sounds && level.wait_for_results == 0x00)
+		PlayMusicAfterLevelResults()
 }
 
 // ----------------------------------------
@@ -692,13 +599,8 @@ function void fn062bf4()
 {
 	base.fn062bf4()
 
-	if (D0.u16 <= objA0.position.x.u16 + 2)
-	{
-		if (new_sounds)
-		{
-			playSound(SFX_JUMP)
-		}
-	}
+	if (D0.u16 <= objA0.position.x.u16 + 2 && new_sounds)
+		playSound(SFX_JUMP)
 }
 
 // ----------------------------------------
@@ -712,9 +614,7 @@ function void fn08db76()
 	base.fn08db76()
 
 	if (new_sounds)
-	{
 		Audio.playAudio("mushmeanie_bounce", AudioContext.CONTEXT_SOUND)
-	}
 }
 
 // ----------------------------------------
@@ -741,13 +641,8 @@ function void fn03fb0c()
 	base.fn03fb0c()
 
 	D0.u16 = u16[A0 + 0x30] - u16[A1 + 0x34] - 0x14
-	if (D0.u16 <= objA0.position.y.u16)
-	{
-		if (new_sounds)
-		{
-			playSound(0x49)
-		}
-	}
+	if (D0.u16 <= objA0.position.y.u16 && new_sounds)
+		playSound(0x49)
 }
 
 // ----------------------------------------
@@ -760,19 +655,8 @@ function void fn075b34()
 {
 	base.fn075b34()
 
-	if (objA0.value3a != 0)
-	{
-		if (D1.s16 < 0)
-		{
-			if (objA0.render_flags & render_flag.VISIBLE)
-			{
-				if (new_sounds)
-				{
-					playSound(0x5d)
-				}
-			}
-		}
-	}
+	if (objA0.value3a != 0 && D1.s16 < 0 && objA0.render_flags & render_flag.VISIBLE && new_sounds)
+		playSound(0x5d)
 }
 
 // ----------------------------------------
@@ -786,9 +670,7 @@ function void fn07585a()
 	base.fn07585a()
 
 	if (new_sounds)
-	{
 		playSound(0x8b)
-	}
 }
 
 // ----------------------------------------
@@ -802,9 +684,7 @@ function void fn0758fc()
 	base.fn0758fc()
 
 	if (new_sounds)
-	{
 		playSound(0x48)
-	}
 }
 
 // ----------------------------------------
@@ -856,18 +736,27 @@ function void fn03c984()
 function void fn03b3c0()
 {
 	base.fn03b3c0()
-
 	CheckGroundCollision()
-	
-	if (D1.s16 < 0)
+	if ((D1.s16 >= 1 && D1.s16 <= 4) && new_sounds && objA0.render_flags & render_flag.VISIBLE)
+		playSound(0x49)
+}
+
+// ----------------------------------------
+// FLYING BATTERY ZONE:
+// Flipping Spring does its thing and flips.
+// ----------------------------------------
+
+//# address-hook(0x03cb66) end(0x03cbc8)
+function void fn03cb66()
+{
+	base.fn03cb66()
+	if ((objA0.animation.sprite == 2 || objA0.animation.sprite == 0) && new_sounds)
+		objA0.value3e = 0
+	if (objA0.animation.sprite == 1 && !objA0.value3e && new_sounds)
 	{
-		if (new_sounds)
-		{
-			if (objA0.render_flags & render_flag.VISIBLE)
-			{
-				playSound(0x49)
-			}
-		}
+		if (objA0.render_flags & render_flag.VISIBLE)
+			Audio.playAudio("heyho_head", AudioContext.CONTEXT_SOUND)
+		objA0.value3e = 1
 	}
 }
 
@@ -881,16 +770,8 @@ function void fn03b18c()
 {
 	base.fn03b18c()
 
-	if (D1.s16 < 0)
-	{
-		if (new_sounds)
-		{
-			if (objA0.render_flags & render_flag.VISIBLE)
-			{
-				playSound(0x9e)
-			}
-		}
-	}
+	if (D1.s16 < 0 && new_sounds && objA0.render_flags & render_flag.VISIBLE)
+		playSound(0x9e)
 }
 
 // ----------------------------------------
@@ -904,9 +785,7 @@ function void fn06f0ce()
 	base.fn06f0ce()
 
 	if (new_sounds)
-	{
 		playSound(0x95)
-	}
 }
 
 // ----------------------------------------
@@ -919,16 +798,8 @@ function void fn03d278()
 {
 	base.fn03d278()
 
-	if (new_sounds)
-	{
-		if (u8[A0 + 0x36] != 0)
-		{
-			if (u32[A0 + 0x30] == 0)
-			{
-				playSound(0x42)
-			}
-		}
-	}
+	if (new_sounds && u8[A0 + 0x36] != 0 && u32[A0 + 0x30] == 0)
+		playSound(0x42)
 }
 
 // ----------------------------------------
@@ -942,9 +813,7 @@ function void fn08e718()
 	base.fn08e718()
 
 	if (new_sounds)
-	{
 		playSound(0x8c)
-	}
 }
 
 // ----------------------------------------
@@ -958,9 +827,7 @@ function void fn076b86()
 	base.fn076b86()
 
 	if (new_sounds)
-	{
 		playSound(0x4a)
-	}
 }
 
 // ----------------------------------------
@@ -972,14 +839,9 @@ function void fn076b86()
 function void fn076bf4()
 {
 	base.fn076bf4()
-
-	if (D2.s16 < 0)
-	{
-		if (new_sounds)
-		{
-			playSound(0x82)
-		}
-	}
+	
+	if (D2.s16 < 0 && new_sounds)
+		playSound(0x82)
 }
 
 // ----------------------------------------
@@ -992,17 +854,8 @@ function bool BossSOZ1.slideAsRock()
 {
 	base.BossSOZ1.slideAsRock()
 
-	if (objA0.velocity.x != 0)
-	{
-		if (abs(objA0.velocity.x) >= 0x80 && (abs(objA0.velocity.x) & 0xf0) == 0)
-		{
-			if (new_sounds)
-			{
-				playSound(0xc8)
-			}
-
-		}
-	}
+	if (objA0.velocity.x != 0 && abs(objA0.velocity.x) >= 0x80 && (abs(objA0.velocity.x) & 0xf0) == 0 && new_sounds)
+		playSound(0xc8)
 
 	if (objA0.velocity.x == 0)
 	{
@@ -1070,9 +923,7 @@ function void fn0786a6()
 	base.fn0786a6()
 
 	if (new_sounds)
-	{
 		playSound(0x5c)
-	}
 }
 
 // ----------------------------------------
@@ -1086,9 +937,7 @@ function void fn079022()
 	base.fn079022()
 
 	if (new_sounds)
-	{
 		playSoundRepeatedly(0xbe)
-	}
 }
 
 // ----------------------------------------
@@ -1104,9 +953,7 @@ function void fn064164()
 	// Bro, he didn't play a sound before.
 	// MF became weightless.
 	if (new_sounds)
-	{
 		playSound(0x4c)
-	}
 }
 
 // ----------------------------------------
@@ -1119,16 +966,8 @@ function void fn064a36()
 {
 	base.fn064a36()
 
-	if (!_equal())
-	{
-		if (objA0.animation.frame == 8)
-		{
-			if (new_sounds)
-			{
-				playSound(0x63)
-			}
-		}
-	}
+	if (!_equal() && objA0.animation.frame == 8 && new_sounds)
+		playSound(0x63)
 }
 
 // ----------------------------------------
@@ -1148,9 +987,7 @@ function void fn06471a()
 	objA0.velocity.y = -0x200
 
 	if !(new_sounds)
-	{
-		SAP.determineJumpSound()
-	}
+		playSound(SFX_JUMP)
 
 	A1 = 0x0667c1
 	fn084580()
@@ -1201,13 +1038,8 @@ function void fn044c76()
 {
 	base.fn044c76()
 
-	if (s8[A0 + 0x2c] >= 0 && objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT))
-	{
-		if (new_sounds)
-		{
-			playSound(0x59)
-		}
-	}
+	if (s8[A0 + 0x2c] >= 0 && objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT) && new_sounds)
+		playSound(0x59)
 }
 
 // ----------------------------------------
@@ -1223,12 +1055,9 @@ function void fn044d98()
 	if (s8[A0 + 0x2c] >= 0)
 	{
 		D0.u16 = objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT)
-		if (D0.u16 != 0)
+		if (D0.u16 != 0 && new_sounds)
 		{
-			if (new_sounds)
-			{
-				playSound(0x59)
-			}
+			playSound(0x59)
 		}
 	}
 }
@@ -1275,14 +1104,8 @@ function void fn0455cc_sub()
 function void fn091526()
 {
 	base.fn091526()
-
-	if (new_sounds)
-	{
-		if (objA0.velocity.y) == 0x06
-		{
-			playSound(0xa0)
-		}
-	}
+	if (new_sounds && objA0.velocity.y == 0x06)
+		playSound(0xa0)
 }
 
 // ----------------------------------------
@@ -1296,14 +1119,11 @@ function void fn0915f6()
 	base.fn0915f6()
 	
 	D0.u8 = global.framecounter.low & 0x0f
-	if (D0.u8 == 0 && s8[A0 + 0x04] < 0)
+	if (D0.u8 == 0 && s8[A0 + 0x04] < 0 && s8[A0 + 0x39] < 0 && new_sounds)
 	{
-		if (s8[A0 + 0x39] < 0)
+		if (new_sounds)
 		{
-			if (new_sounds)
-			{
-				playSound(0xa0)
-			}
+			playSound(0xa0)
 		}
 	}
 }
@@ -1318,13 +1138,8 @@ function void fn07ae22()
 {
 	base.fn07ae22()
 
-	if (new_sounds)
-	{
-		if (u8[A1 + 0x39] == 0) && (objA0.base_state == 0x04)
-		{
-			playSound(0x8a)
-		}
-	}
+	if (new_sounds && u8[A1 + 0x39] == 0 && objA0.base_state == 0x04)
+		playSound(0x8a)
 }
 
 // ----------------------------------------
@@ -1351,13 +1166,8 @@ function void fn07bf28()
 	base.fn07bf28()
 
 	D0.u16 = objA0.velocity.x + u16[A0 + 0x40]
-	if (abs(D0.s16) >= 0x0800)
-	{
-		if (new_sounds)
-		{
-			playSound(0x48)
-		}
-	}
+	if (abs(D0.s16) >= 0x0800 && new_sounds)
+		playSound(0x48)
 }
 
 // ----------------------------------------
@@ -1370,13 +1180,8 @@ function void fn07c39e()
 {
 	base.fn07c39e()
 
-	if (new_sounds)
-	{
-		if (s8(objA0.value39) >= 0)
-		{
-			Audio.playAudio("smm_charge", AudioContext.CONTEXT_SOUND)
-		}
-	}
+	if (new_sounds && s8(objA0.value39) >= 0)
+		Audio.playAudio("smm_charge", AudioContext.CONTEXT_SOUND)
 }
 
 // ----------------------------------------
@@ -1391,13 +1196,8 @@ function void fn07c59a()
 
 	if (objA0.countdown_value >= 0)
 	{
-		if !(_equal())
-		{
-			if (new_sounds)
-			{
-				playSound(0xa6)
-			}
-		}
+		if !(_equal() && new_sounds)
+			playSound(0xa6)
 	}
 }
 
@@ -1412,13 +1212,8 @@ function void fn07c684()
 	base.fn07c684()
 
 	D0.u16 = objA0.velocity.y - 0x40
-	if (D0.s16 >= 0x0380)
-	{
-		if (new_sounds)
-		{
-			playSound(0x9f)
-		}
-	}
+	if (D0.s16 >= 0x0380 && new_sounds)
+		playSound(0x9f)
 }
 
 // ----------------------------------------
@@ -1432,9 +1227,7 @@ function void fn091d12()
 	base.fn091d12()
 	
 	if (new_sounds)
-	{
 		playSound(0x52)
-	}
 }
 
 // ----------------------------------------
@@ -1448,9 +1241,7 @@ function void fn046f18()
 	base.fn046f18()
 
 	if (new_sounds)
-	{
 		playSound(0x98)
-	}
 }
 
 // ----------------------------------------
@@ -1461,13 +1252,8 @@ function void fn046f18()
 //# address-hook(0x04757a) end(0x047612)
 function void fn04757a()
 {
-	if (new_sounds)
-	{
-		if (u16[A0 + 0x34] == 1)
-		{
-			Audio.playAudio("platform_retract", AudioContext.CONTEXT_SOUND)
-		}
-	}
+	if (new_sounds && u16[A0 + 0x34] == 1)
+		Audio.playAudio("platform_retract", AudioContext.CONTEXT_SOUND)
 
 	base.fn04757a()
 }
@@ -1484,13 +1270,8 @@ function void fn07dec6()
 
 	D0.u16 = u16[A0 + 0x40] + 0x20
 	D1.u16 = u16[A0 + 0x3c] + D0.u16
-	if (D1.u16 >= 0x7000)
-	{
-		if (new_sounds)
-		{
-			playSound(0x96)
-		}
-	}
+	if (D1.u16 >= 0x7000 && new_sounds)
+		playSound(0x96)
 }
 
 // ----------------------------------------
@@ -1507,13 +1288,8 @@ function void fn07e98c()
 	if ((u8[A1 + 0x2a] & 0x80) == 0)
 	{
 		D0.u8 = u8[A0 + 0x43]
-		if (D0.u8 >= 0x24)
-		{
-			if (new_sounds)
-			{
-				playSound(0xa5)
-			}
-		}
+		if (D0.u8 >= 0x24 && new_sounds)
+			playSound(0xa5)
 	}
 }
 
@@ -1528,9 +1304,7 @@ function void fn07e9fc()
 	base.fn07e9fc()
 
 	if (new_sounds)
-	{
 		playSound(0x54)
-	}
 }
 
 // ----------------------------------------
@@ -1543,13 +1317,8 @@ function void fn07e342()
 {
 	base.fn07e342()
 
-	if (new_sounds)
-	{
-		if (objA0.countdown_value == 0)
-		{
-			Audio.playAudio("cliff2", AudioContext.CONTEXT_SOUND)
-		}
-	}
+	if (new_sounds && objA0.countdown_value == 0)
+		Audio.playAudio("cliff2", AudioContext.CONTEXT_SOUND)
 }
 
 // ----------------------------------------
@@ -1564,9 +1333,7 @@ function void fn07e384()
 	if (objA1.position.y.u16 >= 0x0360 && (u8[A1 + 0x2a] & char.flag.IN_AIR) == 0)
 	{
 		if (new_sounds)
-		{
 			playSound(0x84)
-		}
 
 		objA0.update_address = 0x07e3ca
 		u8[A1 + 0x2e] = 0x83
@@ -1589,13 +1356,8 @@ function void fn07e3ca()
 {
 	base.fn07e3ca()
 
-	if (objA0.groundspeed == 0x0300)
-	{
-		if (new_sounds)
-		{
-			playSound(0x85)
-		}
-	}
+	if (objA0.groundspeed == 0x0300 && new_sounds)
+		playSound(0x85)
 }
 
 // ----------------------------------------
@@ -1608,13 +1370,8 @@ function void fn048d2c()
 {
 	base.fn048d2c()
 
-	if (u16[A4 + 0x04] == 0x0010)
-	{
-		if (new_sounds)
-		{
-			playSound(0xa5)
-		}
-	}
+	if (u16[A4 + 0x04] == 0x0010 && new_sounds)
+		playSound(0xa5)
 }
 
 // ----------------------------------------
@@ -1667,9 +1424,7 @@ function void fn07f900()
 	objA0.velocity.y = D4.u16
 
 	if (new_sounds)
-	{
 		playSound(0x9a)
-	}
 
 	signalMultiReturn()
 }
@@ -1685,9 +1440,7 @@ function void fn08000e()
 	base.fn08000e()
 
 	if (new_sounds)
-	{
 		playSound(0x6d)
-	}
 }
 
 // ----------------------------------------
@@ -1701,9 +1454,7 @@ function void fn080184()
 	base.fn080184()
 
 	if (new_sounds)
-	{
 		playSound(0x60)
-	}
 }
 
 // ----------------------------------------
@@ -1716,11 +1467,6 @@ function void fn081eca()
 {
 	base.fn081eca()
 
-	if (objA0.countdown_value == 0)
-	{
-		if (new_sounds)
-		{
-			playSound(0x4d)
-		}
-	}
+	if (objA0.countdown_value == 0 && new_sounds)
+		playSound(0x4d)
 }

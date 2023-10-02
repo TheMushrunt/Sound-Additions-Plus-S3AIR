@@ -131,4 +131,12 @@
 	// Chaos Emerald jingle from Sonic 2 used in Origins.
 	// S3&K one has a lower pitch near the end.
 	"chaosemerald_fix": { "File": "Music/chaosemerald.ogg", "Type": "Jingle" },
+	
+	// Tunneling through snow in Ice Cap Zone Act 2's transition.
+	// Sound taken (and edited) from Sonic 2.
+	"snow_traveling": { "File": "snow_traveling.ogg", "Type": "Sound" },
+	
+	// Eggman jumping into the Egg Cannon.
+	// Sound taken from Sonic Mania.
+	"rockemsockem": { "File": "rockemsockem.ogg", "Type": "Sound" } // RockEmSockEm is a funny name the Mania devs gave the sound
 }

@@ -56,6 +56,30 @@ function void fn04c576()
 }
 
 // ----------------------------------------
+// COMPETITION MODE:
+// Pressing a button in Desert Palace.
+// ----------------------------------------
+
+// ...This technically shouldn't need to be done, however AIR's scripts are messed up so we're labelling it an Origins sound even though it's in the original game :)
+
+//# address-hook(0x0362ce) end(0x03634a)
+function void fn0362ce()
+{
+	if (origins_sounds)
+	{
+		if (objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT) && !objA0.value3e)
+		{
+			playSound(SFX_CLICK)
+			objA0.value3e = 1
+		}
+		if (objA0.animation.sprite == 0)
+			objA0.value3e = 0
+	}
+	
+	base.fn0362ce()
+}
+
+// ----------------------------------------
 // ANGEL ISLAND ZONE:
 // Sonic Introduction: Jumping off the tornado.
 // ----------------------------------------
