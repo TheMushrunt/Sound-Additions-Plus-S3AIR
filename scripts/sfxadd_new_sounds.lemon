@@ -737,8 +737,19 @@ function void fn03b3c0()
 {
 	base.fn03b3c0()
 	CheckGroundCollision()
-	if ((D1.s16 >= 1 && D1.s16 <= 4) && new_sounds && objA0.render_flags & render_flag.VISIBLE)
+	if (D1.s16 < 0 && new_sounds && (objA0.render_flags & render_flag.VISIBLE) && objA0.value3e == 1)
+	{
 		playSound(0x49)
+		objA0.value3e = 0
+	}
+}
+
+//# address-hook(0x03b3fa) end(0x03b44a)
+function void fn03b3fa()
+{
+	if (objA0.render_flags & render_flag.VISIBLE)
+		objA0.value3e = 1
+	base.fn03b3fa()
 }
 
 // ----------------------------------------
@@ -770,8 +781,19 @@ function void fn03b18c()
 {
 	base.fn03b18c()
 
-	if (D1.s16 < 0 && new_sounds && objA0.render_flags & render_flag.VISIBLE)
+	if (D1.s16 < 0 && new_sounds && objA0.render_flags & render_flag.VISIBLE && objA0.value3e == 1)
+	{
 		playSound(0x9e)
+		objA0.value3e = 0
+	}
+}
+
+//# address-hook(0x03b1c4) end(0x03b1e4)
+function void fn03b1c4()
+{
+	if (objA0.render_flags & render_flag.VISIBLE)
+		objA0.value3e = 1
+	base.fn03b1c4()
 }
 
 // ----------------------------------------

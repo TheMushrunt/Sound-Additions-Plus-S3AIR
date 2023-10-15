@@ -684,19 +684,62 @@ function void fn02a07e()
 
 // ----------------------------------------
 // LAUNCH BASE ZONE:
-// Bouncing off a Snailblaster.
+// Bouncing off a Snailblaster. (Also changes how the player interacts with it when Origins Sounds is on)
 // ----------------------------------------
 
-//# address-hook(0x00ffd4) end(0x010214)
-function void Character.OnCollisionWithDynamicObject() // this is the script that handles the character's interactions with objects, we use this to make the sound play whenever they COLLIDE, and not overlap in general
+//# address-hook(0x08bfb4) end(0x08bfc2)
+function void fn08bfb4()
 {
-	D1.u8 = (objA1.collision_attributes & collision_attributes.flags)
-	if (D1.u8 == 0) // if you're colliding with an enemy
+	CheckDistanceToPlayers()
+	if (!origins_sounds || (objA0.base_state == 0x08) || u8[A0 + 0x29] != 0x7f || debug_mode.state)
 	{
-		if (objA1.update_address == 0x08bfb4 && u8[A1 + 0x29] == 0x7f && (char.flags & char.flag.ROLLING) && origins_sounds) // update address of Snailblaster
-			Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
+		base.fn08bfb4()
+		return
 	}
-	base.Character.OnCollisionWithDynamicObject()
+	if (D2.u16 < 0x18 && D3.u16 < 0x20 && (objA1.flags2a & char.flag.ROLLING && objA1.flags2a & char.flag.IN_AIR))
+	{
+		D1.u16 = objA0.position.x.u16 - objA1.position.x.u16
+		D2.u16 = objA0.position.y.u16 - objA1.position.y.u16
+		LookupAngleByVector()
+
+		D1.u16 = u8[0xfffffe04] & 0x03
+		D0.u16 += D1.u16
+		LookupSinCos()
+
+		D1.s32 = s32(D1.s16) * -0x380
+		D1.s32 >>= 8
+		objA1.velocity.x = D1.u16
+
+		D0.s32 = s32(D0.s16) * -0x380
+		D0.s32 >>= 8
+		objA1.velocity.y = D0.u16
+		Audio.playAudio("tick", AudioContext.CONTEXT_SOUND)
+		
+		if (objA0.base_state != 0x08)
+		{
+			if (objA0.base_state != 0x0a)
+				objA0.base_state = 0x08
+			else
+				objA0.countdown_value = 0x3b
+			objA0.animation.sprite = (objA0.base_state == 0x0a ? 0 : 3)
+		}
+		DrawObject()
+	}
+	else base.fn08bfb4()
+}
+
+// Necessary for Snailblaster's improved behavior
+
+//# translated(0x08c23c) end(0x08c264)
+function bool fn08c23c()
+{
+	if (origins_sounds)
+	{
+		CheckDistanceToPlayers()
+		if (D2.u16 < 0x30 && D3.u16 < 0x30 && (u8[A1 + 0x20] == char.state.ROLLING))
+			return true
+	}
+	return base.fn08c23c()
 }
 
 // ----------------------------------------
