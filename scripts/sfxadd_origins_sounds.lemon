@@ -1356,11 +1356,14 @@ function void fn06498a()
 //# address-hook(0x0484b0) end(0x0484e2)
 function void fn0484b0()
 {
-	playSound(0xa2)
-	#if STANDALONE
-		Input.setControllerRumbleByAddress(A1, 0.0f, 0.75f, 150)
-	#endif
-	u8[A4 + 0x01] = 0
+	if (origins_sounds)
+	{
+		playSound(0xa2)
+		#if STANDALONE
+			Input.setControllerRumbleByAddress(A1, 0.0f, 0.75f, 150)
+		#endif
+		u8[A4 + 0x01] = 0
+	}
 	base.fn0484b0()
 }
 
