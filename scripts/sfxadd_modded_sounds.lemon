@@ -1,6 +1,23 @@
 // This file contains music and sound replacements that can only
 // fit in one function or aren't really additions.
 
+// Functions below are used to make things less of a headache.
+
+function bool usingOriginsSoundReplacements()
+{
+	return sound_replacements // anything above 0
+}
+
+function bool usingNewSoundReplacements()
+{
+	return sound_replacements > 2 // 3 or 4
+}
+
+function bool usingIncorrectSoundReplacements()
+{
+	return sound_replacements && sound_replacements % 2 == 0 // (should only return a 2 or 4 under normal circumstances)
+}
+
 // ----------------------------------------
 // LAVA REEF ZONE:
 // Silence Stomp Platform if off-screen quicker.
@@ -298,8 +315,8 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 
 
 	// Sound replacements Origins did.
-	if (origins_sounds)
-	{	
+	if (origins_sounds && usingOriginsSoundReplacements())
+	{
 		// Competition Mode - Balloon Pop / Bumper Hit
 		if (competition_mode.active && global.zone == 0x0f)
 		{
@@ -319,27 +336,40 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			soundKey = "chaosemerald_fix"
 			soundRegType = SoundRegType.TYPE_JINGLE
 		}
+		
+		// ANGEL ISLAND ZONE ACT 2
+		// After Boss bridge opens/closes.
+		if (objA0.update_address == 0x02b26c && global.zone_act == 0x0001)
+		{
+			if (u8[0xfffffaa3] != 0)
+			{
+				if (u8[A0 + 0x36] == 0x01)
+				{
+					if (sfxId == 0x56)
+					{
+						soundKey = "bridge"
+						soundRegType = SoundRegType.TYPE_SOUND
+					}
 
-		// Hydrocity's fan appears.
+					if (objA0.flags38 == 0 && objA0.flags38 == 0x80)
+					{
+						if (sfxId == 0x56)
+						{
+							soundKey = "bridge_end"
+							soundRegType = SoundRegType.TYPE_SOUND
+						}
+					}
+				}
+			}
+		}
+
+		// Hydrocity's big fan appears.
 		if (objA0.update_address == 0x03093c && global.zone == 0x01)
 		{
 			if (sfxId == 0x58)
 			{
-				soundKey = 0x76
+				soundKey = "heyho_head"
 				soundRegType = SoundRegType.TYPE_SOUND
-			}
-		}
-		
-		// Hydrocity's closing gate with fans.
-		if (objA0.update_address == 0x030850 && global.zone == 0x01)
-		{
-			if (sfxId == 0x58)
-			{
-				if (!playFanGateSound || !objA0.render_flags & render_flag.VISIBLE)
-					return false
-				soundKey = 0x9a
-				soundRegType = SoundRegType.TYPE_SOUND
-				playFanGateSound = false
 			}
 		}
 
@@ -395,12 +425,23 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			}
 		}
 	}
-
+	
+	// Hydrocity's closing gate with fans.
+	if (objA0.update_address == 0x030850 && global.zone == 0x01 && usingNewSoundReplacements())
+	{
+		if (sfxId == 0x58)
+		{
+			if (!playFanGateSound || !objA0.render_flags & render_flag.VISIBLE || usingIncorrectSoundReplacements())
+				return false
+			soundKey = 0x9a
+			soundRegType = SoundRegType.TYPE_SOUND
+			playFanGateSound = false
+		}
+	}
 
 	// Sound replacements I did.
-	if (new_sounds)
+	if (new_sounds && usingNewSoundReplacements())
 	{
-
 		// Competition Mode - CGZ Bounce Pad.
 		if (competition_mode.active && global.zone == 0x11)
 		{
@@ -411,36 +452,9 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			}
 		}
 
-		// ANGEL ISLAND ZONE ACT 2
-		// After Boss bridge opens/closes.
-		if (objA0.update_address == 0x02b26c && global.zone_act == 0x0001)
-		{
-			if (u8[0xfffffaa3] != 0)
-			{
-				if (u8[A0 + 0x36] == 0x01)
-				{
-					if (sfxId == 0x56)
-					{
-						soundKey = "bridge"
-						soundRegType = SoundRegType.TYPE_SOUND
-					}
-
-					if (objA0.flags38 == 0 && objA0.flags38 == 0x80)
-					{
-						if (sfxId == 0x56)
-						{
-							soundKey = "bridge_end"
-							soundRegType = SoundRegType.TYPE_SOUND
-						}
-					}
-				}
-			}
-		}
-
 		// HYDROCITY ZONE
 		if (global.zone == 0x01)
 		{
-
 			// Hand Launcher.
 			if (objA0.update_address == 0x030b58)
 			{
@@ -516,9 +530,8 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 // Cliffs Section
 // ----------------------------------------
 
-	if (new_sounds)
+	if (new_sounds && usingNewSoundReplacements())
 	{
-
 		// MGZ Spinning Top Walls, ICZ Bridges, LRZ Collapsing Rocks, SSZ Post MS
 		if (global.zone == 0x02 && objA0.update_address == 0x020a56) || (global.zone == 0x05 && objA0.update_address == 0x0205de || objA0.update_address == 0x020b8c)
 		{
@@ -549,6 +562,26 @@ function u64 Standalone.getModdedSoundKey(u64 soundKey, u8 sfxId, u8 soundRegTyp
 			}
 		}
 	}
+	
+// ----------------------------------------
+// Incorrect Origins Sounds
+// ----------------------------------------
+
+	if (usingIncorrectSoundReplacements())
+	{
+		if (sfxId == SFX_SPRING && (objA0.update_address == 0x00903e || objA0.update_address == 0x060ece)) // yellow sphere and REP ball
+		{
+			soundKey = "classic_spring"
+			soundRegType = SoundRegType.TYPE_SOUND
+		}
+		if (sfxId == 0xa7 && (objA0.update_address == 0x03716c || objA0.update_address == 0x048270))
+		{
+			Log = objA0.update_address
+			soundKey = 0x89
+			soundRegType = SoundRegType.TYPE_SOUND
+		}
+	}
+
 	return base.Standalone.getModdedSoundKey(soundKey, sfxId, soundRegType)
 }
 

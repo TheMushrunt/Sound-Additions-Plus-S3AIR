@@ -3,14 +3,14 @@
 		"Name": "Sound Additions Plus",
 		"Author": "leanycat & TheMushrunt",
 		"Description": "This mod adds more gameplay sounds, including Origins' additions, and more new sounds and music in use.",
-		"URL": "https://github.com/TheMushrunt/Sound-Additions-S3AIR",
-		"ModVersion": "2.7.5",
-		"GameVersion": "22.09.10.0"
+		"URL": "https://github.com/TheMushrunt/Sound-Additions-Plus-S3AIR",
+		"ModVersion": "3.0.0",
+		"GameVersion": "24.02.02.0"
 	},
   "Settings": {
 		"List":
-			[
-			  {
+		[
+			{
 				"InternalName": "soundadditions_originssfx",
 				"DisplayName": "Sonic Origins sounds:",
 				"Variable": "origins_sounds",
@@ -19,10 +19,25 @@
 				"Options":	{
 					"0": "No",
 					"1": "Yes"
-							}
-				},
+				}
+			},
+			
+			{
+				"InternalName": "soundadditions_sfxreplacements",
+				"DisplayName": "Sound Replacements:",
+				"Variable": "sound_replacements",
+				"DefaultValue": "3",
+				"Category": "Sound Managing",
+				"Options":	{
+					"0": "None",
+					"1": "Origins",
+					"2": "Origins (w/ Incorrect SFX)",
+					"3": "New (includes Origins)",
+					"4": "New + Incorrect SFX"
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_newsfx",
 				"DisplayName": "New music & sounds:",
 				"Variable": "new_sounds",
@@ -31,10 +46,10 @@
 				"Options":	{
 					"0": "No",
 					"1": "Yes"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_maniasfx",
 				"DisplayName": "Sonic Mania sounds:",
 				"Variable": "mania_sounds",
@@ -43,10 +58,10 @@
 				"Options":	{
 					"0": "No",
 					"1": "Yes"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_slotsfx",
 				"DisplayName": "Slot Machine Alternate:",
 				"Variable": "slot_machine_sounds",
@@ -55,10 +70,10 @@
 				"Options":	{
 					"0": "No",
 					"1": "Yes"
-							}
-				},
+					}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_bsmainmusic",
 				"DisplayName": "Blue Sphere Main:",
 				"Variable": "blue_sphere_menu_music",
@@ -68,10 +83,10 @@
 					"0": "Sonic & Knuckles",
 					"1": "Sonic 3",
 					"2": "Unique"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_bsresultsmusic",
 				"DisplayName": "Blue Sphere Results:",
 				"Variable": "blue_sphere_results_music",
@@ -81,10 +96,10 @@
 					"0": "No change",
 					"1": "Sonic Origins",
 					"2": "Unique"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_cmresultsmusic",
 				"DisplayName": "Competition Mode Results:",
 				"Variable": "competition_results_music",
@@ -94,10 +109,10 @@
 					"0": "No change",
 					"1": "Unused Theme",
 					"2": "Unique"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_sszendmusic",
 				"DisplayName": "SSZ Climbing Cutscene:",
 				"Variable": "sky_sanctuary_climb_music",
@@ -106,10 +121,10 @@
 				"Options":	{
 					"0": "No music",
 					"1": "New"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_mhz1intromusic",
 				"DisplayName": "MHZ1 Start Area:",
 				"Variable": "mushroom_hill_intro_music",
@@ -118,10 +133,10 @@
 				"Options":	{
 					"0": "No change",
 					"1": "New"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_uniquesupermusic",
 				"DisplayName": "Super Form Theme:",
 				"Variable": "unique_super_music",
@@ -130,10 +145,10 @@
 				"Options":	{
 					"0": "Use menu option",
 					"1": "Sonic Origins"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_uniquehypermusic",
 				"DisplayName": "Hyper Form Theme:",
 				"Variable": "unique_hyper_music",
@@ -146,10 +161,10 @@
 					"3": "Sonic 3",
 					"4": "Sonic & Knuckles",
 					"5": "S3 Prototype"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_hiddenpalacemusic",
 				"DisplayName": "Hidden Palace Zone:",
 				"Variable": "hidden_palace_music",
@@ -159,10 +174,10 @@
 					"0": "No change",
 					"1": "Unique",
 					"2": "Sky Sanctuary"
-							}
-				},
+				}
+			},
 
-			  {
+			{
 				"InternalName": "soundadditions_hpzknucklesmusic",
 				"DisplayName": "HPZ Knuckles Battle:",
 				"Variable": "knuckles_hpz_music",
@@ -172,8 +187,8 @@
 					"0": "Use menu option",
 					"1": "Bouncy Glow Proto Remix",
 					"2": "MastaGambit's Fusion"
-							}
 				}
-			]
-		}
+			}
+		]
+	}
 }

@@ -14,6 +14,24 @@ function void fn060d7e()
 }
 
 // ----------------------------------------
+// GUMBALL MACHINE:
+// Touching a "REP" ball.
+// ----------------------------------------
+
+//# address-hook(0x061130) end(0x06114c)
+function void fn061130()
+{
+	if (allocDynamicObjectAfterA0() && origins_sounds)
+	{
+		if (u8[0xffff2022])
+			playSound(0x7B)
+		else
+			playSound(0xB1)
+	}
+	base.fn061130()
+}
+
+// ----------------------------------------
 // SLOT MACHINE:
 // Slot chosen comes to a halt.
 // Detail taken from Sonic the Hedgehog 2.
@@ -56,27 +74,18 @@ function void fn04c576()
 }
 
 // ----------------------------------------
-// COMPETITION MODE:
-// Pressing a button in Desert Palace.
+// BLUE SPHERES MENU:
+// Changing character selection.
 // ----------------------------------------
 
-// ...This technically shouldn't need to be done, however AIR's scripts are messed up so we're labelling it an Origins sound even though it's in the original game :)
-
-//# address-hook(0x0362ce) end(0x03634a)
-function void fn0362ce()
+//# address-hook(0x04d6b8) end(0x04d7a0)
+function void fn04d6b8()
 {
-	if (origins_sounds)
+	base.fn04d6b8()
+	if (control.pad1.pressed & CONTROL_ABC && origins_sounds)
 	{
-		if (objA0.flags2a & (object.flag.P1_ON_OBJECT | object.flag.P2_ON_OBJECT) && !objA0.value3e)
-		{
-			playSound(SFX_CLICK)
-			objA0.value3e = 1
-		}
-		if (objA0.animation.sprite == 0)
-			objA0.value3e = 0
+		Audio.playAudio("retro_beep", AudioContext.CONTEXT_SOUND)
 	}
-	
-	base.fn0362ce()
 }
 
 // ----------------------------------------
@@ -688,12 +697,13 @@ function void fn02a07e()
 // ----------------------------------------
 
 //# address-hook(0x08bfb4) end(0x08bfc2)
-function void fn08bfb4()
+//# alias(fn08bfb4) deprecated
+function void SnailBlaster.BaseUpdate()
 {
 	CheckDistanceToPlayers()
 	if (!origins_sounds || (objA0.base_state == 0x08) || u8[A0 + 0x29] != 0x7f || debug_mode.state)
 	{
-		base.fn08bfb4()
+		base.SnailBlaster.BaseUpdate()
 		return
 	}
 	if (D2.u16 < 0x18 && D3.u16 < 0x20 && (objA1.flags2a & char.flag.ROLLING && objA1.flags2a & char.flag.IN_AIR))
@@ -725,7 +735,7 @@ function void fn08bfb4()
 		}
 		DrawObject()
 	}
-	else base.fn08bfb4()
+	else base.SnailBlaster.BaseUpdate()
 }
 
 // Necessary for Snailblaster's improved behavior
@@ -1336,6 +1346,22 @@ function void fn06498a()
 
 	if (origins_sounds)
 		playSound(0x90)
+}
+
+// ----------------------------------------
+// DEATH EGG ZONE:
+// Those launchers with the rings of light send you flying.
+// ----------------------------------------
+
+//# address-hook(0x0484b0) end(0x0484e2)
+function void fn0484b0()
+{
+	playSound(0xa2)
+	#if STANDALONE
+		Input.setControllerRumbleByAddress(A1, 0.0f, 0.75f, 150)
+	#endif
+	u8[A4 + 0x01] = 0
+	base.fn0484b0()
 }
 
 // ----------------------------------------

@@ -39,7 +39,7 @@
 
 	// Blue Sphere grab sound.
 	// Taken from Mania's sound effects.
-	"bluesphere_mania":	   { "File": "bluesphere_mania.ogg", "Type": "Sound" },
+	"bluesphere_mania":	   { "File": "bluesphere_mania.ogg", "Type": "Sound", "Channel": "65" },
 
 	// LBZ Spinlauncher gimmick.
 	// Sound taken from Sonic 2.
@@ -59,7 +59,7 @@
 
 	// DEZ Platform returning back.
 	// Sound taken from Sonic Mania.
-	"platform_retract":	   { "File": "platform_retract.ogg", "Type": "Sound" },
+	"platform_retract":	   { "File": "platform_retract.ogg", "Type": "Sound", "Channel": "A3" },
 	
 	// Hey-Ho's head locks back into its body.
 	// Sound taken from Sonic Mania.
@@ -67,9 +67,9 @@
 
 	// Cliffs breaking, for variety purposes.
 	// Sounds taken from S1 and CD respectively.
-	"cliff1":	   { "File": "cliff1.ogg", "Type": "Sound", "Channel": "9B" },
-	"cliff2":	   { "File": "cliff2.ogg", "Type": "Sound", "Channel": "9B" },
-	"cliff3":	   { "File": "cliff3.ogg", "Type": "Sound", "Channel": "9B" },
+	"cliff1":	   { "File": "cliff1.ogg", "Type": "Sound", "Channel": "59" },
+	"cliff2":	   { "File": "cliff2.ogg", "Type": "Sound", "Channel": "59" },
+	"cliff3":	   { "File": "cliff3.ogg", "Type": "Sound", "Channel": "59" },
 
 	// ----------------------------------------
 	// MUSIC SECTION
@@ -138,5 +138,13 @@
 	
 	// Eggman jumping into the Egg Cannon.
 	// Sound taken from Sonic Mania.
-	"rockemsockem": { "File": "rockemsockem.ogg", "Type": "Sound" } // RockEmSockEm is a funny name the Mania devs gave the sound
+	"rockemsockem": { "File": "rockemsockem.ogg", "Type": "Sound" }, // RockEmSockEm is a funny name the Mania devs gave the sound
+	
+	// Classic spring sound (for Origins-related things)
+	// Sound taken from Sonic Mania.
+	"classic_spring": { "File": "classic_spring.ogg", "Type": "Sound" },
+	
+	// Random beep used in the Retro Engine Sonic ports.
+	// Sound taken from Sonic Mania.
+	"retro_beep": { "File": "retro_beep.ogg", "Type": "Sound" }
 }
